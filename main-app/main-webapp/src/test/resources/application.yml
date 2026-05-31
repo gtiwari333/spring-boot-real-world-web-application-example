@@ -39,9 +39,6 @@ spring:
         password: admin
     jmx:
         enabled: false
-springdoc:
-    swagger-ui:
-        enabled: false
 
 debug: false
 

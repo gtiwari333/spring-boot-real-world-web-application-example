@@ -12,11 +12,14 @@ spring:
             include-exception: true
             include-binding-errors: always
             include-message: always
-logging:
+springdoc:
+    enable-native-support: true
+
 server:
     port: 8085
 
 
+logging:
     level:
         org.springframework.web: INFO
         ROOT: WARN

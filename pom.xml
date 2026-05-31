@@ -319,17 +319,4 @@
         </pluginManagement>
     </build>
 
-    <profiles>
-        <profile>
-            <id>native</id>
-            <properties>
-                <checkstyle.skip>true</checkstyle.skip>
-                <maven.checkstyle.skip>true</maven.checkstyle.skip>
-                <modernizer.skip>true</modernizer.skip>
-                <dependency-check.skip>true</dependency-check.skip>
-                <pmd.skip>true</pmd.skip>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>

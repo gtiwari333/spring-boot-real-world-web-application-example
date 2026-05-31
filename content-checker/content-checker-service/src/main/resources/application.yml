@@ -6,6 +6,8 @@ spring:
         password: ${SPRING_ARTEMIS_PASSWORD:admin}
         broker-url: tcp://${SPRING_ARTEMIS_HOST:localhost:61616}
 
+springdoc:
+    enable-native-support: true
 
 server:
     port: 8083

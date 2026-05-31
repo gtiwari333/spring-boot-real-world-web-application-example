@@ -180,79 +180,100 @@
                     <configLocation>../../checkstyle.xml</configLocation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <!--
+                      Seed the agent-output directory before tests run so:
+                      (a) the directory always exists for -H:ConfigurationFileDirectories even if tests are skipped,
+                      (b) merge-agent-files merges agent captures ON TOP of these known-good baseline entries.
+                    -->
+                    <execution>
+                        <id>seed-native-agent-output</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/native/agent-output/test</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/resources/META-INF/native-image</directory>
+                                    <includes>
+                                        <include>reachability-metadata.json</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <agent>
+                        <enabled>true</enabled>
+                        <options>
+                            <callerFilterFiles>
+                                <filterFile>
+                                    ${project.basedir}/src/main/resources/META-INF/native-image/agent-caller-filter.json
+                                </filterFile>
+                            </callerFilterFiles>
+                            <accessFilterFiles>
+                                <filterFile>
+                                    ${project.basedir}/src/main/resources/META-INF/native-image/agent-access-filter.json
+                                </filterFile>
+                            </accessFilterFiles>
+                        </options>
+                    </agent>
+                    <buildArgs combine.children="append">
+                        <buildArg>--no-fallback</buildArg>
+                        <buildArg>-H:+AddAllCharsets</buildArg>
+                        <buildArg>-Ob</buildArg>
+                        <!-- Smaller binary size -->
+                        <!--  <buildArg>-Os</buildArg>-->
+                        <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
+                        <buildArg>-H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test
+                        </buildArg>
+                    </buildArgs>
+                </configuration>
+
+                <executions>
+                    <!-- sequence is important -->
+                    <execution>
+                        <id>add-reachability-metadata</id>
+                        <goals>
+                            <goal>add-reachability-metadata</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>add-agent-to-test</id>
+                        <goals>
+                            <goal>generateTestResourceConfig
+                            </goal>
+                        </goals>
+                        <phase>generate-test-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>metadata-copy</id>
+                        <goals>
+                            <goal>metadata-copy</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>build-native</id>
+                        <goals>
+                            <goal>compile-no-fork</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>native</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <configuration>
-                            <agent>
-                                <enabled>true</enabled>
-                                <options>
-                                    <callerFilterFiles>
-                                        <filterFile>${project.basedir}/src/main/resources/META-INF/native-image/agent-caller-filter.json</filterFile>
-                                    </callerFilterFiles>
-                                    <accessFilterFiles>
-                                        <filterFile>${project.basedir}/src/main/resources/META-INF/native-image/agent-access-filter.json</filterFile>
-                                    </accessFilterFiles>
-                                </options>
-                            </agent>
-                            <buildArgs combine.children="append">
-                                <buildArg>--no-fallback</buildArg>
-                                <buildArg>-H:+AddAllCharsets</buildArg>
-                                <buildArg>-Ob</buildArg>
-                                <!-- Smaller binary size -->
-                                <!--  <buildArg>-Os</buildArg>-->
-                                <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
-                                <buildArg>-H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test</buildArg>
-                            </buildArgs>
-                        </configuration>
-
-                        <executions>
-                            <!-- sequence is important -->
-                            <execution>
-                                <id>add-reachability-metadata</id>
-                                <goals>
-                                    <goal>add-reachability-metadata</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>add-agent-to-test</id>
-                                <goals>
-                                    <goal>generateTestResourceConfig
-                                    </goal>
-                                </goals>
-                                <phase>generate-test-resources</phase>
-                            </execution>
-                            <execution>
-                                <id>metadata-copy</id>
-                                <goals>
-                                    <goal>metadata-copy</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>compile-no-fork</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

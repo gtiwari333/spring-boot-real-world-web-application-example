@@ -46,6 +46,10 @@ spring:
                         client-secret: secret123
                         scope: openid, profile, email, offline_access # last one for refresh tokens
                     # we can have multiple auth providers
+
+springdoc:
+    enable-native-support: true
+
 server:
     port: 8081
 

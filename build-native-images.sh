@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+
+# Enable testcontainers reuse
+TC_PROPS="$HOME/.testcontainers.properties"
+if ! grep -q "testcontainers.reuse.enable=true" "$TC_PROPS" 2>/dev/null; then
+    echo "testcontainers.reuse.enable=true" >> "$TC_PROPS"
+    echo "Set testcontainers.reuse.enable=true in $TC_PROPS"
+fi
+
 # build all modules - tests are run with native-image-agent to generate reachability-metadata
 
 ALL_MODULES=(
