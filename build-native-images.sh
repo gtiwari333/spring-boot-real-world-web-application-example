@@ -22,7 +22,9 @@ ALL_MODULES=(
 mkdir -p dist
 for module in "${ALL_MODULES[@]}"; do
     name="${module##*/}"
-    ./mvnw --batch-mode --no-transfer-progress --file "${module}/pom.xml"  package -Pnative
+    mvnd --batch-mode --no-transfer-progress --file "${module}/pom.xml"  test -Pnative
+    mvnd --batch-mode --no-transfer-progress --file "${module}/pom.xml"  native:compile -Pnative -DskipTests
+
     src="$module/target/$name"
     cp "$src" "dist/$name"
 done
