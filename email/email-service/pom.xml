@@ -193,34 +193,6 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <!--
-                              Seed the agent-output directory before tests run so:
-                              (a) the directory always exists for -H:ConfigurationFileDirectories even if tests are skipped,
-                              (b) merge-agent-files merges agent captures ON TOP of these known-good baseline entries.
-                            -->
-                            <execution>
-                                <id>seed-native-agent-output</id>
-                                <phase>generate-test-resources</phase>
-                                <goals><goal>copy-resources</goal></goals>
-                                <configuration>
-                                    <outputDirectory>${project.build.directory}/native/agent-output/test</outputDirectory>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>${project.basedir}/src/main/resources/META-INF/native-image</directory>
-                                            <includes>
-                                                <include>reachability-metadata.json</include>
-                                            </includes>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
                         <configuration>

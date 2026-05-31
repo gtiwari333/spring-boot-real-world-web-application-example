@@ -88,6 +88,8 @@ services:
 
     content-checker-service:
         image: gtapp-content-checker-service:latest
+        environment:
+            - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
             zipkin:
@@ -97,6 +99,8 @@ services:
 
     email-service:
         image: gtapp-email-service:latest
+        environment:
+            - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
             emailhog:
@@ -106,6 +110,8 @@ services:
 
     trend-service:
         image: gtapp-trend-service:latest
+        environment:
+            - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
             zipkin:
@@ -113,6 +119,8 @@ services:
 
     report-service:
         image: gtapp-report-service:latest
+        environment:
+            - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
             zipkin:
@@ -124,6 +132,8 @@ services:
 
     main-webapp:
         image: gtapp-main-webapp:latest
+        environment:
+            - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
             zipkin:

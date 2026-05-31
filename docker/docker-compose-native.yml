@@ -90,7 +90,7 @@ services:
             retries: 15
             start_period: 60s  # Keycloak + realm import is slow
 
-    content-checker-service:
+    content-checker-service-native:
         image: gtapp-content-checker-service-native:latest
         network_mode: "service:localhost"
         depends_on:
@@ -99,7 +99,7 @@ services:
             activemq:
                 condition: service_healthy
 
-    email-service:
+    email-service-native:
         image: gtapp-email-service-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
@@ -110,7 +110,7 @@ services:
             zipkin:
                 condition: service_healthy
 
-    trend-service:
+    trend-service-native:
         image: gtapp-trend-service-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
@@ -119,7 +119,7 @@ services:
             zipkin:
                 condition: service_healthy
 
-    report-service:
+    report-service-native:
         image: gtapp-report-service-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
@@ -132,7 +132,7 @@ services:
             keycloak:
                 condition: service_healthy
 
-    main-webapp:
+    main-webapp-native:
         image: gtapp-main-webapp-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
@@ -140,7 +140,7 @@ services:
         depends_on:
             zipkin:
                 condition: service_healthy
-            email-service:
+            email-service-native:
                 condition: service_started  # no healthcheck defined, best effort
             mysql:
                 condition: service_healthy
