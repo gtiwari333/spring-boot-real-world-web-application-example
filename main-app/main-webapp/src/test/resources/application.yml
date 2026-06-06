@@ -1,6 +1,6 @@
 spring:
     application:
-        name: Integration Test
+        name: Main-APP
     profiles:
         active: test
     liquibase:
@@ -16,8 +16,6 @@ spring:
                 implicit-strategy: org.springframework.boot.hibernate.SpringImplicitNamingStrategy
     mvc:
         static-path-pattern: /static/**
-    jooq:
-        sql-dialect: MYSQL
     main:
         banner-mode: off
     security:

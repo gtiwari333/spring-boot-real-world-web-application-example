@@ -1,6 +1,6 @@
 spring:
     application:
-        name: Email Service
+        name: Email-Service
     mail:
         host: ${MAILHOG_HOST:localhost}
         port: ${MAILHOG_PORT:1025}

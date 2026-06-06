@@ -1,23 +1,16 @@
 package gt.app.modules.article;
 
 import gt.app.domain.Comment;
-import gt.app.domain.CommentStatus;
 import gt.app.modules.common.AbstractRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-
-import static gtapp.jooq.tables.GComment.G_COMMENT;
 
 @Slf4j
 class CommentRepositoryCustomImpl extends AbstractRepositoryImpl<Comment, CommentRepository> implements CommentRepositoryCustom {
 
-    private final DSLContext jooq;
-
-    CommentRepositoryCustomImpl(DSLContext jooq) {
+    CommentRepositoryCustomImpl( ) {
         super(Comment.class);
-        this.jooq = jooq;
     }
 
     @Autowired
@@ -26,9 +19,4 @@ class CommentRepositoryCustomImpl extends AbstractRepositoryImpl<Comment, Commen
         this.repository = repository;
     }
 
-
-    @Override
-    public long findFlaggedComments(CommentStatus status) {
-        return jooq.fetchCount(G_COMMENT.where(G_COMMENT.STATUS.eq(status.name())));
-    }
 }

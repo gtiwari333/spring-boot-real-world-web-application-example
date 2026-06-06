@@ -1,23 +1,16 @@
 package gt.app.modules.article;
 
 import gt.app.domain.Article;
-import gt.app.domain.ArticleStatus;
 import gt.app.modules.common.AbstractRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-
-import static gtapp.jooq.tables.GArticle.G_ARTICLE;
 
 @Slf4j
 class ArticleRepositoryCustomImpl extends AbstractRepositoryImpl<Article, ArticleRepository> implements ArticleRepositoryCustom {
 
-    private final DSLContext jooq;
-
-    ArticleRepositoryCustomImpl(DSLContext jooq) {
+    ArticleRepositoryCustomImpl() {
         super(Article.class);
-        this.jooq = jooq;
     }
 
     @Autowired
@@ -26,8 +19,4 @@ class ArticleRepositoryCustomImpl extends AbstractRepositoryImpl<Article, Articl
         this.repository = repository;
     }
 
-    @Override
-    public long countArticles(ArticleStatus status) {
-        return jooq.fetchCount(G_ARTICLE.where(G_ARTICLE.STATUS.eq(status.name())));
-    }
 }

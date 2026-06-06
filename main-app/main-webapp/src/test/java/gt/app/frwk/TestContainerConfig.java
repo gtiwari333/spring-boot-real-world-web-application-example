@@ -9,9 +9,12 @@ import org.testcontainers.mysql.MySQLContainer;
 @TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfig {
 
-    static final ArtemisContainer artemis = new ArtemisContainer("apache/activemq-artemis:2.44.0");
+    static final ArtemisContainer artemis = new ArtemisContainer("apache/activemq-artemis:2.44.0")
+        .withReuse(true);
 
     static final MySQLContainer mysql = new MySQLContainer("mysql:9.7")
+        .withReuse(true)
+        .withDatabaseName("test_mainwebapp")
         .withCommand(
             "mysqld",
             "--lower_case_table_names=1",

@@ -68,6 +68,9 @@
         <owasp-dependency-check-plugin.version>8.4.0</owasp-dependency-check-plugin.version>
         <pitest-maven-plugin.version>1.17.0</pitest-maven-plugin.version>
         <pitest-junit5-plugin.version>1.2.3</pitest-junit5-plugin.version>
+
+        <!-- native-image agent disabled by default; enable with -Pnative -->
+        <native.agent.enabled>false</native.agent.enabled>
     </properties>
 
 
@@ -250,53 +253,29 @@
                             <version>${puppycrawl.checkstyle.version}</version>
                         </dependency>
                     </dependencies>
-                    <executions>
-                        <execution>
-                            <id>verify-checkstyle</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                    <!-- executions moved to code-quality profile -->
                 </plugin>
 
                 <plugin>
                     <groupId>org.gaul</groupId>
                     <artifactId>modernizer-maven-plugin</artifactId>
                     <version>${modernizer-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>modernizer</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>modernizer</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <javaVersion>${java.version}</javaVersion>
                         <includeTestClasses>false</includeTestClasses>
                     </configuration>
+                    <!-- executions moved to code-quality profile -->
                 </plugin>
 
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${spotbugs-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>verify-spotbugs</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <excludeFilterFile>spot-bugs.filter-exclude.xml</excludeFilterFile>
                         <includeTests>false</includeTests>
                     </configuration>
+                    <!-- executions moved to code-quality profile -->
                 </plugin>
                 <plugin>
                     <groupId>org.pitest</groupId>
@@ -318,5 +297,60 @@
 
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <properties>
+                <native.agent.enabled>true</native.agent.enabled>
+            </properties>
+        </profile>
+        <profile>
+            <id>code-quality</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>verify-checkstyle</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.gaul</groupId>
+                        <artifactId>modernizer-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>modernizer</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>modernizer</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>verify-spotbugs</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

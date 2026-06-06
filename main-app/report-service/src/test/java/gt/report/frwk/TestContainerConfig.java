@@ -9,6 +9,8 @@ import org.testcontainers.mysql.MySQLContainer;
 public class TestContainerConfig {
 
     static final MySQLContainer mysql = new MySQLContainer("mysql:9.7")
+        .withReuse(true)
+        .withDatabaseName("test_reportservice")
         .withCommand(
             "mysqld",
             "--lower_case_table_names=1",

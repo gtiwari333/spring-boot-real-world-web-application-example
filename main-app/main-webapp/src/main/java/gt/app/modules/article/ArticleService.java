@@ -75,7 +75,6 @@ public class ArticleService {
 
     @Cacheable(cacheNames = "articleRead", key = "#id")
     public ArticleReadDto read(Long id) {
-        //TODO: filter out unpublished comments - write a jooq
         ArticleReadDto dto = articleRepository.findOneWithAllByIdAndStatus(id, ArticleStatus.PUBLISHED, Sort.by(Sort.Direction.DESC, "id"))
             .map(ArticleMapper.INSTANCE::mapForRead)
             .map(this::mapNested)

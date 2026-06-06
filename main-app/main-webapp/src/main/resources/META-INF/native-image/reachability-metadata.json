@@ -8,6 +8,15 @@
                     "parameterTypes": []
                 }
             ]
+        },
+        {
+            "type": "org.hibernate.bytecode.internal.bytebuddy.BytecodeProviderImpl",
+            "methods": [
+                {
+                    "name": "<init>",
+                    "parameterTypes": []
+                }
+            ]
         }
     ]
 }

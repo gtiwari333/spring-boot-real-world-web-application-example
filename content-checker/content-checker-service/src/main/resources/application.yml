@@ -1,6 +1,6 @@
 spring:
     application:
-        name: Trend-Service
+        name: Content-Checker-Service
     artemis:
         user: ${SPRING_ARTEMIS_USER:admin}
         password: ${SPRING_ARTEMIS_PASSWORD:admin}
