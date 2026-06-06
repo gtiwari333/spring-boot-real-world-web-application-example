@@ -1,0 +1,8 @@
+FROM gcr.io/distroless/cc-debian13:nonroot
+
+ARG NATIVE_BINARY
+COPY ${NATIVE_BINARY} /app/server
+
+EXPOSE 8080 8081
+
+ENTRYPOINT ["/app/server"]

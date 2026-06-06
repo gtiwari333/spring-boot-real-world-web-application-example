@@ -1,0 +1,13 @@
+{
+    "reflection": [
+        {
+            "type": "gt.app.hibernate.PrefixedNamingStrategy",
+            "methods": [
+                {
+                    "name": "<init>",
+                    "parameterTypes": []
+                }
+            ]
+        }
+    ]
+}

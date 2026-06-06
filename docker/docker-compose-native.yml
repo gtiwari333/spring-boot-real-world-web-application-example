@@ -1,12 +1,15 @@
-# this is used to run the whole application + dependencies(keycloak, mysql, emailhog, zipkin) as docker images
-# use './build-docker-images.sh' to create docker images
+# Runs the whole application using GraalVM native images (no JVM).
+# Build native images first:  ./build-native-images.sh
+#
+# Image naming: native images use -native suffix to distinguish from JVM images
+#   JVM:   gtapp-content-checker-service:latest
+#   Native: gtapp-content-checker-service-native:latest
 services:
-    localhost: #expose all container ports so they can use services using localhost:PORT
+    localhost:
         image: alpine:latest
         command: sleep infinity
         ports:
             - "8080:8080"
-            - "8161:8161"
             - "3306:3306"
             - "1025:1025"
             - "8025:8025"
@@ -16,6 +19,7 @@ services:
             - "8084:8084"
             - "8085:8085"
             - "8086:8086"
+            - "8161:8161"
             - "61616:61616"
 
     activemq:
@@ -25,7 +29,7 @@ services:
             - "ARTEMIS_PASSWORD=admin"
         network_mode: "service:localhost"
         healthcheck:
-            test: [ "CMD-SHELL", "curl -sf http://localhost:8161 || exit 1" ]
+            test: [ "CMD-SHELL", "curl -sf http://localhost:61616 || exit 1" ]
             interval: 10s
             timeout: 5s
             retries: 10
@@ -84,12 +88,10 @@ services:
             interval: 15s
             timeout: 5s
             retries: 15
-            start_period: 60s
+            start_period: 60s  # Keycloak + realm import is slow
 
-    content-checker-service:
-        image: gtapp-content-checker-service:latest
-        environment:
-            - "SPRING_PROFILES_ACTIVE=prod"
+    content-checker-service-native:
+        image: gtapp-content-checker-service-native:latest
         network_mode: "service:localhost"
         depends_on:
             zipkin:
@@ -97,8 +99,8 @@ services:
             activemq:
                 condition: service_healthy
 
-    email-service:
-        image: gtapp-email-service:latest
+    email-service-native:
+        image: gtapp-email-service-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
@@ -108,8 +110,8 @@ services:
             zipkin:
                 condition: service_healthy
 
-    trend-service:
-        image: gtapp-trend-service:latest
+    trend-service-native:
+        image: gtapp-trend-service-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
@@ -117,8 +119,8 @@ services:
             zipkin:
                 condition: service_healthy
 
-    report-service:
-        image: gtapp-report-service:latest
+    report-service-native:
+        image: gtapp-report-service-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
@@ -130,16 +132,16 @@ services:
             keycloak:
                 condition: service_healthy
 
-    main-webapp:
-        image: gtapp-main-webapp:latest
+    main-webapp-native:
+        image: gtapp-main-webapp-native:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
             zipkin:
                 condition: service_healthy
-            email-service:
-                condition: service_started
+            email-service-native:
+                condition: service_started  # no healthcheck defined, best effort
             mysql:
                 condition: service_healthy
             activemq:

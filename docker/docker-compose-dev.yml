@@ -15,7 +15,7 @@ services:
         networks:
             - gtapp-network
     mysql:
-        image: 'mysql'
+        image: 'mysql:9.7'
         environment:
             - "MYSQL_ROOT_PASSWORD=password"
             - "MYSQL_DATABASE=seedapp"
