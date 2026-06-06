@@ -46,6 +46,10 @@ spring:
                         client-secret: secret123
                         scope: openid, profile, email, offline_access # last one for refresh tokens
                     # we can have multiple auth providers
+
+springdoc:
+    enable-native-support: true
+
 server:
     port: 8081
 
@@ -68,8 +72,8 @@ feign-clients:
 
 app-properties:
     jms:
-        content-checkerrequest-queue: jms-content-checker-requestqueue
-        content-checkercallback-response-queue: jms-content-checkercallback-responsequeue
+        content-checker-request-queue: jms-content-checker-requestqueue
+        content-checker-call-back-response-queue: jms-content-checkercallback-responsequeue
     file-storage:
         upload-folder: ${java.io.tmpdir}/uploads
     web:

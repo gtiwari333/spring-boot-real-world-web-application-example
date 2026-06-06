@@ -1,19 +1,23 @@
 package gt.mail.frwk;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 
-import static java.lang.System.setProperty;
-
-@Configuration
+@TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfig {
 
+    public static final GenericContainer<?> mailhog = new GenericContainer<>("richarvey/mailhog")
+        .withExposedPorts(1025);
+
     static {
-        var mailHog = new GenericContainer<>("richarvey/mailhog");
-        mailHog.withExposedPorts(1025);
-        mailHog.start();
+        mailhog.start();
+    }
 
-        setProperty("MAILHOG_PORT", Integer.toString(mailHog.getMappedPort(1025)));
-
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.mail.host", () -> mailhog.getHost());
+        registry.add("spring.mail.port", () -> mailhog.getMappedPort(1025));
     }
 }

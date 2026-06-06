@@ -6,10 +6,8 @@ spring:
     liquibase:
         enabled: true
         change-log: classpath:/liquibase/master.xml
-    datasource:
-        url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
     jpa:
-        show-sql: true
+        show-sql: false
         open-in-view: false
         hibernate:
             ddl-auto: none  # we use liquibase
@@ -19,7 +17,7 @@ spring:
     mvc:
         static-path-pattern: /static/**
     jooq:
-        sql-dialect: H2
+        sql-dialect: MYSQL
     main:
         banner-mode: off
     security:
@@ -41,9 +39,6 @@ spring:
         password: admin
     jmx:
         enabled: false
-springdoc:
-    swagger-ui:
-        enabled: false
 
 debug: false
 
@@ -58,8 +53,8 @@ app-properties:
     file-storage:
         upload-folder: ${java.io.tmpdir}/uploads
     jms:
-        content-checkerrequest-queue: jms-content-checker-requestqueue
-        content-checkercallback-response-queue: jms-content-checkercallback-responsequeue
+        content-checker-request-queue: jms-content-checker-requestqueue
+        content-checker-call-back-response-queue: jms-content-checkercallback-responsequeue
     web:
         base-url: http://localhost:${server.port} #we use defined_port for integration testing where this base-url is used
 

@@ -152,8 +152,10 @@ class WebAppIT extends BaseSeleniumTest {
         //go back to user page again
         userArticleListingPage = homePage.openUsersArticlePage();
 
-        //edit previously created article - newly created article might be
-        ArticleEditPage editPage = userArticleListingPage.editArticle(1);
+        // Edit by title, not by row index — the listing sorts by createdDate desc
+        // and MySQL stores datetime with 1s precision, so two articles posted in the
+        // same second have an undefined relative order and indexing by row is flaky.
+        ArticleEditPage editPage = userArticleListingPage.editArticleByTitle("Another Title");
         editPage.body().shouldHave(text("Update Article"));
 
         homePage = editPage.updateArticle("Updated Title", "Updated Content");
@@ -182,10 +184,10 @@ class WebAppIT extends BaseSeleniumTest {
         //go back to user page again
         userArticleListingPage = homePage.openUsersArticlePage();
 
-        //delete
+        //delete — by title, not by row, for the same reason as the edit above
         UserArticleListingPage publicPage = userArticleListingPage
-            .deletePage(1)
-            .deletePage(1);
+            .deleteByTitle("Title with file")
+            .deleteByTitle("Updated Title");
         publicPage.body()
             .shouldHave(text("Article with id"))
             .shouldHave(text("is deleted"))

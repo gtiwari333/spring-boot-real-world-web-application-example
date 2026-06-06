@@ -7,10 +7,12 @@ import gt.app.domain.CommentStatus;
 import gt.app.modules.article.ArticleRepository;
 import gt.app.modules.article.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@Primary
 public class NoopContentCheckService implements ContentCheckService {
 
     private final ArticleRepository articleRepository;

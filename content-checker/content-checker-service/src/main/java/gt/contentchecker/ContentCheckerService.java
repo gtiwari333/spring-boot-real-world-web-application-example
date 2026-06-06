@@ -13,6 +13,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @Slf4j
@@ -59,24 +62,33 @@ class ContentCheckHandler {
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
 class ContentChecker {
 
-    private final List<String> badWords = List.of("fuck", "suck", "ass");
-    private final List<String> controversial = List.of("party", "politics", "libtard", "freedom", "conspiracy", "snowflake");
+    private final Pattern badPattern;
+    private final Pattern controversialPattern;
+
+    ContentChecker() {
+        this.badPattern = buildPattern(List.of("fuck", "suck", "ass"));
+        this.controversialPattern = buildPattern(List.of("party", "politics", "libtard", "freedom", "conspiracy", "snowflake"));
+    }
 
     ContentCheckOutcome isOkay(String text) {
-        String lower = text.toLowerCase();
-
-        if (badWords.stream().anyMatch(lower::contains)) {
+        Matcher m = badPattern.matcher(text);
+        if (m.find()) {
             return ContentCheckOutcome.FAILED;
         }
-
-        if (controversial.stream().anyMatch(lower::contains)) {
+        m = controversialPattern.matcher(text);
+        if (m.find()) {
             return ContentCheckOutcome.MANUAL_REVIEW_NEEDED;
         }
-
         return ContentCheckOutcome.PASSED;
+    }
+
+    private static Pattern buildPattern(List<String> words) {
+        String regex = words.stream()
+            .map(w -> w.length() <= 3 ? Pattern.quote(w) + "\\b" : Pattern.quote(w))
+            .collect(Collectors.joining("|", "\\b(?:", ")"));
+        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
 
 }

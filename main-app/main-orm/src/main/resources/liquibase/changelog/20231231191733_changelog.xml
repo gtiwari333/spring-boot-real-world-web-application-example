@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet author="gt (generated)" id="1704050255405-1">
-        <createTable tableName="g_app_user">
+        <createTable tableName="G_APP_USER">
             <column name="id" type="BINARY(16)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -18,7 +18,7 @@
         </createTable>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-2">
-        <createTable tableName="g_article">
+        <createTable tableName="G_ARTICLE">
             <column name="created_date" type="datetime">
                 <constraints nullable="false"/>
             </column>
@@ -36,7 +36,7 @@
         </createTable>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-3">
-        <createTable tableName="g_article_attached_files">
+        <createTable tableName="G_ARTICLE_ATTACHED_FILES">
             <column name="article_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -46,14 +46,14 @@
         </createTable>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-4">
-        <createTable tableName="g_authority">
+        <createTable tableName="G_AUTHORITY">
             <column name="name" type="VARCHAR(16)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
         </createTable>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-5">
-        <createTable tableName="g_comment">
+        <createTable tableName="G_COMMENT">
             <column name="article_id" type="BIGINT"/>
             <column name="created_date" type="datetime">
                 <constraints nullable="false"/>
@@ -70,7 +70,7 @@
         </createTable>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-6">
-        <createTable tableName="g_received_file">
+        <createTable tableName="G_RECEIVED_FILE">
             <column name="received_date" type="datetime"/>
             <column name="id" type="CHAR(36)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -81,46 +81,46 @@
         </createTable>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-7">
-        <createIndex indexName="FK8onv8y1o9i8jji6u9hj8yhcov" tableName="g_comment">
+        <createIndex indexName="FK8onv8y1o9i8jji6u9hj8yhcov" tableName="G_COMMENT">
             <column name="created_by_user_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-8">
-        <createIndex indexName="FKc6gr3yijnp18qba0jvhtcx745" tableName="g_article_attached_files">
+        <createIndex indexName="FKc6gr3yijnp18qba0jvhtcx745" tableName="G_ARTICLE_ATTACHED_FILES">
             <column name="article_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-9">
-        <createIndex indexName="FKe0tn8lv0281y31rsaltfvry2d" tableName="g_article">
+        <createIndex indexName="FKe0tn8lv0281y31rsaltfvry2d" tableName="G_ARTICLE">
             <column name="created_by_user_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-10">
-        <createIndex indexName="FKjqmipqcqrpdg0r7qydr5uowah" tableName="g_comment">
+        <createIndex indexName="FKjqmipqcqrpdg0r7qydr5uowah" tableName="G_COMMENT">
             <column name="last_modified_by_user_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-11">
-        <createIndex indexName="FKt75a3q8ih81madstl0iw4x098" tableName="g_article">
+        <createIndex indexName="FKt75a3q8ih81madstl0iw4x098" tableName="G_ARTICLE">
             <column name="last_modified_by_user_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-12">
-        <addForeignKeyConstraint baseColumnNames="created_by_user_id" baseTableName="g_comment" constraintName="FK8onv8y1o9i8jji6u9hj8yhcov" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="g_app_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by_user_id" baseTableName="G_COMMENT" constraintName="FK8onv8y1o9i8jji6u9hj8yhcov" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="G_APP_USER" validate="true"/>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-13">
-        <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="g_article_attached_files" constraintName="FKc6gr3yijnp18qba0jvhtcx745" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="g_article" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="G_ARTICLE_ATTACHED_FILES" constraintName="FKc6gr3yijnp18qba0jvhtcx745" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="G_ARTICLE" validate="true"/>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-14">
-        <addForeignKeyConstraint baseColumnNames="created_by_user_id" baseTableName="g_article" constraintName="FKe0tn8lv0281y31rsaltfvry2d" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="g_app_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by_user_id" baseTableName="G_ARTICLE" constraintName="FKe0tn8lv0281y31rsaltfvry2d" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="G_APP_USER" validate="true"/>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-15">
-        <addForeignKeyConstraint baseColumnNames="last_modified_by_user_id" baseTableName="g_comment" constraintName="FKjqmipqcqrpdg0r7qydr5uowah" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="g_app_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="last_modified_by_user_id" baseTableName="G_COMMENT" constraintName="FKjqmipqcqrpdg0r7qydr5uowah" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="G_APP_USER" validate="true"/>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-16">
-        <addForeignKeyConstraint baseColumnNames="attached_files_id" baseTableName="g_article_attached_files" constraintName="FKnk3oifir3wa8s4t8teffbvl9i" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="g_received_file" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="attached_files_id" baseTableName="G_ARTICLE_ATTACHED_FILES" constraintName="FKnk3oifir3wa8s4t8teffbvl9i" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="G_RECEIVED_FILE" validate="true"/>
     </changeSet>
     <changeSet author="gt (generated)" id="1704050255405-17">
-        <addForeignKeyConstraint baseColumnNames="last_modified_by_user_id" baseTableName="g_article" constraintName="FKt75a3q8ih81madstl0iw4x098" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="g_app_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="last_modified_by_user_id" baseTableName="G_ARTICLE" constraintName="FKt75a3q8ih81madstl0iw4x098" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="G_APP_USER" validate="true"/>
     </changeSet>
 </databaseChangeLog>

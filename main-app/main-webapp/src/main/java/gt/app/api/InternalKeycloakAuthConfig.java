@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedCli
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
 @Slf4j
-class InternalKeycloakAuthConfig {
+public class InternalKeycloakAuthConfig {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER = "Bearer";

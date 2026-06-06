@@ -1,0 +1,2 @@
+jms:
+    content-checker-request-queue: jms-content-checker-request-queue

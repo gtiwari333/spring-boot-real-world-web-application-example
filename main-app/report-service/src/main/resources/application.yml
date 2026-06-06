@@ -1,7 +1,9 @@
 spring:
     application:
         name: Report Service
-
+    liquibase:
+        enabled: true
+        change-log: classpath:/liquibase/master.xml
     datasource:
         url: jdbc:mysql://${MYSQL_HOST:localhost:3306}/${MYSQL_DB:seedapp}?useUnicode=true&allowPublicKeyRetrieval=true
         username: ${MYSQL_USERNAME:root}
@@ -11,6 +13,10 @@ spring:
             resourceserver:
                 jwt:
                     issuer-uri: ${KEYCLOAK_URL:http://localhost:8080}/realms/seedapp
+
+springdoc:
+    enable-native-support: true
+
 server:
     port: 8086
 
