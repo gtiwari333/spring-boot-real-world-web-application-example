@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = "server.port=8088")
@@ -14,7 +15,9 @@ public abstract class BaseSeleniumTest extends AbstractIntegrationTest {
     @BeforeAll
     public static void init() {
         Configuration.headless = true;
-        Configuration.browser = Browsers.EDGE;
+        Configuration.browser = Browsers.CHROME;
+        Configuration.browserCapabilities = new ChromeOptions();
+        ((ChromeOptions) Configuration.browserCapabilities).addArguments("--no-sandbox");
     }
 
     @BeforeEach

@@ -1,0 +1,23 @@
+spring:
+    profiles:
+        active: test
+    liquibase:
+        enabled: true
+        change-log: classpath:/liquibase/master.xml
+    jpa:
+        show-sql: false
+        open-in-view: false
+        hibernate:
+            ddl-auto: none  # we use liquibase
+            naming:
+                physical-strategy: gt.app.hibernate.PrefixedNamingStrategy
+                implicit-strategy: org.springframework.boot.hibernate.SpringImplicitNamingStrategy
+
+    jooq:
+        sql-dialect: MYSQL
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://localhost:8080/realms/seedapp
+debug: false

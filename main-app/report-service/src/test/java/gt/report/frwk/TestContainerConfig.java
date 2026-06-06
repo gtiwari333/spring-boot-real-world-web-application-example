@@ -1,15 +1,12 @@
-package gt.app.frwk;
+package gt.report.frwk;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
-import org.testcontainers.activemq.ArtemisContainer;
 import org.testcontainers.mysql.MySQLContainer;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfig {
-
-    static final ArtemisContainer artemis = new ArtemisContainer("apache/activemq-artemis:2.44.0");
 
     static final MySQLContainer mysql = new MySQLContainer("mysql:9.7")
         .withCommand(
@@ -20,16 +17,7 @@ public class TestContainerConfig {
         );
 
     static {
-        artemis.start();
         mysql.start();
-    }
-
-
-    @Bean
-    @ServiceConnection
-    ArtemisContainer artemis() {
-        // activemq-artemis has @SeriviceConnection support, so using it here.
-        return artemis;
     }
 
     @Bean

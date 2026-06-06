@@ -8,7 +8,7 @@
     <version>1.0</version>
 
     <parent>
-        <artifactId>article-app-parent</artifactId>
+        <artifactId>example-app-parent</artifactId>
         <groupId>gt.app</groupId>
         <version>1.0</version>
     </parent>

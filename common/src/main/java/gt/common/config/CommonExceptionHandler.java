@@ -40,7 +40,13 @@ public class CommonExceptionHandler {
         String method = request.getMethod();
         String queryString = StringUtils.hasText(request.getQueryString()) ? "?" + request.getQueryString() : "";
 
-        log.error("Failed to process {}: {}{}", method, requestURI, queryString, error);
+        if (status.value() == HttpStatus.UNAUTHORIZED.value()) {
+            // do not print full stacktrace for known errors that we don't need the full stacktrace
+            // TODO: pass current username and log
+            log.error("Failed to process {}: {} - {} - {}", method, requestURI, queryString, error.getMessage());
+        } else {
+            log.error("Failed to process {}: {}{}", method, requestURI, queryString, error);
+        }
         ServerHttpObservationFilter.findObservationContext(request).ifPresent(context -> context.setError(error));
         return createProblemDetail(status, reason, error);
     }

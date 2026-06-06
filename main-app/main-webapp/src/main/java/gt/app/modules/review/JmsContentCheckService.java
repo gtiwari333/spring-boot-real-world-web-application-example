@@ -5,7 +5,6 @@ import gt.app.domain.Article;
 import gt.app.domain.Comment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import static gt.contentchecker.Request.withArticle;
 
 @RequiredArgsConstructor
 @Service
-@Profile("!test")
 @Slf4j
 public class JmsContentCheckService implements ContentCheckService {
 

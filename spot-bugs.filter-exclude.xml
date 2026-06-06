@@ -22,4 +22,7 @@
     <Match>
         <Source name="~generated-sources\..*"/>
     </Match>
+    <Match>
+        <Class name="~.*\$\$SpringCGLIB\$\$.*"/>
+    </Match>
 </FindBugsFilter>
