@@ -9,6 +9,7 @@
 
 ### Service Dependency Map
 
+```
 main-webapp
 ├── mysql          (jdbc:mysql://mysql:3306/seedapp)
 ├── activemq       (activemq:61616)
@@ -29,6 +30,8 @@ report-service
 ├── mysql
 ├── keycloak
 └── zipkin
+
+```
 
 ### App Architecture:
 [![Foo](https://lucid.app/publicSegments/view/8c2fa859-36bd-4559-80c7-12fb30997092/image.png)](https://lucid.app/documents/view/fa076c6e-86d3-412b-a9bc-1996dca86a1e)
