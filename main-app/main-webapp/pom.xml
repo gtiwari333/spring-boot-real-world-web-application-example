@@ -550,6 +550,8 @@
                         <buildArg>-H:+AddAllCharsets</buildArg>
                         <buildArg>-Ob</buildArg>
                         <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
+                        <buildArg>-H:ServiceLoaderFeatureExcludeServices=org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
+                        <buildArg>-H:ExcludeResources=META-INF/services/org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
                     </buildArgs>
                 </configuration>
 
