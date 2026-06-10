@@ -183,10 +183,6 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery-toast-plugin</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
 
         <!-- test dependencies -->
         <dependency>
@@ -273,14 +269,17 @@
         <dependency>
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>datasource-proxy-spring-boot-starter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.ttddyy.observation</groupId>
             <artifactId>datasource-micrometer-spring-boot</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>flexy-pool-spring-boot-starter</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- spock deps -->
@@ -300,7 +299,7 @@
             <scope>test</scope>
         </dependency>
         <!-- Optional dependencies for using Spock -->
-        <dependency> <!-- enables mocking of classes without default constructor (together with ByteBuddy or CGLIB) -->
+        <dependency> <!-- enables mocking of Spock Groovy classes without default constructor (together with ByteBuddy or CGLIB) -->
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
             <scope>test</scope>
@@ -551,7 +550,6 @@
                         <buildArg>-H:+AddAllCharsets</buildArg>
                         <buildArg>-Ob</buildArg>
                         <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
-                        <buildArg>-H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test</buildArg>
                     </buildArgs>
                 </configuration>
 
@@ -590,23 +588,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.hibernate.orm</groupId>
-                        <artifactId>hibernate-maven-plugin</artifactId>
-                        <version>${hibernate.version}</version>
-                        <executions>
-                            <execution>
-                                <id>enhance</id>
-                                <goals>
-                                    <goal>enhance</goal>
-                                </goals>
-                                <configuration>
-                                    <enableAssociationManagement>true</enableAssociationManagement>
-                                    <enableExtendedEnhancement>true</enableExtendedEnhancement>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
                         <executions>
@@ -622,6 +603,13 @@
                                     <goal>generateTestResourceConfig</goal>
                                 </goals>
                                 <phase>generate-test-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>metadata-copy</id>
+                                <goals>
+                                    <goal>metadata-copy</goal>
+                                </goals>
+                                <phase>prepare-package</phase>
                             </execution>
                             <execution>
                                 <id>build-native</id>
