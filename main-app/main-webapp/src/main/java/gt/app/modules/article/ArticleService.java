@@ -38,6 +38,7 @@ public class ArticleService {
     private final WebsocketHandler websocketHandler;
     private final TransactionTemplate transactionTemplate;
 
+    @Transactional
     public Article createArticle(ArticleCreateDto dto) {
 
         List<ReceivedFile> files = new ArrayList<>();
@@ -64,6 +65,7 @@ public class ArticleService {
     }
 
     //single update statement - no transaction required
+    @Transactional
     public Article update(ArticleEditDto dto) {
         Optional<Article> articleOpt = articleRepository.findWithFilesAndUserById(dto.getId());
         return articleOpt.map(article -> {
@@ -74,6 +76,7 @@ public class ArticleService {
     }
 
     @Cacheable(cacheNames = "articleRead", key = "#id")
+    @Transactional(readOnly = true)
     public ArticleReadDto read(Long id) {
         ArticleReadDto dto = articleRepository.findOneWithAllByIdAndStatus(id, ArticleStatus.PUBLISHED, Sort.by(Sort.Direction.DESC, "id"))
             .map(ArticleMapper.INSTANCE::mapForRead)
@@ -102,6 +105,7 @@ public class ArticleService {
         return d;
     }
 
+    @Transactional(readOnly = true)
     private ArticleReadDto.CommentDto findParentWithId(ArticleReadDto d, Long parentCommentId) {
         return d.getComments().stream()
             .filter(c -> c.id.equals(parentCommentId))
@@ -109,24 +113,28 @@ public class ArticleService {
     }
 
     @Cacheable(cacheNames = "previewForPublicHomePage")
+    @Transactional(readOnly = true)
     public Page<ArticlePreviewDto> previewForPublicHomePage(Pageable pageable) {
         return articleRepository.findWithUserAndAttachedFilesByStatus(ArticleStatus.PUBLISHED, pageable)
             .map(ArticleMapper.INSTANCE::mapForPreviewListing);
     }
 
     @Cacheable(cacheNames = "previewAllWithFilesByUser")
+    @Transactional(readOnly = true)
     public Page<ArticlePreviewDto> previewAllWithFilesByUser(Pageable pageable, UUID userId) {
         return articleRepository.findWithFilesAndUserByCreatedByUser_IdAndStatusOrderByCreatedDateDesc(userId, ArticleStatus.PUBLISHED, pageable)
             .map(ArticleMapper.INSTANCE::mapForPreviewListing);
     }
 
     @Cacheable(cacheNames = "articleForReview", key = "#id")
+    @Transactional(readOnly = true)
     public ArticlePreviewDto readForReview(Long id) {
         return articleRepository.findOneWithUserAndAttachedFilesByIdAndStatus(id, ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW)
             .map(ArticleMapper.INSTANCE::mapForReview)
             .orElseThrow();
     }
 
+    @Transactional(readOnly = true)
     public Page<ArticlePreviewDto> getAllToReview(Pageable pageable) {
         return articleRepository.findWithUserAndAttachedFilesByStatus(ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW, pageable)
             .map(ArticleMapper.INSTANCE::mapForPreviewListing);
@@ -143,6 +151,7 @@ public class ArticleService {
         return articleRepository.findCreatedByUserIdById(articleId);
     }
 
+    @Transactional
     public Optional<Article> handleReview(ArticleReviewResultDto dto) {
         return articleRepository.findWithModifiedUserByIdAndStatus(dto.getId(), ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW)
             .map(n -> {

@@ -31,7 +31,7 @@ class ReviewController {
     }
 
     @PostMapping("/review")
-    public String finishEditArticle(ArticleReviewResultDto reviewResult, RedirectAttributes redirectAttrs) {
+    public String finishReviewArticle(ArticleReviewResultDto reviewResult, RedirectAttributes redirectAttrs) {
 
         Optional<Article> articleOpt = articleService.handleReview(reviewResult);
 

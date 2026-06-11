@@ -6,6 +6,7 @@ spring:
     liquibase:
         enabled: true
         change-log: classpath:/liquibase/master.xml
+        # fix for graalvm native image
         parameters.secureParsing: false
     jpa:
         open-in-view: false

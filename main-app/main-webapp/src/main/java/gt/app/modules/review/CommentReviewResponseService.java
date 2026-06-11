@@ -28,7 +28,7 @@ class CommentReviewResponseService {
 
         int maxLengthToTrim = Math.min(c.getContent().length(), 20);
 
-        websocketHandler.sendToUser(c.getLastModifiedByUser().getUsername(), "Your comment " + c.getContent().substring(0, maxLengthToTrim) + " has been " + (resp.getContentCheckOutcome() == PASSED ? "approved." : "queued for manual review."));
+        websocketHandler.sendToUser(c.getCreatedByUser().getUsername(), "Your comment " + c.getContent().substring(0, maxLengthToTrim) + " has been " + (resp.getContentCheckOutcome() == PASSED ? "approved." : "queued for manual review."));
         if (resp.getContentCheckOutcome() != PASSED) {
             websocketHandler.sendToUser("system", "A new comment " + c.getContent().substring(0, maxLengthToTrim) + " has is queued for system admin review.");
         }
