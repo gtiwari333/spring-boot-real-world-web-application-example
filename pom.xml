@@ -70,6 +70,7 @@
 
         <!-- native-image agent disabled by default; enable with -Pnative -->
         <native.agent.enabled>false</native.agent.enabled>
+        <native-build-tools-plugin.version>1.1.2</native-build-tools-plugin.version>
     </properties>
 
 
@@ -286,17 +287,77 @@
                         <targetTests>gt.app.modules.file.*</targetTests>
                     </configuration>
                 </plugin>
+                <!-- Spring Boot Maven Plugin for AOT processing and repackaging -->
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>process-aot</goal>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- GraalVM Native Build Tools Plugin -->
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                    <version>${native-build-tools-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <!-- Enable the centralized metadata repository for known libraries -->
+                        <metadataRepository>
+                            <enabled>true</enabled>
+                        </metadataRepository>
+                    </configuration>
+                </plugin>
             </plugins>
 
         </pluginManagement>
     </build>
 
     <profiles>
+        <!--
+                 The 'native' profile configures the build to:
+                 1. Run tests with the GraalVM tracing agent to generate reachability metadata.
+                 2. Compile the application into a native executable using that metadata.
+               -->
         <profile>
             <id>native</id>
-            <properties>
-                <native.agent.enabled>true</native.agent.enabled>
-            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <configuration>
+                            <agent>
+                                <enabled>true</enabled>
+                            </agent>
+                        </configuration>
+                        <executions>
+                            <!-- Execution 1: Run tests with the tracing agent to generate metadata -->
+                            <execution>
+                                <id>test-native</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>test</phase>
+                            </execution>
+                            <!-- Execution 2: Build the native image using the generated metadata -->
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>compile-no-fork</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>code-quality</id>

@@ -178,78 +178,9 @@
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
-                <configuration>
-                    <agent>
-                        <enabled>${native.agent.enabled}</enabled>
-                        <metadataCopy>
-                            <merge>true</merge>
-                            <outputDirectory>${project.build.outputDirectory}/META-INF/native-image</outputDirectory>
-                            <disabledStages>
-                                <stage>main</stage>
-                            </disabledStages>
-                        </metadataCopy>
-                        <options>
-                            <callerFilterFiles>
-                                <filterFile>
-                                    ${project.basedir}/src/main/resources/META-INF/native-image/agent-caller-filter.json
-                                </filterFile>
-                            </callerFilterFiles>
-                            <accessFilterFiles>
-                                <filterFile>
-                                    ${project.basedir}/src/main/resources/META-INF/native-image/agent-access-filter.json
-                                </filterFile>
-                            </accessFilterFiles>
-                        </options>
-                    </agent>
-                    <buildArgs combine.children="append">
-                        <buildArg>--no-fallback</buildArg>
-                        <buildArg>-H:+AddAllCharsets</buildArg>
-                        <buildArg>-Ob</buildArg>
-                        <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
-                        <buildArg>-H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test</buildArg>
-                    </buildArgs>
-                </configuration>
-
-                <executions>
-                    <!-- all native-image executions moved to native profile; activate with -Pnative -->
-                </executions>
             </plugin>
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>native</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>add-reachability-metadata</id>
-                                <goals>
-                                    <goal>add-reachability-metadata</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>add-agent-to-test</id>
-                                <goals>
-                                    <goal>generateTestResourceConfig</goal>
-                                </goals>
-                                <phase>generate-test-resources</phase>
-                            </execution>
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>compile-no-fork</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+
 </project>
