@@ -4,35 +4,45 @@
 # Image naming: native images use -native suffix to distinguish from JVM images
 #   JVM:   gtapp-content-checker-service:latest
 #   Native: gtapp-content-checker-service-native:latest
-
 services:
-    activemq:
-        image: apache/activemq-artemis:2.44.0
-        environment:
-            - ARTEMIS_USER=admin
-            - ARTEMIS_PASSWORD=admin
+    localhost:
+        image: alpine:latest
+        command: sleep infinity
         ports:
-            - "8161:8161"     # Web console
-            - "61616:61616"   # Messaging port
+            - "8080:8080"
+            - "3306:3306"
+            - "1025:1025"
+            - "8025:8025"
+            - "9411:9411"
+            - "8081:8081"
+            - "8083:8083"
+            - "8084:8084"
+            - "8085:8085"
+            - "8086:8086"
+            - "8161:8161"
+            - "61616:61616"
+
+    activemq:
+        image: 'apache/activemq-artemis:2.44.0'
+        environment:
+            - "ARTEMIS_USER=admin"
+            - "ARTEMIS_PASSWORD=admin"
+        network_mode: "service:localhost"
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:8161" ]
+            test: [ "CMD-SHELL", "curl -sf http://localhost:8161 || exit 1" ]
             interval: 10s
             timeout: 5s
             retries: 10
             start_period: 30s
 
     mysql:
-        image: mysql:8.4  # 9.7 doesn't exist; using stable 8.4 LTS
+        image: 'mysql:9.7'
         environment:
-            - MYSQL_USER=seedappuser
-            - MYSQL_ROOT_PASSWORD=password
-            - MYSQL_DATABASE=seedapp
-        command: >
-            mysqld --lower_case_table_names=1
-                   --character-set-server=utf8mb4
-                   --explicit_defaults_for_timestamp=ON
-        ports:
-            - "3306:3306"
+            - "MYSQL_USER=seedappuser"
+            - "MYSQL_ROOT_PASSWORD=password"
+            - "MYSQL_DATABASE=seedapp"
+        command: mysqld --lower_case_table_names=1 --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+        network_mode: "service:localhost"
         healthcheck:
             test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword" ]
             interval: 10s
@@ -41,58 +51,47 @@ services:
             start_period: 30s
 
     emailhog:
-        image: mailhog/mailhog  # Updated to official image
-        ports:
-            - "1025:1025"   # SMTP
-            - "8025:8025"   # Web UI
+        image: 'richarvey/mailhog'
+        network_mode: "service:localhost"
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:8025" ]
+            test: [ "CMD-SHELL", "wget -qO- http://localhost:8025 || exit 1" ]
             interval: 10s
             timeout: 5s
             retries: 5
             start_period: 10s
 
     zipkin:
-        image: openzipkin/zipkin
-        ports:
-            - "9411:9411"
+        image: 'openzipkin/zipkin'
+        network_mode: "service:localhost"
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:9411/health" ]
+            test: [ "CMD-SHELL", "wget -qO- http://localhost:9411/health || exit 1" ]
             interval: 10s
             timeout: 5s
             retries: 10
             start_period: 20s
 
     keycloak:
-        image: quay.io/keycloak/keycloak:26.6.1
+        image: 'quay.io/keycloak/keycloak:26.6.1'
         command: start-dev --import-realm
         environment:
-            - KC_BOOTSTRAP_ADMIN_USERNAME=admin
-            - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
-            - KC_FEATURES=scripts
-            - KC_HTTP_PORT=8080
-            - KC_HTTPS_PORT=9445
-            - KC_DB=dev-file
-            - KC_HEALTH_ENABLED=true  # Required to expose the management/health endpoint on port 9000
+            - "KEYCLOAK_DB=dev-file"
+            - "KC_BOOTSTRAP_ADMIN_USERNAME=admin"
+            - "KC_BOOTSTRAP_ADMIN_PASSWORD=admin"
+            - "KEYCLOAK_FEATURES=scripts"
+            - "KEYCLOAK_HTTP_PORT=8080"
+            - "KEYCLOAK_HTTPS_PORT=9445"
         volumes:
             - ../main-app/main-webapp/src/main/resources/keycloak/:/opt/keycloak/data/import
-        ports:
-            - "8080:8080"
-            - "9445:9445"
+        network_mode: "service:localhost"
         healthcheck:
-            # Keycloak 26+ management/health endpoint is on port 9000
-            test: [ "CMD", "curl", "-f", "http://localhost:9000/health/ready" ]
+            test: [ "CMD-SHELL", "curl -sf http://localhost:9000/health/ready || exit 1" ]
             interval: 15s
             timeout: 5s
             retries: 15
             start_period: 60s
-
     content-checker-service-native:
         image: gtapp-content-checker-service-native:latest
-        environment:
-            - SPRING_PROFILES_ACTIVE=native
-        ports:
-            - "8083:8080"
+        network_mode: "service:localhost"
         depends_on:
             zipkin:
                 condition: service_healthy
@@ -102,9 +101,8 @@ services:
     email-service-native:
         image: gtapp-email-service-native:latest
         environment:
-            - SPRING_PROFILES_ACTIVE=native
-        ports:
-            - "8084:8080"
+            - "SPRING_PROFILES_ACTIVE=native"
+        network_mode: "service:localhost"
         depends_on:
             emailhog:
                 condition: service_healthy
@@ -114,21 +112,17 @@ services:
     trend-service-native:
         image: gtapp-trend-service-native:latest
         environment:
-            - SPRING_PROFILES_ACTIVE=native
-        ports:
-            - "8085:8080"
+            - "SPRING_PROFILES_ACTIVE=native"
+        network_mode: "service:localhost"
         depends_on:
             zipkin:
-                condition: service_healthy
-            activemq:
                 condition: service_healthy
 
     report-service-native:
         image: gtapp-report-service-native:latest
         environment:
-            - SPRING_PROFILES_ACTIVE=native
-        ports:
-            - "8086:8080"
+            - "SPRING_PROFILES_ACTIVE=native"
+        network_mode: "service:localhost"
         depends_on:
             zipkin:
                 condition: service_healthy
@@ -140,11 +134,8 @@ services:
     main-webapp-native:
         image: gtapp-main-webapp-native:latest
         environment:
-            - SPRING_PROFILES_ACTIVE=native
-        ports:
-            - "8081:8080"
-        volumes:
-            - /var/tmp/:/tmp/uploads/attachments/
+            - "SPRING_PROFILES_ACTIVE=native"
+        network_mode: "service:localhost"
         depends_on:
             zipkin:
                 condition: service_healthy
@@ -158,3 +149,5 @@ services:
                 condition: service_healthy
             keycloak:
                 condition: service_healthy
+        volumes:
+            - /var/tmp/:/tmp/uploads/attachments/
