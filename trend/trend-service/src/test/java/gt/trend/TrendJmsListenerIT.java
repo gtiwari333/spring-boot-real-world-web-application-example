@@ -13,7 +13,7 @@ import org.springframework.jms.core.JmsTemplate;
 
 @SpringBootTest
 @Import(TestContainerConfig.class)
-class TrendJmsListenerTest {
+class TrendJmsListenerIT {
 
     @Autowired
     JmsTemplate jmsTemplate;

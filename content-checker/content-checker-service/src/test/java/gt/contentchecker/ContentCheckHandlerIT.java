@@ -14,7 +14,7 @@ import org.springframework.jms.core.JmsTemplate;
 
 @SpringBootTest
 @Import(TestContainerConfig.class)
-class ContentCheckHandlerTest {
+class ContentCheckHandlerIT {
 
     @Autowired
     JmsTemplate jmsTemplate;

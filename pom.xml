@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>4.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -30,9 +30,10 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <!-- this is used by jooq -->
-        <spring-boot.version>4.0.6</spring-boot.version>
-        <spring-cloud.version>2025.1.1</spring-cloud.version>
+        <!-- Root directory of the multi-module project, used for agent filter files -->
+        <root.dir>${maven.multiModuleProjectDirectory}</root.dir>
+
+        <spring-boot.version>4.1.0</spring-boot.version>
         <hibernate-hypersistence-utils.version>3.15.2</hibernate-hypersistence-utils.version>
         <datasource-proxy-sb-starter.version>2.0.1</datasource-proxy-sb-starter.version>
         <datasource-micrometer-sb-starter.version>2.2.1</datasource-micrometer-sb-starter.version>
@@ -67,22 +68,11 @@
         <owasp-dependency-check-plugin.version>8.4.0</owasp-dependency-check-plugin.version>
         <pitest-maven-plugin.version>1.17.0</pitest-maven-plugin.version>
         <pitest-junit5-plugin.version>1.2.3</pitest-junit5-plugin.version>
-
-        <!-- native-image agent disabled by default; enable with -Pnative -->
-        <native.agent.enabled>false</native.agent.enabled>
-        <native-build-tools-plugin.version>1.1.2</native-build-tools-plugin.version>
     </properties>
 
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-bom</artifactId>
@@ -340,56 +330,77 @@
         <profile>
             <id>native</id>
             <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <metadataRepository>
-                                <enabled>true</enabled>
-                            </metadataRepository>
-                        </configuration>
-                    </plugin>
-                </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.graalvm.buildtools</groupId>
+                            <artifactId>native-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>build-native</id>
+                                    <goals>
+                                        <goal>build</goal>
+                                    </goals>
+                                    <phase>package</phase>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <agent>
+                                    <metadataCopy>
+                                        <merge>true</merge>
+                                        <outputDirectory>${project.build.outputDirectory}/META-INF/native-image
+                                        </outputDirectory>
+                                        <disabledStages>
+                                            <stage>main</stage>
+                                        </disabledStages>
+                                    </metadataCopy>
+                                </agent>
+                                <metadataRepository>
+                                    <enabled>true</enabled>
+                                </metadataRepository>
+                                <buildArgs combine.children="append">
+                                    <buildArg>--no-fallback</buildArg>
+                                    <buildArg>-H:+AddAllCharsets</buildArg>
+                                    <buildArg>-Ob</buildArg>
+                                    <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
+                                    <buildArg>
+                                        -H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test
+                                    </buildArg>
+                                </buildArgs>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
         </profile>
 
         <!--
-          PROFILE 2: Metadata Generation (Run ONLY when dependencies upgrade)
-          Runs unit and integration tests with the GraalVM tracing agent to
-          generate reachability metadata JSON files.
+          PROFILE 2: Metadata Generation + Auto-Copy (Run ONLY when dependencies upgrade)
+          1. Runs tests with the GraalVM tracing agent.
+          2. Automatically copies the merged metadata to src/main/resources for committing.
         -->
         <profile>
             <id>native-metadata</id>
             <build>
                 <plugins>
-                    <!-- Unit Tests with Agent -->
+                    <!-- 1. Unit Tests with Agent -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <argLine>@{argLine}
-                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata
+                            <argLine>
+                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata,caller-filter-file=${root.dir}/agent-caller-filter.json,access-filter-file=${root.dir}/agent-access-filter.json
                             </argLine>
                         </configuration>
                     </plugin>
 
-                    <!-- Integration Tests with Agent -->
+                    <!-- 2. Integration Tests with Agent -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <configuration>
-                            <argLine>@{argLine}
-                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata
+                            <argLine>
+                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata,caller-filter-file=${root.dir}/agent-caller-filter.json,access-filter-file=${root.dir}/agent-access-filter.json
                             </argLine>
                         </configuration>
                         <executions>
@@ -398,6 +409,34 @@
                                     <goal>integration-test</goal>
                                     <goal>verify</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- 3. AUTO-COPY: Move generated metadata to source tree -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-native-metadata</id>
+                                <phase>verify</phase> <!-- Runs after failsafe completes -->
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Evaluates per-module, e.g., email-service/src/main/... -->
+                                    <outputDirectory>
+                                        ${project.basedir}/src/main/resources/META-INF/native-image/${project.artifactId}
+                                    </outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.build.directory}/native-reachability-metadata
+                                            </directory>
+                                            <filtering>false</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

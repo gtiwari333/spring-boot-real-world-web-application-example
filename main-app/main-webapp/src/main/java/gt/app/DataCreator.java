@@ -85,13 +85,22 @@ public class DataCreator {
         createArticle(adminUser, "Admin's Second Article", "Content2 Admin");
         createArticle(user1, "User1 Article", "Content User 1");
         createArticle(user2, "User2 Article", "Content User 2");
+
+        // create articles for admin review testing
+        createArticleWithStatus(user1, "Flagged Article To Accept", "Flagged Content To Accept", ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW);
+        createArticleWithStatus(user2, "Flagged Article To Reject", "Flagged Content To Reject", ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW);
     }
 
     void createArticle(AppUser user, String title, String content) {
+        createArticleWithStatus(user, title, content, ArticleStatus.PUBLISHED);
+    }
+
+    void createArticleWithStatus(AppUser user, String title, String content, ArticleStatus status) {
         var n = new Article();
         n.setCreatedByUser(user);
         n.setTitle(title);
         n.setContent(content);
+        n.setStatus(status);
 
         articleRepository.save(n);
 

@@ -27,10 +27,6 @@ spring:
         user: ${SPRING_ARTEMIS_USER:admin}
         password: ${SPRING_ARTEMIS_PASSWORD:admin}
         broker-url: tcp://${SPRING_ARTEMIS_HOST:localhost:61616}
-    cloud:
-        openfeign:
-            micrometer:
-                enabled: true
     security:
         oauth2:
             client:

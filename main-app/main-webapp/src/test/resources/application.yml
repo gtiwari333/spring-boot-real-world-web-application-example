@@ -6,6 +6,7 @@ spring:
     liquibase:
         enabled: true
         change-log: classpath:/liquibase/master.xml
+        clear-checksums: true
     jpa:
         show-sql: false
         open-in-view: false

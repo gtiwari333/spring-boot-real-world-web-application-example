@@ -151,16 +151,18 @@ public class ArticleService {
         return articleRepository.findCreatedByUserIdById(articleId);
     }
 
-    @Transactional
     public Optional<Article> handleReview(ArticleReviewResultDto dto) {
         return articleRepository.findWithModifiedUserByIdAndStatus(dto.getId(), ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW)
             .map(n -> {
-                transactionTemplate.executeWithoutResult(txSt -> {
+                // Use execute() (not executeWithoutResult) to capture the managed entity
+                // returned by save() — the merged copy has auditing fields (@LastModifiedBy)
+                // populated by the AuditingEntityListener during flush/commit.
+                Article managed = transactionTemplate.execute(txSt -> {
                     n.setStatus(dto.getVerdict());
-                    articleRepository.save(n);
+                    return articleRepository.save(n);
                 });
-                websocketHandler.sendToUser(n.getLastModifiedByUser().getUsername(), "Your article with title " + n.getTitle() + " has been " + (dto.getVerdict() == ArticleStatus.PUBLISHED ? "approved from manual review." : "rejected from manual review."));
-                return n;
+                websocketHandler.sendToUser(managed.getLastModifiedByUser().getUsername(), "Your article with title " + managed.getTitle() + " has been " + (dto.getVerdict() == ArticleStatus.PUBLISHED ? "approved from manual review." : "rejected from manual review."));
+                return managed;
             });
     }
 

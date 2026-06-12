@@ -64,10 +64,10 @@
       "type": "brave.propagation.ThreadLocalCurrentTraceContext"
     },
     {
-      "type": "brave.sampler.Sampler"
+      "type": "brave.sampler.CountingSampler"
     },
     {
-      "type": "brave.sampler.Sampler$1"
+      "type": "brave.sampler.Sampler"
     },
     {
       "type": "byte[]"
@@ -2237,86 +2237,31 @@
       "type": "gt.common.config.CommonExceptionHandler"
     },
     {
-      "type": "gt.common.dtos.ArticleSummaryDto",
+      "type": "gt.contentchecker.ContentCheckHandler",
       "methods": [
         {
           "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getContent",
-          "parameterTypes": []
-        },
-        {
-          "name": "getId",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUsername",
-          "parameterTypes": []
-        },
-        {
-          "name": "setContent",
           "parameterTypes": [
-            "java.lang.String"
+            "org.springframework.jms.core.JmsTemplate",
+            "gt.contentchecker.ContentChecker"
           ]
         },
         {
-          "name": "setId",
+          "name": "onMessage",
           "parameterTypes": [
-            "java.lang.Long"
-          ]
-        },
-        {
-          "name": "setTitle",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        },
-        {
-          "name": "setUsername",
-          "parameterTypes": [
-            "java.lang.String"
+            "gt.contentchecker.Request"
           ]
         }
       ]
     },
     {
-      "type": "gt.trend.ExceptionHandler",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "io.micrometer.tracing.Tracer"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "gt.trend.TestContainerConfig",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "artemis",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "gt.trend.TestContainerConfig__TestContext001_BeanDefinitions"
-    },
-    {
-      "type": "gt.trend.TrendJmsListenerTest",
+      "type": "gt.contentchecker.ContentCheckHandlerIT",
       "fields": [
         {
           "name": "jmsTemplate"
+        },
+        {
+          "name": "requestQueue"
         }
       ],
       "methods": [
@@ -2325,15 +2270,23 @@
           "parameterTypes": []
         },
         {
-          "name": "articlePublishedListenerConsumesMessage",
+          "name": "badWordsTakePriorityOverControversial",
           "parameterTypes": []
         },
         {
-          "name": "articleReadListenerConsumesMessage",
+          "name": "failsOnBadWord",
           "parameterTypes": []
         },
         {
-          "name": "bothListenersWorkIndependently",
+          "name": "handlesMultipleRequestsInSequence",
+          "parameterTypes": []
+        },
+        {
+          "name": "needsManualReviewOnControversialWord",
+          "parameterTypes": []
+        },
+        {
+          "name": "passesCleanText",
           "parameterTypes": []
         },
         {
@@ -2347,28 +2300,55 @@
       ]
     },
     {
-      "type": "gt.trend.TrendServiceApp",
+      "type": "gt.contentchecker.ContentCheckOutcome"
+    },
+    {
+      "type": "gt.contentchecker.ContentChecker",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "gt.contentchecker.ContentCheckerService",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "gt.contentchecker.ExceptionHandler",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "io.micrometer.tracing.Tracer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "gt.contentchecker.JMSConfig",
       "methods": [
         {
           "name": "jacksonJmsMessageConverter",
           "parameterTypes": []
         },
         {
-          "name": "onArticlePublished",
+          "name": "myFactory",
           "parameterTypes": [
-            "gt.common.dtos.ArticleSummaryDto"
-          ]
-        },
-        {
-          "name": "onArticleRead",
-          "parameterTypes": [
-            "gt.common.dtos.ArticleSummaryDto"
+            "jakarta.jms.ConnectionFactory",
+            "org.springframework.boot.jms.autoconfigure.DefaultJmsListenerContainerFactoryConfigurer"
           ]
         }
       ]
     },
     {
-      "type": "gt.trend.TrendServiceApp$$SpringCGLIB$$0",
+      "type": "gt.contentchecker.JMSConfig$$SpringCGLIB$$0",
       "fields": [
         {
           "name": "$$beanFactory"
@@ -2394,7 +2374,7 @@
       ]
     },
     {
-      "type": "gt.trend.TrendServiceApp$$SpringCGLIB$$FastClass$$0",
+      "type": "gt.contentchecker.JMSConfig$$SpringCGLIB$$FastClass$$0",
       "methods": [
         {
           "name": "<init>",
@@ -2405,7 +2385,7 @@
       ]
     },
     {
-      "type": "gt.trend.TrendServiceApp$$SpringCGLIB$$FastClass$$1",
+      "type": "gt.contentchecker.JMSConfig$$SpringCGLIB$$FastClass$$1",
       "methods": [
         {
           "name": "<init>",
@@ -2416,14 +2396,91 @@
       ]
     },
     {
-      "type": "gt.trend.TrendServiceAppTest",
+      "type": "gt.contentchecker.Request",
       "methods": [
         {
           "name": "<init>",
           "parameterTypes": []
         },
         {
-          "name": "contextLoads",
+          "name": "getEntityId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPostBackTopic",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestType",
+          "parameterTypes": []
+        },
+        {
+          "name": "getText",
+          "parameterTypes": []
+        },
+        {
+          "name": "setEntityId",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setPostBackTopic",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setRequestType",
+          "parameterTypes": [
+            "gt.contentchecker.Request$RequestType"
+          ]
+        },
+        {
+          "name": "setText",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "gt.contentchecker.Request$RequestType"
+    },
+    {
+      "type": "gt.contentchecker.Response",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "gt.contentchecker.ContentCheckOutcome",
+            "java.lang.String",
+            "gt.contentchecker.Request$RequestType"
+          ]
+        },
+        {
+          "name": "getContentCheckOutcome",
+          "parameterTypes": []
+        },
+        {
+          "name": "getEntityId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestType",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "gt.contentchecker.TestContainerConfig",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "artemis",
           "parameterTypes": []
         }
       ]
@@ -2812,13 +2869,7 @@
       "type": "io.netty.util.DefaultAttributeMap"
     },
     {
-      "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap",
-      "methods": [
-        {
-          "name": "acquireFenceFallback",
-          "parameterTypes": []
-        }
-      ]
+      "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap"
     },
     {
       "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap$Index"
@@ -2859,9 +2910,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "io.netty.util.internal.RefCnt"
     },
     {
       "type": "io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueColdProducerFields"
@@ -3181,9 +3229,6 @@
       "type": "java.io.Closeable"
     },
     {
-      "type": "java.io.Console"
-    },
-    {
       "type": "java.io.Externalizable"
     },
     {
@@ -3204,9 +3249,6 @@
     {
       "type": "java.io.IOException",
       "jniAccessible": true
-    },
-    {
-      "type": "java.io.Reader"
     },
     {
       "type": "java.io.Serializable"
@@ -3274,6 +3316,12 @@
     {
       "type": "java.lang.ClassLoader",
       "methods": [
+        {
+          "name": "getDefinedPackage",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
         {
           "name": "registerAsParallelCapable",
           "parameterTypes": []
@@ -3373,6 +3421,12 @@
         {
           "name": "isNativeAccessEnabled",
           "parameterTypes": []
+        },
+        {
+          "name": "isOpen",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
         }
       ]
     },
@@ -3507,7 +3561,13 @@
       "type": "java.lang.annotation.Retention"
     },
     {
-      "type": "java.lang.annotation.Target"
+      "type": "java.lang.annotation.Target",
+      "methods": [
+        {
+          "name": "value",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.lang.constant.ClassDesc"
@@ -3577,23 +3637,79 @@
       ]
     },
     {
-      "type": "java.lang.instrument.Instrumentation"
+      "type": "java.lang.instrument.Instrumentation",
+      "methods": [
+        {
+          "name": "redefineModule",
+          "parameterTypes": [
+            "java.lang.Module",
+            "java.util.Set",
+            "java.util.Map",
+            "java.util.Map",
+            "java.util.Set",
+            "java.util.Map"
+          ]
+        }
+      ]
     },
     {
-      "type": "java.lang.invoke.MethodHandle"
+      "type": "java.lang.invoke.MethodHandle",
+      "methods": [
+        {
+          "name": "bindTo",
+          "parameterTypes": [
+            "java.lang.Object"
+          ]
+        },
+        {
+          "name": "invokeWithArguments",
+          "parameterTypes": [
+            "java.lang.Object[]"
+          ]
+        }
+      ]
     },
     {
       "type": "java.lang.invoke.MethodHandles",
       "methods": [
         {
+          "name": "byteArrayViewVarHandle",
+          "parameterTypes": [
+            "java.lang.Class",
+            "java.nio.ByteOrder"
+          ]
+        },
+        {
+          "name": "byteBufferViewVarHandle",
+          "parameterTypes": [
+            "java.lang.Class",
+            "java.nio.ByteOrder"
+          ]
+        },
+        {
           "name": "lookup",
           "parameterTypes": []
+        },
+        {
+          "name": "privateLookupIn",
+          "parameterTypes": [
+            "java.lang.Class",
+            "java.lang.invoke.MethodHandles$Lookup"
+          ]
         }
       ]
     },
     {
       "type": "java.lang.invoke.MethodHandles$Lookup",
       "methods": [
+        {
+          "name": "findVarHandle",
+          "parameterTypes": [
+            "java.lang.Class",
+            "java.lang.String",
+            "java.lang.Class"
+          ]
+        },
         {
           "name": "findVirtual",
           "parameterTypes": [
@@ -3618,6 +3734,15 @@
     },
     {
       "type": "java.lang.invoke.TypeDescriptor$OfField"
+    },
+    {
+      "type": "java.lang.invoke.VarHandle",
+      "methods": [
+        {
+          "name": "acquireFence",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.lang.management.BufferPoolMXBean"
@@ -3700,6 +3825,10 @@
         {
           "name": "getParameterCount",
           "parameterTypes": []
+        },
+        {
+          "name": "getParameters",
+          "parameterTypes": []
         }
       ]
     },
@@ -3710,10 +3839,42 @@
       "type": "java.lang.reflect.Method"
     },
     {
-      "type": "java.lang.reflect.Parameter"
+      "type": "java.lang.reflect.Parameter",
+      "methods": [
+        {
+          "name": "isNamePresent",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.reflect.ParameterizedType",
+      "methods": [
+        {
+          "name": "getActualTypeArguments",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRawType",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.lang.reflect.Type"
+    },
+    {
+      "type": "java.lang.reflect.WildcardType",
+      "methods": [
+        {
+          "name": "getLowerBounds",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUpperBounds",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.math.BigDecimal"
@@ -3871,13 +4032,7 @@
       "type": "java.sql.Timestamp[]"
     },
     {
-      "type": "java.text.NumberFormat"
-    },
-    {
       "type": "java.time.Clock"
-    },
-    {
-      "type": "java.time.Duration"
     },
     {
       "type": "java.time.ZoneId"
@@ -3925,13 +4080,7 @@
       "type": "java.util.RandomAccess"
     },
     {
-      "type": "java.util.SortedSet"
-    },
-    {
       "type": "java.util.concurrent.Executor"
-    },
-    {
-      "type": "java.util.concurrent.Future"
     },
     {
       "type": "java.util.concurrent.ThreadFactory"
@@ -3944,6 +4093,15 @@
     },
     {
       "type": "java.util.logging.LogManager"
+    },
+    {
+      "type": "java.util.logging.SimpleFormatter",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "javafx.beans.value.ObservableValue"
@@ -3995,6 +4153,9 @@
     },
     {
       "type": "jdk.internal.loader.ClassLoaders$PlatformClassLoader"
+    },
+    {
+      "type": "jdk.jfr.FlightRecorder"
     },
     {
       "type": "jdk.management.VirtualThreadSchedulerMXBean"
@@ -4230,6 +4391,9 @@
       "type": "net.bytebuddy.asm.Advice$Thrown"
     },
     {
+      "type": "net.bytebuddy.description.enumeration.EnumerationDescription[]"
+    },
+    {
       "type": "net.bytebuddy.description.method.MethodDescription$InDefinedShape$AbstractBase$Executable"
     },
     {
@@ -4243,6 +4407,9 @@
     },
     {
       "type": "net.bytebuddy.description.type.TypeDescription$ForLoadedType$Dispatcher"
+    },
+    {
+      "type": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$Delegator$ForLoadedExecutableExceptionType$Dispatcher"
     },
     {
       "type": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$Delegator$ForLoadedExecutableParameterType$Dispatcher"
@@ -4777,6 +4944,9 @@
       "type": "org.brotli.dec.BrotliInputStream"
     },
     {
+      "type": "org.crac.Core"
+    },
+    {
       "type": "org.eclipse.core.runtime.FileLocator"
     },
     {
@@ -4832,6 +5002,128 @@
     },
     {
       "type": "org.joda.time.ReadableInstant"
+    },
+    {
+      "type": "org.junit.AssumptionViolatedException"
+    },
+    {
+      "type": "org.junit.internal.AssumptionViolatedException"
+    },
+    {
+      "type": "org.junit.jupiter.api.AfterEach"
+    },
+    {
+      "type": "org.junit.jupiter.api.BeforeEach"
+    },
+    {
+      "type": "org.junit.jupiter.api.DisplayName"
+    },
+    {
+      "type": "org.junit.jupiter.api.Tag"
+    },
+    {
+      "type": "org.junit.jupiter.api.Test"
+    },
+    {
+      "type": "org.junit.jupiter.api.TestTemplate"
+    },
+    {
+      "type": "org.junit.jupiter.api.extension.ExtendWith"
+    },
+    {
+      "type": "org.junit.jupiter.engine.JupiterTestEngine"
+    },
+    {
+      "type": "org.junit.jupiter.params.ParameterizedTest"
+    },
+    {
+      "type": "org.junit.jupiter.params.provider.ArgumentsSource"
+    },
+    {
+      "type": "org.junit.jupiter.params.provider.ValueSource"
+    },
+    {
+      "type": "org.junit.platform.commons.annotation.Testable"
+    },
+    {
+      "type": "org.junit.platform.engine.CancellationToken",
+      "methods": [
+        {
+          "name": "create",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.junit.platform.launcher.Launcher",
+      "methods": [
+        {
+          "name": "execute",
+          "parameterTypes": [
+            "org.junit.platform.launcher.LauncherExecutionRequest"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.junit.platform.launcher.LauncherExecutionRequest"
+    },
+    {
+      "type": "org.junit.platform.launcher.LauncherSession",
+      "methods": [
+        {
+          "name": "getLauncher",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.junit.platform.launcher.TestIdentifier",
+      "methods": [
+        {
+          "name": "getParentIdObject",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.junit.platform.launcher.core.LauncherExecutionRequestBuilder",
+      "methods": [
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "cancellationToken",
+          "parameterTypes": [
+            "org.junit.platform.engine.CancellationToken"
+          ]
+        },
+        {
+          "name": "listeners",
+          "parameterTypes": [
+            "org.junit.platform.launcher.TestExecutionListener[]"
+          ]
+        },
+        {
+          "name": "request",
+          "parameterTypes": [
+            "org.junit.platform.launcher.LauncherDiscoveryRequest"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.junit.platform.launcher.core.LauncherFactory",
+      "methods": [
+        {
+          "name": "openSession",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.junit.platform.launcher.listeners.UniqueIdTrackingListener"
     },
     {
       "type": "org.messaginghub.pooled.jms.JmsPoolConnectionFactory"
@@ -4946,6 +5238,15 @@
     },
     {
       "type": "org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher"
+    },
+    {
+      "type": "org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$YIvHmEHY",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.mockito.internal.util.reflection.ModuleMemberAccessor",
@@ -6147,17 +6448,8 @@
         {
           "name": "<init>",
           "parameterTypes": []
-        },
-        {
-          "name": "artemisConnectionDetails",
-          "parameterTypes": [
-            "org.springframework.boot.artemis.autoconfigure.ArtemisProperties"
-          ]
         }
       ]
-    },
-    {
-      "type": "org.springframework.boot.artemis.autoconfigure.ArtemisAutoConfiguration$PropertiesArtemisConnectionDetails"
     },
     {
       "type": "org.springframework.boot.artemis.autoconfigure.ArtemisConnectionDetails"
@@ -6207,24 +6499,6 @@
         {
           "name": "<init>",
           "parameterTypes": []
-        },
-        {
-          "name": "setBrokerUrl",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        },
-        {
-          "name": "setPassword",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        },
-        {
-          "name": "setUser",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
         }
       ]
     },
@@ -6591,6 +6865,24 @@
     },
     {
       "type": "org.springframework.boot.autoconfigure.preinitialize.BackgroundPreinitializingApplicationListener",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.autoconfigure.preinitialize.CharsetsBackgroundPreinitializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.autoconfigure.preinitialize.ConversionServiceBackgroundPreinitializer",
       "methods": [
         {
           "name": "<init>",
@@ -7538,6 +7830,15 @@
       "type": "org.springframework.boot.http.converter.autoconfigure.KotlinSerializationHttpMessageConvertersConfiguration"
     },
     {
+      "type": "org.springframework.boot.http.converter.autoconfigure.MessageConverterBackgroundPreinitializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.http.converter.autoconfigure.ServerHttpMessageConvertersCustomizer"
     },
     {
@@ -7671,6 +7972,15 @@
       "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JsonProblemDetailsConfiguration$ProblemDetailJsonMapperBuilderCustomizer"
     },
     {
+      "type": "org.springframework.boot.jackson.autoconfigure.JacksonBackgroundPreinitializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.jackson.autoconfigure.JacksonProperties",
       "methods": [
         {
@@ -7708,15 +8018,6 @@
         },
         {
           "name": "jmsListenerContainerFactoryConfigurer",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.jms.autoconfigure.JmsAnnotationDrivenConfiguration$EnableJmsConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
           "parameterTypes": []
         }
       ]
@@ -7822,9 +8123,6 @@
     },
     {
       "type": "org.springframework.boot.jms.health.JmsHealthIndicator"
-    },
-    {
-      "type": "org.springframework.boot.logging.LogLevelEditor"
     },
     {
       "type": "org.springframework.boot.logging.java.JavaLoggingSystem$Factory",
@@ -8350,21 +8648,6 @@
         {
           "name": "<init>",
           "parameterTypes": []
-        },
-        {
-          "name": "getSampling",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.micrometer.tracing.autoconfigure.TracingProperties$Sampling",
-      "methods": [
-        {
-          "name": "setProbability",
-          "parameterTypes": [
-            "float"
-          ]
         }
       ]
     },
@@ -8864,12 +9147,6 @@
       ]
     },
     {
-      "type": "org.springframework.boot.testcontainers.properties.TestcontainersPropertySourceAutoConfiguration__TestContext001_BeanDefinitions"
-    },
-    {
-      "type": "org.springframework.boot.testcontainers.properties.TestcontainersPropertySourceAutoConfiguration__TestContext002_BeanDefinitions"
-    },
-    {
       "type": "org.springframework.boot.testcontainers.service.connection.ContainerConnectionDetailsFactory$ContainerConnectionDetails"
     },
     {
@@ -8912,6 +9189,15 @@
     },
     {
       "type": "org.springframework.boot.tomcat.TomcatWebServerFactory"
+    },
+    {
+      "type": "org.springframework.boot.tomcat.autoconfigure.TomcatBackgroundPreinitializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.boot.tomcat.autoconfigure.TomcatServerProperties",
@@ -9029,6 +9315,15 @@
       "type": "org.springframework.boot.transaction.jta.autoconfigure.JtaAutoConfiguration"
     },
     {
+      "type": "org.springframework.boot.validation.autoconfigure.JakartaValidationBackgroundPreinitializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.validation.autoconfigure.PrimaryDefaultValidatorPostProcessor",
       "methods": [
         {
@@ -9138,12 +9433,6 @@
         {
           "name": "<init>",
           "parameterTypes": []
-        },
-        {
-          "name": "setPort",
-          "parameterTypes": [
-            "java.lang.Integer"
-          ]
         }
       ]
     },
@@ -9795,12 +10084,6 @@
         {
           "name": "<init>",
           "parameterTypes": []
-        },
-        {
-          "name": "setEndpoint",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
         }
       ]
     },
@@ -11452,6 +11735,15 @@
       "type": "sun.util.resources.cldr.CalendarData"
     },
     {
+      "type": "sun.util.resources.cldr.TimeZoneNames"
+    },
+    {
+      "type": "sun.util.resources.cldr.TimeZoneNames_en"
+    },
+    {
+      "type": "sun.util.resources.cldr.TimeZoneNames_en_US"
+    },
+    {
       "type": "tools.jackson.core.TreeCodec"
     },
     {
@@ -11559,6 +11851,33 @@
     {
       "type": {
         "proxy": [
+          "java.lang.reflect.ParameterizedType",
+          "org.springframework.core.SerializableTypeWrapper$SerializableTypeProxy",
+          "java.io.Serializable"
+        ]
+      }
+    },
+    {
+      "type": {
+        "proxy": [
+          "java.lang.reflect.TypeVariable",
+          "org.springframework.core.SerializableTypeWrapper$SerializableTypeProxy",
+          "java.io.Serializable"
+        ]
+      }
+    },
+    {
+      "type": {
+        "proxy": [
+          "java.lang.reflect.WildcardType",
+          "org.springframework.core.SerializableTypeWrapper$SerializableTypeProxy",
+          "java.io.Serializable"
+        ]
+      }
+    },
+    {
+      "type": {
+        "proxy": [
           "net.bytebuddy.description.method.MethodDescription$InDefinedShape$AbstractBase$Executable"
         ]
       }
@@ -11602,6 +11921,13 @@
       "type": {
         "proxy": [
           "net.bytebuddy.description.type.TypeDescription$Generic"
+        ]
+      }
+    },
+    {
+      "type": {
+        "proxy": [
+          "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$Delegator$ForLoadedExecutableExceptionType$Dispatcher"
         ]
       }
     },
@@ -11970,6 +12296,9 @@
       "glob": "META-INF/services/org.apache.commons.logging.LogFactory"
     },
     {
+      "glob": "META-INF/services/org.apache.juli.logging.Log"
+    },
+    {
       "glob": "META-INF/services/org.apache.logging.log4j.util.PropertySource"
     },
     {
@@ -12111,28 +12440,37 @@
       "glob": "gt/common/config/CommonExceptionHandler.class"
     },
     {
-      "glob": "gt/trend"
+      "glob": "gt/contentchecker"
     },
     {
-      "glob": "gt/trend/ExceptionHandler.class"
+      "glob": "gt/contentchecker/ContentCheckHandler.class"
     },
     {
-      "glob": "gt/trend/TestContainerConfig.class"
+      "glob": "gt/contentchecker/ContentCheckHandlerIT-context.xml"
     },
     {
-      "glob": "gt/trend/TrendJmsListenerTest-context.xml"
+      "glob": "gt/contentchecker/ContentCheckHandlerIT.class"
     },
     {
-      "glob": "gt/trend/TrendJmsListenerTest.class"
+      "glob": "gt/contentchecker/ContentCheckHandlerITContext.groovy"
     },
     {
-      "glob": "gt/trend/TrendJmsListenerTestContext.groovy"
+      "glob": "gt/contentchecker/ContentChecker.class"
     },
     {
-      "glob": "gt/trend/TrendServiceAppTest-context.xml"
+      "glob": "gt/contentchecker/ExceptionHandler.class"
     },
     {
-      "glob": "gt/trend/TrendServiceAppTestContext.groovy"
+      "glob": "gt/contentchecker/JMSConfig.class"
+    },
+    {
+      "glob": "gt/contentchecker/Request.class"
+    },
+    {
+      "glob": "gt/contentchecker/Response.class"
+    },
+    {
+      "glob": "gt/contentchecker/TestContainerConfig.class"
     },
     {
       "glob": "io/swagger/v3/oas/annotations/Hidden.class"
@@ -12208,6 +12546,18 @@
     },
     {
       "glob": "org.apache.activemq.artemis.api.jms.ActiveMQJMSClient.properties"
+    },
+    {
+      "glob": "org/apache/catalina/authenticator/LocalStrings.properties"
+    },
+    {
+      "glob": "org/apache/catalina/util/LocalStrings.properties"
+    },
+    {
+      "glob": "org/apache/catalina/valves/LocalStrings.properties"
+    },
+    {
+      "glob": "org/apache/tomcat/util/http/LocalStrings.properties"
     },
     {
       "glob": "org/apiguardian/api/API.class"
@@ -13266,9 +13616,6 @@
       "glob": "org/springframework/web/servlet/config/annotation/WebMvcConfigurer.class"
     },
     {
-      "glob": "public/index.html"
-    },
-    {
       "glob": "resources/index.html"
     },
     {
@@ -13293,6 +13640,18 @@
     },
     {
       "bundle": "jakarta.servlet.http.LocalStrings"
+    },
+    {
+      "bundle": "org.apache.catalina.authenticator.LocalStrings"
+    },
+    {
+      "bundle": "org.apache.catalina.util.LocalStrings"
+    },
+    {
+      "bundle": "org.apache.catalina.valves.LocalStrings"
+    },
+    {
+      "bundle": "org.apache.tomcat.util.http.LocalStrings"
     }
   ]
 }

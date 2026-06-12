@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Import(TestContainerConfig.class)
-class StatReportIntegrationTest {
+class StatReportIntegrationIT extends BaseJooqTest{
 
     @Autowired
     StatReport statReport;

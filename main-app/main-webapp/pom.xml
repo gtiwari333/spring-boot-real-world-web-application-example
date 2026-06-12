@@ -66,10 +66,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-webflux</artifactId>-->
+<!--        </dependency>-->
         <!-- tracing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -82,10 +82,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-zipkin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-micrometer</artifactId>
         </dependency>
 
         <dependency>
@@ -211,12 +207,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-contract-stub-runner</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit</artifactId>
             <scope>test</scope>
@@ -305,20 +295,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--spring cloud contract stubs -->
-        <!--        <dependency>-->
-        <!--            <groupId>gt.app</groupId>-->
-        <!--            <artifactId>email-service</artifactId>-->
-        <!--            <classifier>stub</classifier>-->
-        <!--            <version>${project.parent.version}</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>*</groupId>-->
-        <!--                    <artifactId>*</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
-        <!-- test only dependencies -->
     </dependencies>
 
     <build>
@@ -524,11 +500,6 @@
                 <artifactId>native-maven-plugin</artifactId>
                 <configuration>
                     <buildArgs combine.children="append">
-                        <buildArg>--no-fallback</buildArg>
-                        <buildArg>-H:+AddAllCharsets</buildArg>
-                        <buildArg>-Ob</buildArg>
-                        <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
-                        <buildArg>-H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test</buildArg>
                         <buildArg>-H:ServiceLoaderFeatureExcludeServices=org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
                         <buildArg>-H:ExcludeResources=META-INF/services/org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
                     </buildArgs>

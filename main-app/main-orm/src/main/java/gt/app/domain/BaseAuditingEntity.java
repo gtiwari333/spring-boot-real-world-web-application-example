@@ -13,10 +13,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.Instant;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-abstract class BaseAuditingEntity extends BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseAuditingEntity extends BaseEntity {
 
     private static final long serialVersionUID = 4681401402666658611L;
 

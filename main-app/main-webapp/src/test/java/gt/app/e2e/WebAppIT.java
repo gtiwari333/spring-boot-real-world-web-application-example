@@ -55,13 +55,13 @@ class WebAppIT extends BaseSeleniumTest {
         testAccessDenied(new PublicPage().open());
     }
 
-    void testAccessDenied(PublicPage publicPage) {
+    void testAccessDenied(PublicPage curPage) {
 
-        publicPage.load("/article");
-        publicPage.body().shouldHave(text("Sign in"));
+        curPage.load("/article");
+        curPage.body().shouldHave(text("Sign in"));
 
-        publicPage.load("/admin");
-        publicPage.body().shouldHave(text("Sign in"));
+        curPage.load("/admin");
+        curPage.body().shouldHave(text("Sign in"));
     }
 
     @Test
@@ -101,7 +101,52 @@ class WebAppIT extends BaseSeleniumTest {
     }
 
     private void testAdminFunctions(AdminPage adminPage) {
-        //TODO: test review page
+        // admin sees articles to review
+        adminPage.body()
+            .shouldHave(text("Articles to review"))
+            .shouldHave(text("Flagged Article To Accept"))
+            .shouldHave(text("Flagged Article To Reject"));
+
+        // --- accept flow ---
+        ReviewArticlePage reviewPage = adminPage.clickReviewByTitle("Flagged Article To Accept");
+        reviewPage.body()
+            .shouldHave(text("Flagged Article To Accept"))
+            .shouldHave(text("Flagged Content To Accept"));
+
+        adminPage = reviewPage.accept();
+        adminPage.body()
+            .shouldHave(text("Article with id"))
+            .shouldHave(text("Approved"));
+
+        // the accepted article should now appear on the public page
+        new PublicPage().open()
+            .body()
+            .shouldHave(text("Flagged Article To Accept"))
+            .shouldHave(text("Flagged Content To Accept"));
+
+        // --- reject flow ---
+        // go back to admin area — the article to reject should still be in the list
+        adminPage = adminPage.open();
+        adminPage.body()
+            .shouldHave(text("Articles to review"))
+            .shouldHave(text("Flagged Article To Reject"))
+            .shouldNotHave(text("Flagged Article To Accept"));
+
+        reviewPage = adminPage.clickReviewByTitle("Flagged Article To Reject");
+        reviewPage.body()
+            .shouldHave(text("Flagged Article To Reject"))
+            .shouldHave(text("Flagged Content To Reject"));
+
+        adminPage = reviewPage.reject();
+        adminPage.body()
+            .shouldHave(text("Article with id"))
+            .shouldHave(text("Rejected"));
+
+        // the rejected article should NOT appear on the public page
+        new PublicPage().open()
+            .body()
+            .shouldNotHave(text("Flagged Article To Reject"))
+            .shouldNotHave(text("Flagged Content To Reject"));
     }
 
     private void testLoggedInHomePage(LoggedInHomePage page, String username) {

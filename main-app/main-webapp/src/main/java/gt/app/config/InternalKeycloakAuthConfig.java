@@ -1,8 +1,8 @@
-package gt.app.api;
+package gt.app.config;
 
-import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
@@ -12,12 +12,11 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 
+@Configuration
 @Slf4j
 public class InternalKeycloakAuthConfig {
-
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String BEARER = "Bearer";
 
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(
@@ -37,25 +36,25 @@ public class InternalKeycloakAuthConfig {
     }
 
     @Bean
-    public RequestInterceptor bearerAuthRequestInterceptor(
+    public ClientHttpRequestInterceptor bearerAuthInterceptor(
         OAuth2AuthorizedClientManager authorizedClientManager) {
-        return template -> {
+        return (request, body, execution) -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
-                return;
+                return execution.execute(request, body);
             }
 
-            OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest
+            OAuth2AuthorizeRequest oauthRequest = OAuth2AuthorizeRequest
                 .withClientRegistrationId("oidc")
                 .principal(authentication)
                 .build();
 
-            OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
+            OAuth2AuthorizedClient client = authorizedClientManager.authorize(oauthRequest);
             if (client != null) {
-                log.debug("Propagating access token to {}", template.url());
-                template.header(AUTHORIZATION_HEADER,
-                    "%s %s".formatted(BEARER, client.getAccessToken().getTokenValue()));
+                log.debug("Propagating access token to {}", request.getURI());
+                request.getHeaders().setBearerAuth(client.getAccessToken().getTokenValue());
             }
+            return execution.execute(request, body);
         };
     }
 }

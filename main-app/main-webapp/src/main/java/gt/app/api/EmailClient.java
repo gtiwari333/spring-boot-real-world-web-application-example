@@ -5,21 +5,37 @@ import gt.api.email.EmailService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
 
-@FeignClient(name = "email-service", url = "${feign-clients.email-service.url}", fallback = EmailClient.EmailClientFallback.class)
-//doesn't use auth token
-public interface EmailClient extends EmailService {
-    @Slf4j
-    class EmailClientFallback implements EmailClient {
+@Component
+@Slf4j
+public class EmailClient implements EmailService {
 
-        @Override
-        public ResponseEntity<Void> sendEmailWithAttachments(@Valid @NotNull EmailDto email) {
-            log.debug("sending email to nowhere {}", email);
-            return ResponseEntity.noContent().build();
-        }
+    private final RestClient restClient;
+
+    /**
+     * For use by subclasses in tests.
+     */
+    protected EmailClient() {
+        this.restClient = null;
     }
 
+    public EmailClient(@Value("${feign-clients.email-service.url}") String baseUrl,
+                       RestClient.Builder restClientBuilder) {
+        this.restClient = restClientBuilder.baseUrl(baseUrl).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> sendEmailWithAttachments(@Valid @NotNull EmailDto email) {
+        return restClient.post()
+            .uri("/sendEmail")
+            .body(email)
+            .retrieve()
+            .toBodilessEntity();
+
+    }
 }
 
