@@ -1,29 +1,28 @@
 #!/usr/bin/env bash
 
 
-# Enable testcontainers reuse
-TC_PROPS="$HOME/.testcontainers.properties"
-if ! grep -q "testcontainers.reuse.enable=true" "$TC_PROPS" 2>/dev/null; then
-    echo "testcontainers.reuse.enable=true" >> "$TC_PROPS"
-    echo "Set testcontainers.reuse.enable=true in $TC_PROPS"
-fi
-
 # build all modules - tests are run with native-image-agent to generate reachability-metadata
 
 ALL_MODULES=(
-#    content-checker/content-checker-service
-#    email/email-service
-#    trend/trend-service
-#    main-app/report-service
+    content-checker/content-checker-service
+    email/email-service
+    trend/trend-service
+    main-app/report-service
     main-app/main-webapp
 )
+
+./mvnw clean
 
 # copy native binaries to dist/
 mkdir -p dist
 for module in "${ALL_MODULES[@]}"; do
     name="${module##*/}"
-    ./mvnw --batch-mode --no-transfer-progress --file "${module}/pom.xml"  package -Pnative
+    ./mvnw --batch-mode --no-transfer-progress --file "${module}/pom.xml" package -Pnative -DskipTests
     src="$module/target/$name"
+
+## optionally compress the binary using UPX
+#    upx --lzma "$src"
+
     cp "$src" "dist/$name"
 done
 

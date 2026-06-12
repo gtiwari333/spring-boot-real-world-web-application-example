@@ -294,8 +294,20 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <executions>
                         <execution>
+                            <id>process-aot</id>
                             <goals>
                                 <goal>process-aot</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>process-test-aot</id>
+                            <goals>
+                                <goal>process-test-aot</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
                                 <goal>repackage</goal>
                             </goals>
                         </execution>
@@ -321,10 +333,10 @@
 
     <profiles>
         <!--
-                 The 'native' profile configures the build to:
-                 1. Run tests with the GraalVM tracing agent to generate reachability metadata.
-                 2. Compile the application into a native executable using that metadata.
-               -->
+          PROFILE 1: Fast Native Build (Daily Use / CI)
+          Skips tests entirely and builds the native image using
+          the pre-existing metadata in src/main/resources/META-INF/native-image/
+        -->
         <profile>
             <id>native</id>
             <build>
@@ -332,33 +344,67 @@
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
-                        <configuration>
-                            <agent>
-                                <enabled>true</enabled>
-                            </agent>
-                        </configuration>
                         <executions>
-                            <!-- Execution 1: Run tests with the tracing agent to generate metadata -->
-                            <execution>
-                                <id>test-native</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution>
-                            <!-- Execution 2: Build the native image using the generated metadata -->
                             <execution>
                                 <id>build-native</id>
                                 <goals>
-                                    <goal>compile-no-fork</goal>
+                                    <goal>build</goal>
                                 </goals>
                                 <phase>package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <metadataRepository>
+                                <enabled>true</enabled>
+                            </metadataRepository>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--
+          PROFILE 2: Metadata Generation (Run ONLY when dependencies upgrade)
+          Runs unit and integration tests with the GraalVM tracing agent to
+          generate reachability metadata JSON files.
+        -->
+        <profile>
+            <id>native-metadata</id>
+            <build>
+                <plugins>
+                    <!-- Unit Tests with Agent -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <argLine>@{argLine}
+                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata
+                            </argLine>
+                        </configuration>
+                    </plugin>
+
+                    <!-- Integration Tests with Agent -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <argLine>@{argLine}
+                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata
+                            </argLine>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>code-quality</id>
             <build>
