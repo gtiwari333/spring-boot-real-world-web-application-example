@@ -63,11 +63,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-zipkin</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId>
-        </dependency>
-
 
         <!-- processors/code generators -->
         <dependency>
@@ -79,6 +74,7 @@
         <!-- end processor/code generators -->
 
         <!-- test dependencies -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail-test</artifactId>
@@ -156,15 +152,15 @@
             <!-- its currently failing, uncomment when the bug if fixed -->
             <!-- https://github.com/spring-cloud/spring-cloud-contract/issues/2379 -->
             <!--  https://github.com/rest-assured/rest-assured/issues/1850 -->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-contract-maven-plugin</artifactId>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <baseClassForTests>gt.mail.BaseTestCloudContract</baseClassForTests>-->
-<!--                    <testFramework>JUNIT5</testFramework>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-contract-maven-plugin</artifactId>-->
+            <!--                <extensions>true</extensions>-->
+            <!--                <configuration>-->
+            <!--                    <baseClassForTests>gt.mail.BaseTestCloudContract</baseClassForTests>-->
+            <!--                    <testFramework>JUNIT5</testFramework>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -178,6 +174,10 @@
                 <configuration>
                     <configLocation>../../checkstyle.xml</configLocation>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

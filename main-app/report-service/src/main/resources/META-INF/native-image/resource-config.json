@@ -1,0 +1,9 @@
+{
+  "resources": {
+    "includes": [
+      { "pattern": "\\Qapplication.yml\\E" },
+      { "pattern": "\\Qapplication-k8s.yml\\E" },
+      { "pattern": "\\Qstatic/index.html\\E" }
+    ]
+  }
+}

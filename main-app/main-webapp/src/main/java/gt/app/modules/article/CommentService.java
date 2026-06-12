@@ -5,6 +5,7 @@ import gt.app.exception.RecordNotFoundException;
 import gt.app.modules.review.ContentCheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class CommentService {
     final CommentRepository commentRepository;
     final ContentCheckService contentCheckService;
 
-    //no transaction required - single operation
+    @Transactional
     public void save(NewCommentDto c) {
         Comment comment = new Comment(c.content, c.articleId);
 

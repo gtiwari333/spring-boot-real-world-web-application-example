@@ -41,7 +41,6 @@
 
         <selenide.version>7.16.1</selenide.version>
 
-        <google-guava.version>33.6.0-jre</google-guava.version>
         <wro4j.version>2.1.1</wro4j.version>
         <archunit.version>1.4.2</archunit.version>
         <testcontainers-keycloak.version>4.2.1</testcontainers-keycloak.version>
@@ -68,6 +67,10 @@
         <owasp-dependency-check-plugin.version>8.4.0</owasp-dependency-check-plugin.version>
         <pitest-maven-plugin.version>1.17.0</pitest-maven-plugin.version>
         <pitest-junit5-plugin.version>1.2.3</pitest-junit5-plugin.version>
+
+        <!-- native-image agent disabled by default; enable with -Pnative -->
+        <native.agent.enabled>false</native.agent.enabled>
+        <native-build-tools-plugin.version>1.1.2</native-build-tools-plugin.version>
     </properties>
 
 
@@ -176,12 +179,6 @@
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${google-guava.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
@@ -250,53 +247,29 @@
                             <version>${puppycrawl.checkstyle.version}</version>
                         </dependency>
                     </dependencies>
-                    <executions>
-                        <execution>
-                            <id>verify-checkstyle</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                    <!-- executions moved to code-quality profile -->
                 </plugin>
 
                 <plugin>
                     <groupId>org.gaul</groupId>
                     <artifactId>modernizer-maven-plugin</artifactId>
                     <version>${modernizer-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>modernizer</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>modernizer</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <javaVersion>${java.version}</javaVersion>
                         <includeTestClasses>false</includeTestClasses>
                     </configuration>
+                    <!-- executions moved to code-quality profile -->
                 </plugin>
 
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${spotbugs-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>verify-spotbugs</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <excludeFilterFile>spot-bugs.filter-exclude.xml</excludeFilterFile>
                         <includeTests>false</includeTests>
                     </configuration>
+                    <!-- executions moved to code-quality profile -->
                 </plugin>
                 <plugin>
                     <groupId>org.pitest</groupId>
@@ -314,8 +287,170 @@
                         <targetTests>gt.app.modules.file.*</targetTests>
                     </configuration>
                 </plugin>
+                <!-- Spring Boot Maven Plugin for AOT processing and repackaging -->
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>process-aot</id>
+                            <goals>
+                                <goal>process-aot</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>process-test-aot</id>
+                            <goals>
+                                <goal>process-test-aot</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- GraalVM Native Build Tools Plugin -->
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                    <version>${native-build-tools-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <!-- Enable the centralized metadata repository for known libraries -->
+                        <metadataRepository>
+                            <enabled>true</enabled>
+                        </metadataRepository>
+                    </configuration>
+                </plugin>
             </plugins>
+
         </pluginManagement>
     </build>
+
+    <profiles>
+        <!--
+          PROFILE 1: Fast Native Build (Daily Use / CI)
+          Skips tests entirely and builds the native image using
+          the pre-existing metadata in src/main/resources/META-INF/native-image/
+        -->
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <metadataRepository>
+                                <enabled>true</enabled>
+                            </metadataRepository>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--
+          PROFILE 2: Metadata Generation (Run ONLY when dependencies upgrade)
+          Runs unit and integration tests with the GraalVM tracing agent to
+          generate reachability metadata JSON files.
+        -->
+        <profile>
+            <id>native-metadata</id>
+            <build>
+                <plugins>
+                    <!-- Unit Tests with Agent -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <argLine>@{argLine}
+                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata
+                            </argLine>
+                        </configuration>
+                    </plugin>
+
+                    <!-- Integration Tests with Agent -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <argLine>@{argLine}
+                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata
+                            </argLine>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>code-quality</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>verify-checkstyle</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.gaul</groupId>
+                        <artifactId>modernizer-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>modernizer</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>modernizer</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>verify-spotbugs</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

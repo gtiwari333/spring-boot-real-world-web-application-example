@@ -1,6 +1,6 @@
 spring:
     application:
-        name: Report Service
+        name: Report-Service
     liquibase:
         enabled: true
         change-log: classpath:/liquibase/master.xml

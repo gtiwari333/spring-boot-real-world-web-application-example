@@ -1,0 +1,10 @@
+{
+  "rules": [
+    {"excludeClasses": "org.springframework.test.**"},
+    {"excludeClasses": "org.springframework.boot.testcontainers.**"},
+    {"excludeClasses": "org.springframework.boot.artemis.testcontainers.**"},
+    {"excludeClasses": "org.springframework.boot.micrometer.metrics.testcontainers.**"},
+    {"excludeClasses": "org.springframework.boot.zipkin.testcontainers.**"},
+    {"includeClasses": "**"}
+  ]
+}

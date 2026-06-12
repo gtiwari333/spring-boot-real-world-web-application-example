@@ -42,9 +42,9 @@ class ArticleReviewResponseService {
             jmsTemplate.convertAndSend("article-published", ArticleMapper.INSTANCE.INSTANCE.mapForPublishedEvent(a));
         }
 
-        websocketHandler.sendToUser(a.getLastModifiedByUser().getUsername(), "Your article " + a.getTitle() + " has been " + (resp.getContentCheckOutcome() == PASSED ? "approved." : "queued for manual review."));
+        websocketHandler.sendToUser(a.getCreatedByUser().getUsername(), "Your article " + a.getTitle() + " has been " + (resp.getContentCheckOutcome() == PASSED ? "approved." : "queued for manual review."));
         if (resp.getContentCheckOutcome() != PASSED) {
-            websocketHandler.sendToUser("system", "A new article " + a.getTitle() + " by " + a.getLastModifiedByUser().getUsername() + " is queued for system admin review.");
+            websocketHandler.sendToUser("system", "A new article " + a.getTitle() + " by " + a.getCreatedByUser().getUsername() + " is queued for system admin review.");
         }
         sendEmailNotificationToAuthor(a, resp.getContentCheckOutcome());
 

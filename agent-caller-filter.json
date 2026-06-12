@@ -1,0 +1,11 @@
+{
+  "rules": [
+    {"excludeClasses": "org.testcontainers.**"},
+    {"excludeClasses": "com.github.dockerjava.**"},
+    {"excludeClasses": "org.junit.**"},
+    {"excludeClasses": "org.mockito.**"},
+    {"excludeClasses": "org.springframework.test.**"},
+    {"excludeClasses": "org.springframework.boot.testcontainers.**"},
+    {"includeClasses": "**"}
+  ]
+}

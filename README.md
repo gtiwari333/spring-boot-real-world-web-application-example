@@ -191,6 +191,17 @@ The default username/passwords are listed on : gt.app.Application.initData, whic
 `mvn -T 5 clean package`
 
 
+# Generate GraalVM native image
+
+### using existing reachability metadata
+
+mvn clean package -Pnative
+
+
+### generate reachability metadata and copy to src/main/resources/META-INF/native-image/
+mvn clean verify -Pnative-metadata
+
+
 # Code Quality
 
 ##### The `error-prone` runs at compile time.

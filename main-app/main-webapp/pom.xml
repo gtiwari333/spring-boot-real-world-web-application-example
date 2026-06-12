@@ -39,10 +39,6 @@
             <groupId>gt.app</groupId>
         </dependency>
         <dependency>
-            <artifactId>main-orm-jooq</artifactId>
-            <groupId>gt.app</groupId>
-        </dependency>
-        <dependency>
             <artifactId>common</artifactId>
             <groupId>gt.app</groupId>
         </dependency>
@@ -88,10 +84,6 @@
             <artifactId>spring-boot-starter-zipkin</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-micrometer</artifactId>
         </dependency>
@@ -111,10 +103,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -194,10 +182,6 @@
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery-toast-plugin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
         </dependency>
 
         <!-- test dependencies -->
@@ -285,14 +269,17 @@
         <dependency>
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>datasource-proxy-spring-boot-starter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.ttddyy.observation</groupId>
             <artifactId>datasource-micrometer-spring-boot</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>flexy-pool-spring-boot-starter</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- spock deps -->
@@ -312,7 +299,7 @@
             <scope>test</scope>
         </dependency>
         <!-- Optional dependencies for using Spock -->
-        <dependency> <!-- enables mocking of classes without default constructor (together with ByteBuddy or CGLIB) -->
+        <dependency> <!-- enables mocking of Spock Groovy classes without default constructor (together with ByteBuddy or CGLIB) -->
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
             <scope>test</scope>
@@ -532,9 +519,50 @@
                     <targetTests>gt.app.modules.*</targetTests>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <buildArgs combine.children="append">
+                        <buildArg>--no-fallback</buildArg>
+                        <buildArg>-H:+AddAllCharsets</buildArg>
+                        <buildArg>-Ob</buildArg>
+                        <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
+                        <buildArg>-H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test</buildArg>
+                        <buildArg>-H:ServiceLoaderFeatureExcludeServices=org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
+                        <buildArg>-H:ExcludeResources=META-INF/services/org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>native</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.hibernate.orm</groupId>
+                            <artifactId>hibernate-core</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.hibernate.orm</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.hibernate.orm</groupId>
+                            <artifactId>hibernate-bytebuddy</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>

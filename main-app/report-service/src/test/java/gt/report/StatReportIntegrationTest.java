@@ -3,6 +3,10 @@ package gt.report;
 import gt.report.frwk.TestContainerConfig;
 import gtapp.jooq.tables.GAppUser;
 import gtapp.jooq.tables.GArticle;
+import gtapp.jooq.tables.GArticleAttachedFiles;
+import gtapp.jooq.tables.GAuthority;
+import gtapp.jooq.tables.GComment;
+import gtapp.jooq.tables.GReceivedFile;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +32,12 @@ class StatReportIntegrationTest {
 
     @AfterEach
     void cleanUp() {
+        // delete in FK order: child tables before parents
+        db.deleteFrom(GArticleAttachedFiles.G_ARTICLE_ATTACHED_FILES).execute();
+        db.deleteFrom(GReceivedFile.G_RECEIVED_FILE).execute();
+        db.deleteFrom(GComment.G_COMMENT).execute();
         db.deleteFrom(GArticle.G_ARTICLE).execute();
+        db.deleteFrom(GAuthority.G_AUTHORITY).execute();
         db.deleteFrom(GAppUser.G_APP_USER).execute();
     }
 
