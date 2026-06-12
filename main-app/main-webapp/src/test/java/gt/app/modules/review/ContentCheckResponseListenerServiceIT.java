@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 @SpringBootTest
-class ContentCheckResponseListenerServiceTest extends AbstractIntegrationTest {
+class ContentCheckResponseListenerServiceIT extends AbstractIntegrationTest {
 
     @MockitoBean
     CommentReviewResponseService commentReviewResponseService;

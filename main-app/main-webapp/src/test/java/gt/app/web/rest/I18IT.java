@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-class I18Test extends AbstractIntegrationTest {
+class I18IT extends AbstractIntegrationTest {
 
     @Test
     void testi18n(@Autowired MockMvc mvc) throws Exception {
