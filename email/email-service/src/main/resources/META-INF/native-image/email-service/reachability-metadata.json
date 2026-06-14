@@ -339,1734 +339,6 @@
       "type": "com.fasterxml.jackson.module.paramnames.ParameterNamesModule"
     },
     {
-      "type": "com.github.dockerjava.api.command.AsyncDockerCmd"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.CreateContainerCmd"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.DockerCmd"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.ExecCreateCmd"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.ExecCreateCmdResponse",
-      "fields": [
-        {
-          "name": "id"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.ExecStartCmd"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.GraphData"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.GraphDriver",
-      "fields": [
-        {
-          "name": "data"
-        },
-        {
-          "name": "name"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.HealthState"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.HealthStateLog"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectContainerResponse",
-      "fields": [
-        {
-          "name": "args"
-        },
-        {
-          "name": "config"
-        },
-        {
-          "name": "created"
-        },
-        {
-          "name": "driver"
-        },
-        {
-          "name": "execIds"
-        },
-        {
-          "name": "graphDriver"
-        },
-        {
-          "name": "hostConfig"
-        },
-        {
-          "name": "hostnamePath"
-        },
-        {
-          "name": "hostsPath"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "imageId"
-        },
-        {
-          "name": "logPath"
-        },
-        {
-          "name": "mountLabel"
-        },
-        {
-          "name": "mounts"
-        },
-        {
-          "name": "name"
-        },
-        {
-          "name": "networkSettings"
-        },
-        {
-          "name": "path"
-        },
-        {
-          "name": "platform"
-        },
-        {
-          "name": "processLabel"
-        },
-        {
-          "name": "resolvConfPath"
-        },
-        {
-          "name": "restartCount"
-        },
-        {
-          "name": "state"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectContainerResponse$ContainerState",
-      "fields": [
-        {
-          "name": "dead"
-        },
-        {
-          "name": "error"
-        },
-        {
-          "name": "exitCode"
-        },
-        {
-          "name": "finishedAt"
-        },
-        {
-          "name": "oomKilled"
-        },
-        {
-          "name": "paused"
-        },
-        {
-          "name": "pid"
-        },
-        {
-          "name": "restarting"
-        },
-        {
-          "name": "running"
-        },
-        {
-          "name": "startedAt"
-        },
-        {
-          "name": "status"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "com.github.dockerjava.api.command.InspectContainerResponse"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectContainerResponse$Mount"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectContainerResponse$Node"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectExecResponse",
-      "fields": [
-        {
-          "name": "canRemove"
-        },
-        {
-          "name": "containerID"
-        },
-        {
-          "name": "detachKeys"
-        },
-        {
-          "name": "exitCode"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "openStderr"
-        },
-        {
-          "name": "openStdin"
-        },
-        {
-          "name": "openStdout"
-        },
-        {
-          "name": "pid"
-        },
-        {
-          "name": "processConfig"
-        },
-        {
-          "name": "running"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectExecResponse$Container"
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectExecResponse$ProcessConfig",
-      "fields": [
-        {
-          "name": "arguments"
-        },
-        {
-          "name": "entryPoint"
-        },
-        {
-          "name": "privileged"
-        },
-        {
-          "name": "tty"
-        },
-        {
-          "name": "user"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "com.github.dockerjava.api.command.InspectExecResponse"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.InspectImageResponse",
-      "fields": [
-        {
-          "name": "arch"
-        },
-        {
-          "name": "author"
-        },
-        {
-          "name": "comment"
-        },
-        {
-          "name": "config"
-        },
-        {
-          "name": "container"
-        },
-        {
-          "name": "containerConfig"
-        },
-        {
-          "name": "created"
-        },
-        {
-          "name": "dockerVersion"
-        },
-        {
-          "name": "graphDriver"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "os"
-        },
-        {
-          "name": "parent"
-        },
-        {
-          "name": "repoDigests"
-        },
-        {
-          "name": "repoTags"
-        },
-        {
-          "name": "rootFS"
-        },
-        {
-          "name": "size"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.RootFS",
-      "fields": [
-        {
-          "name": "layers"
-        },
-        {
-          "name": "type"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.command.SyncDockerCmd"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.AccessMode"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Bind"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.BindOptions"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.BindPropagation"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Bind[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Binds",
-      "methods": [
-        {
-          "name": "fromPrimitive",
-          "parameterTypes": [
-            "java.lang.String[]"
-          ]
-        },
-        {
-          "name": "toPrimitive",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.BlkioRateDevice"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.BlkioWeightDevice"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Capability"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Capability[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ClusterInfo"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Container",
-      "fields": [
-        {
-          "name": "command"
-        },
-        {
-          "name": "created"
-        },
-        {
-          "name": "hostConfig"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "image"
-        },
-        {
-          "name": "imageId"
-        },
-        {
-          "name": "labels"
-        },
-        {
-          "name": "mounts"
-        },
-        {
-          "name": "names"
-        },
-        {
-          "name": "networkSettings"
-        },
-        {
-          "name": "ports"
-        },
-        {
-          "name": "state"
-        },
-        {
-          "name": "status"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerConfig",
-      "fields": [
-        {
-          "name": "attachStderr"
-        },
-        {
-          "name": "attachStdin"
-        },
-        {
-          "name": "attachStdout"
-        },
-        {
-          "name": "cmd"
-        },
-        {
-          "name": "domainName"
-        },
-        {
-          "name": "entrypoint"
-        },
-        {
-          "name": "env"
-        },
-        {
-          "name": "exposedPorts"
-        },
-        {
-          "name": "hostName"
-        },
-        {
-          "name": "image"
-        },
-        {
-          "name": "labels"
-        },
-        {
-          "name": "onBuild"
-        },
-        {
-          "name": "stdInOnce"
-        },
-        {
-          "name": "stdinOpen"
-        },
-        {
-          "name": "tty"
-        },
-        {
-          "name": "user"
-        },
-        {
-          "name": "volumes"
-        },
-        {
-          "name": "workingDir"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerHostConfig",
-      "fields": [
-        {
-          "name": "networkMode"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerMount"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerNetwork",
-      "fields": [
-        {
-          "name": "aliases"
-        },
-        {
-          "name": "endpointId"
-        },
-        {
-          "name": "gateway"
-        },
-        {
-          "name": "globalIPv6Address"
-        },
-        {
-          "name": "globalIPv6PrefixLen"
-        },
-        {
-          "name": "ipAddress"
-        },
-        {
-          "name": "ipPrefixLen"
-        },
-        {
-          "name": "ipV6Gateway"
-        },
-        {
-          "name": "ipamConfig"
-        },
-        {
-          "name": "links"
-        },
-        {
-          "name": "macAddress"
-        },
-        {
-          "name": "networkID"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerNetwork$Ipam"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerNetworkSettings",
-      "fields": [
-        {
-          "name": "networks"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerPort",
-      "fields": [
-        {
-          "name": "ip"
-        },
-        {
-          "name": "privatePort"
-        },
-        {
-          "name": "publicPort"
-        },
-        {
-          "name": "type"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ContainerPort[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Device"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.DeviceRequest"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Device[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.DockerObject",
-      "methods": [
-        {
-          "name": "getRawValues",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Driver"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ExposedPort"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ExposedPort[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ExposedPorts",
-      "methods": [
-        {
-          "name": "fromPrimitive",
-          "parameterTypes": [
-            "java.util.Map"
-          ]
-        },
-        {
-          "name": "toPrimitive",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ExternalCA"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ExternalCAProtocol"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.HealthCheck"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.HostConfig",
-      "fields": [
-        {
-          "name": "autoRemove"
-        },
-        {
-          "name": "binds"
-        },
-        {
-          "name": "blkioDeviceReadBps"
-        },
-        {
-          "name": "blkioDeviceReadIOps"
-        },
-        {
-          "name": "blkioDeviceWriteBps"
-        },
-        {
-          "name": "blkioDeviceWriteIOps"
-        },
-        {
-          "name": "blkioWeight"
-        },
-        {
-          "name": "blkioWeightDevice"
-        },
-        {
-          "name": "capAdd"
-        },
-        {
-          "name": "capDrop"
-        },
-        {
-          "name": "cgroup"
-        },
-        {
-          "name": "cgroupParent"
-        },
-        {
-          "name": "cgroupnsMode"
-        },
-        {
-          "name": "consoleSize"
-        },
-        {
-          "name": "containerIDFile"
-        },
-        {
-          "name": "cpuCount"
-        },
-        {
-          "name": "cpuPercent"
-        },
-        {
-          "name": "cpuPeriod"
-        },
-        {
-          "name": "cpuQuota"
-        },
-        {
-          "name": "cpuRealtimePeriod"
-        },
-        {
-          "name": "cpuRealtimeRuntime"
-        },
-        {
-          "name": "cpuShares"
-        },
-        {
-          "name": "cpusetCpus"
-        },
-        {
-          "name": "cpusetMems"
-        },
-        {
-          "name": "deviceCgroupRules"
-        },
-        {
-          "name": "deviceRequests"
-        },
-        {
-          "name": "devices"
-        },
-        {
-          "name": "dns"
-        },
-        {
-          "name": "dnsOptions"
-        },
-        {
-          "name": "dnsSearch"
-        },
-        {
-          "name": "extraHosts"
-        },
-        {
-          "name": "groupAdd"
-        },
-        {
-          "name": "ioMaximumBandwidth"
-        },
-        {
-          "name": "ioMaximumIOps"
-        },
-        {
-          "name": "ipcMode"
-        },
-        {
-          "name": "isolation"
-        },
-        {
-          "name": "links"
-        },
-        {
-          "name": "logConfig"
-        },
-        {
-          "name": "memory"
-        },
-        {
-          "name": "memoryReservation"
-        },
-        {
-          "name": "memorySwap"
-        },
-        {
-          "name": "memorySwappiness"
-        },
-        {
-          "name": "nanoCPUs"
-        },
-        {
-          "name": "networkMode"
-        },
-        {
-          "name": "oomKillDisable"
-        },
-        {
-          "name": "oomScoreAdj"
-        },
-        {
-          "name": "pidMode"
-        },
-        {
-          "name": "pidsLimit"
-        },
-        {
-          "name": "portBindings"
-        },
-        {
-          "name": "privileged"
-        },
-        {
-          "name": "publishAllPorts"
-        },
-        {
-          "name": "readonlyRootfs"
-        },
-        {
-          "name": "restartPolicy"
-        },
-        {
-          "name": "runtime"
-        },
-        {
-          "name": "securityOpts"
-        },
-        {
-          "name": "shmSize"
-        },
-        {
-          "name": "ulimits"
-        },
-        {
-          "name": "usernsMode"
-        },
-        {
-          "name": "utSMode"
-        },
-        {
-          "name": "volumeDriver"
-        },
-        {
-          "name": "volumesFrom"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getAnnotations",
-          "parameterTypes": []
-        },
-        {
-          "name": "getAutoRemove",
-          "parameterTypes": []
-        },
-        {
-          "name": "getBlkioDeviceReadBps",
-          "parameterTypes": []
-        },
-        {
-          "name": "getBlkioDeviceReadIOps",
-          "parameterTypes": []
-        },
-        {
-          "name": "getBlkioDeviceWriteBps",
-          "parameterTypes": []
-        },
-        {
-          "name": "getBlkioDeviceWriteIOps",
-          "parameterTypes": []
-        },
-        {
-          "name": "getBlkioWeight",
-          "parameterTypes": []
-        },
-        {
-          "name": "getBlkioWeightDevice",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCapAdd",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCapDrop",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCgroup",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCgroupParent",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCgroupnsMode",
-          "parameterTypes": []
-        },
-        {
-          "name": "getConsoleSize",
-          "parameterTypes": []
-        },
-        {
-          "name": "getContainerIDFile",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuCount",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuPercent",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuPeriod",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuQuota",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuRealtimePeriod",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuRealtimeRuntime",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpuShares",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpusetCpus",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCpusetMems",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDeviceCgroupRules",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDeviceRequests",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDevices",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDiskQuota",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDns",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDnsOptions",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDnsSearch",
-          "parameterTypes": []
-        },
-        {
-          "name": "getExtraHosts",
-          "parameterTypes": []
-        },
-        {
-          "name": "getGroupAdd",
-          "parameterTypes": []
-        },
-        {
-          "name": "getInit",
-          "parameterTypes": []
-        },
-        {
-          "name": "getIoMaximumBandwidth",
-          "parameterTypes": []
-        },
-        {
-          "name": "getIoMaximumIOps",
-          "parameterTypes": []
-        },
-        {
-          "name": "getIpcMode",
-          "parameterTypes": []
-        },
-        {
-          "name": "getIsolation",
-          "parameterTypes": []
-        },
-        {
-          "name": "getKernelMemory",
-          "parameterTypes": []
-        },
-        {
-          "name": "getLxcConf",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMemory",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMemoryReservation",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMemorySwap",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMemorySwappiness",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMounts",
-          "parameterTypes": []
-        },
-        {
-          "name": "getNanoCPUs",
-          "parameterTypes": []
-        },
-        {
-          "name": "getNetworkMode",
-          "parameterTypes": []
-        },
-        {
-          "name": "getOomKillDisable",
-          "parameterTypes": []
-        },
-        {
-          "name": "getOomScoreAdj",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPidMode",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPidsLimit",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPortBindings",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPrivileged",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPublishAllPorts",
-          "parameterTypes": []
-        },
-        {
-          "name": "getReadonlyRootfs",
-          "parameterTypes": []
-        },
-        {
-          "name": "getRestartPolicy",
-          "parameterTypes": []
-        },
-        {
-          "name": "getRuntime",
-          "parameterTypes": []
-        },
-        {
-          "name": "getSecurityOpts",
-          "parameterTypes": []
-        },
-        {
-          "name": "getShmSize",
-          "parameterTypes": []
-        },
-        {
-          "name": "getStorageOpt",
-          "parameterTypes": []
-        },
-        {
-          "name": "getSysctls",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTmpFs",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUlimits",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUsernsMode",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUtSMode",
-          "parameterTypes": []
-        },
-        {
-          "name": "getVolumeDriver",
-          "parameterTypes": []
-        },
-        {
-          "name": "getVolumesFrom",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Image",
-      "fields": [
-        {
-          "name": "containers"
-        },
-        {
-          "name": "created"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "labels"
-        },
-        {
-          "name": "parentId"
-        },
-        {
-          "name": "repoDigests"
-        },
-        {
-          "name": "repoTags"
-        },
-        {
-          "name": "sharedSize"
-        },
-        {
-          "name": "size"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ImageOptions"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Info",
-      "fields": [
-        {
-          "name": "architecture"
-        },
-        {
-          "name": "bridgeNfIp6tables"
-        },
-        {
-          "name": "bridgeNfIptables"
-        },
-        {
-          "name": "cGroupDriver"
-        },
-        {
-          "name": "cGroupVersion"
-        },
-        {
-          "name": "containers"
-        },
-        {
-          "name": "containersPaused"
-        },
-        {
-          "name": "containersRunning"
-        },
-        {
-          "name": "containersStopped"
-        },
-        {
-          "name": "cpuCfsPeriod"
-        },
-        {
-          "name": "cpuCfsQuota"
-        },
-        {
-          "name": "cpuSet"
-        },
-        {
-          "name": "cpuShares"
-        },
-        {
-          "name": "debug"
-        },
-        {
-          "name": "dockerRootDir"
-        },
-        {
-          "name": "driver"
-        },
-        {
-          "name": "driverStatuses"
-        },
-        {
-          "name": "experimentalBuild"
-        },
-        {
-          "name": "httpProxy"
-        },
-        {
-          "name": "httpsProxy"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "images"
-        },
-        {
-          "name": "indexServerAddress"
-        },
-        {
-          "name": "ipv4Forwarding"
-        },
-        {
-          "name": "isolation"
-        },
-        {
-          "name": "kernelVersion"
-        },
-        {
-          "name": "labels"
-        },
-        {
-          "name": "loggingDriver"
-        },
-        {
-          "name": "memTotal"
-        },
-        {
-          "name": "memoryLimit"
-        },
-        {
-          "name": "nEventsListener"
-        },
-        {
-          "name": "nGoroutines"
-        },
-        {
-          "name": "name"
-        },
-        {
-          "name": "ncpu"
-        },
-        {
-          "name": "nfd"
-        },
-        {
-          "name": "noProxy"
-        },
-        {
-          "name": "oomKillDisable"
-        },
-        {
-          "name": "operatingSystem"
-        },
-        {
-          "name": "osType"
-        },
-        {
-          "name": "plugins"
-        },
-        {
-          "name": "registryConfig"
-        },
-        {
-          "name": "runtimes"
-        },
-        {
-          "name": "securityOptions"
-        },
-        {
-          "name": "serverVersion"
-        },
-        {
-          "name": "swapLimit"
-        },
-        {
-          "name": "swarm"
-        },
-        {
-          "name": "systemTime"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.InfoRegistryConfig",
-      "fields": [
-        {
-          "name": "indexConfigs"
-        },
-        {
-          "name": "insecureRegistryCIDRs"
-        },
-        {
-          "name": "mirrors"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.InfoRegistryConfig$IndexConfig",
-      "fields": [
-        {
-          "name": "mirrors"
-        },
-        {
-          "name": "name"
-        },
-        {
-          "name": "official"
-        },
-        {
-          "name": "secure"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.InternetProtocol"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Isolation",
-      "methods": [
-        {
-          "name": "fromValue",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Link"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Link[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Links",
-      "methods": [
-        {
-          "name": "toPrimitive",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.LocalNodeState",
-      "methods": [
-        {
-          "name": "forValue",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.LogConfig",
-      "fields": [
-        {
-          "name": "config"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "setType",
-          "parameterTypes": [
-            "com.github.dockerjava.api.model.LogConfig$LoggingType"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.LogConfig$LoggingType",
-      "methods": [
-        {
-          "name": "fromValue",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.LxcConf"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.LxcConf[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Mount"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.MountType"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.NetworkSettings",
-      "fields": [
-        {
-          "name": "endpointID"
-        },
-        {
-          "name": "gateway"
-        },
-        {
-          "name": "globalIPv6Address"
-        },
-        {
-          "name": "globalIPv6PrefixLen"
-        },
-        {
-          "name": "ipAddress"
-        },
-        {
-          "name": "ipPrefixLen"
-        },
-        {
-          "name": "ipV6Gateway"
-        },
-        {
-          "name": "macAddress"
-        },
-        {
-          "name": "networks"
-        },
-        {
-          "name": "ports"
-        },
-        {
-          "name": "sandboxId"
-        },
-        {
-          "name": "sandboxKey"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.PeerNode"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.PortBinding[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Ports",
-      "methods": [
-        {
-          "name": "fromPrimitive",
-          "parameterTypes": [
-            "java.util.Map"
-          ]
-        },
-        {
-          "name": "toPrimitive",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Ports$Binding"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Ports$Binding[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.PropagationMode"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.ResourceVersion"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.RestartPolicy",
-      "fields": [
-        {
-          "name": "maximumRetryCount"
-        },
-        {
-          "name": "name"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.RuntimeInfo",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "setPath",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SELContext"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SwarmCAConfig"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SwarmDispatcherConfig"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SwarmInfo",
-      "fields": [
-        {
-          "name": "controlAvailable"
-        },
-        {
-          "name": "error"
-        },
-        {
-          "name": "localNodeState"
-        },
-        {
-          "name": "nodeAddr"
-        },
-        {
-          "name": "nodeID"
-        },
-        {
-          "name": "remoteManagers"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SwarmOrchestration"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SwarmRaftConfig"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.SwarmSpec"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.TaskDefaults"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.TmpfsOptions"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Ulimit"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Ulimit[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Version",
-      "fields": [
-        {
-          "name": "apiVersion"
-        },
-        {
-          "name": "arch"
-        },
-        {
-          "name": "buildTime"
-        },
-        {
-          "name": "components"
-        },
-        {
-          "name": "gitCommit"
-        },
-        {
-          "name": "goVersion"
-        },
-        {
-          "name": "kernelVersion"
-        },
-        {
-          "name": "minAPIVersion"
-        },
-        {
-          "name": "operatingSystem"
-        },
-        {
-          "name": "platform"
-        },
-        {
-          "name": "version"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VersionComponent",
-      "fields": [
-        {
-          "name": "details"
-        },
-        {
-          "name": "name"
-        },
-        {
-          "name": "version"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VersionPlatform",
-      "fields": [
-        {
-          "name": "name"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Volume"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumeBind"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumeBind[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumeBinds"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumeOptions"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumeRW"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumeRW[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Volume[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.Volumes",
-      "methods": [
-        {
-          "name": "toPrimitive",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumesFrom"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumesFrom[]"
-    },
-    {
-      "type": "com.github.dockerjava.api.model.VolumesRW"
-    },
-    {
       "type": "com.github.therapi.runtimejavadoc.CommentFormatter"
     },
     {
@@ -2266,112 +538,7 @@
       "type": "float[]"
     },
     {
-      "type": "groovy.io.FileType"
-    },
-    {
-      "type": "groovy.lang.Buildable"
-    },
-    {
-      "type": "groovy.lang.Closure"
-    },
-    {
-      "type": "groovy.lang.EmptyRange"
-    },
-    {
-      "type": "groovy.lang.ExpandoMetaClass"
-    },
-    {
-      "type": "groovy.lang.ExpandoMetaClassBeanInfo"
-    },
-    {
-      "type": "groovy.lang.ExpandoMetaClassCustomizer"
-    },
-    {
-      "type": "groovy.lang.GString"
-    },
-    {
-      "type": "groovy.lang.GroovyObject"
-    },
-    {
-      "type": "groovy.lang.GroovyObjectSupport"
-    },
-    {
-      "type": "groovy.lang.IntRange"
-    },
-    {
-      "type": "groovy.lang.ListWithDefault"
-    },
-    {
       "type": "groovy.lang.MetaClass"
-    },
-    {
-      "type": "groovy.lang.MetaClassImpl"
-    },
-    {
-      "type": "groovy.lang.MetaClassImplBeanInfo"
-    },
-    {
-      "type": "groovy.lang.MetaClassImplCustomizer"
-    },
-    {
-      "type": "groovy.lang.MetaMember"
-    },
-    {
-      "type": "groovy.lang.MetaMethod"
-    },
-    {
-      "type": "groovy.lang.MetaObjectProtocol"
-    },
-    {
-      "type": "groovy.lang.MetaProperty"
-    },
-    {
-      "type": "groovy.lang.MutableMetaClass"
-    },
-    {
-      "type": "groovy.lang.ObjectRange"
-    },
-    {
-      "type": "groovy.lang.Range"
-    },
-    {
-      "type": "groovy.lang.SpreadMap"
-    },
-    {
-      "type": "groovy.lang.Tuple2"
-    },
-    {
-      "type": "groovy.lang.Writable"
-    },
-    {
-      "type": "groovy.lang.groovydoc.Groovydoc"
-    },
-    {
-      "type": "groovy.runtime.metaclass.CustomMetaClassCreationHandle"
-    },
-    {
-      "type": "groovy.runtime.metaclass.groovy.lang.ExpandoMetaClassMetaClass"
-    },
-    {
-      "type": "groovy.runtime.metaclass.org.springframework.beans.factory.groovy.GroovyBeanDefinitionReaderMetaClass"
-    },
-    {
-      "type": "groovy.util.BufferedIterator"
-    },
-    {
-      "type": "groovy.util.function.DoubleComparator"
-    },
-    {
-      "type": "groovy.util.function.FloatComparator"
-    },
-    {
-      "type": "groovy.util.function.FloatUnaryOperator"
-    },
-    {
-      "type": "groovy.util.function.IntComparator"
-    },
-    {
-      "type": "groovy.util.function.LongComparator"
     },
     {
       "type": "gt.api.email.EmailDto",
@@ -2594,34 +761,16 @@
       ],
       "methods": [
         {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
           "name": "registerProperties",
           "parameterTypes": [
             "org.springframework.test.context.DynamicPropertyRegistry"
           ]
-        },
-        {
-          "name": "sendEmail",
-          "parameterTypes": []
         }
       ]
     },
     {
       "type": "gt.mail.web.rest.EmailResourceIT",
       "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "canSendEmail",
-          "parameterTypes": [
-            "org.springframework.test.web.servlet.MockMvc"
-          ]
-        },
         {
           "name": "registerProperties",
           "parameterTypes": [
@@ -2644,19 +793,7 @@
       ]
     },
     {
-      "type": "gt.mail.web.rest.HelloResourceIT",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "sayHello2",
-          "parameterTypes": [
-            "org.springframework.test.web.servlet.MockMvc"
-          ]
-        }
-      ]
+      "type": "gt.mail.web.rest.HelloResourceIT"
     },
     {
       "type": "int[]"
@@ -2672,6 +809,9 @@
     },
     {
       "type": "io.micrometer.context.ContextSnapshot"
+    },
+    {
+      "type": "io.micrometer.context.ContextSnapshotFactory"
     },
     {
       "type": "io.micrometer.context.ThreadLocalAccessor"
@@ -2819,6 +959,9 @@
     },
     {
       "type": "io.micrometer.prometheusmetrics.PrometheusMeterRegistry"
+    },
+    {
+      "type": "io.micrometer.registry.otlp.ExemplarContextProvider"
     },
     {
       "type": "io.micrometer.registry.otlp.OtlpMeterRegistry"
@@ -3146,67 +1289,16 @@
       "type": "java.beans.Introspector"
     },
     {
-      "type": "java.beans.PropertyVetoException"
-    },
-    {
-      "type": "java.io.BufferedInputStream"
-    },
-    {
-      "type": "java.io.BufferedOutputStream"
-    },
-    {
-      "type": "java.io.BufferedReader"
-    },
-    {
-      "type": "java.io.BufferedWriter"
-    },
-    {
       "type": "java.io.Closeable"
     },
     {
-      "type": "java.io.DataInputStream"
-    },
-    {
-      "type": "java.io.DataOutputStream"
-    },
-    {
-      "type": "java.io.File"
-    },
-    {
       "type": "java.io.Flushable"
-    },
-    {
-      "type": "java.io.InputStream"
-    },
-    {
-      "type": "java.io.ObjectInputStream"
-    },
-    {
-      "type": "java.io.ObjectOutputStream"
-    },
-    {
-      "type": "java.io.OutputStream"
-    },
-    {
-      "type": "java.io.PrintStream"
-    },
-    {
-      "type": "java.io.PrintWriter"
-    },
-    {
-      "type": "java.io.Reader"
     },
     {
       "type": "java.io.Serializable"
     },
     {
       "type": "java.io.Serializable[]"
-    },
-    {
-      "type": "java.io.Writer"
-    },
-    {
-      "type": "java.lang.Appendable"
     },
     {
       "type": "java.lang.AutoCloseable"
@@ -3237,9 +1329,6 @@
       ]
     },
     {
-      "type": "java.lang.CharSequence"
-    },
-    {
       "type": "java.lang.CharSequence[]"
     },
     {
@@ -3258,11 +1347,7 @@
           "parameterTypes": []
         },
         {
-          "name": "getPermittedSubclasses",
-          "parameterTypes": []
-        },
-        {
-          "name": "isSealed",
+          "name": "isRecord",
           "parameterTypes": []
         }
       ]
@@ -3289,9 +1374,6 @@
     },
     {
       "type": "java.lang.Class[]"
-    },
-    {
-      "type": "java.lang.Cloneable"
     },
     {
       "type": "java.lang.Comparable"
@@ -3347,12 +1429,6 @@
       "type": "java.lang.Module",
       "methods": [
         {
-          "name": "addReads",
-          "parameterTypes": [
-            "java.lang.Module"
-          ]
-        },
-        {
           "name": "canRead",
           "parameterTypes": [
             "java.lang.Module"
@@ -3367,32 +1443,14 @@
         {
           "name": "isNamed",
           "parameterTypes": []
-        },
-        {
-          "name": "isOpen",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
         }
       ]
-    },
-    {
-      "type": "java.lang.Number"
     },
     {
       "type": "java.lang.Object"
     },
     {
-      "type": "java.lang.ObjectBeanInfo"
-    },
-    {
-      "type": "java.lang.ObjectCustomizer"
-    },
-    {
       "type": "java.lang.Object[]"
-    },
-    {
-      "type": "java.lang.Process"
     },
     {
       "type": "java.lang.ProcessHandle",
@@ -3406,9 +1464,6 @@
           "parameterTypes": []
         }
       ]
-    },
-    {
-      "type": "java.lang.Readable"
     },
     {
       "type": "java.lang.Record"
@@ -3443,22 +1498,7 @@
       "type": "java.lang.StackTraceElement"
     },
     {
-      "type": "java.lang.StackWalker"
-    },
-    {
-      "type": "java.lang.StackWalker$Option"
-    },
-    {
-      "type": "java.lang.StackWalker$StackFrame"
-    },
-    {
       "type": "java.lang.String"
-    },
-    {
-      "type": "java.lang.StringBuffer"
-    },
-    {
-      "type": "java.lang.StringBuilder"
     },
     {
       "type": "java.lang.String[]"
@@ -3473,16 +1513,10 @@
       ]
     },
     {
-      "type": "java.lang.System$Logger"
-    },
-    {
       "type": "java.lang.Thread"
     },
     {
       "type": "java.lang.Thread$Builder"
-    },
-    {
-      "type": "java.lang.Throwable"
     },
     {
       "type": "java.lang.Void",
@@ -3491,15 +1525,6 @@
           "name": "TYPE"
         }
       ]
-    },
-    {
-      "type": "java.lang.WeakPairMap"
-    },
-    {
-      "type": "java.lang.WeakPairMap$Pair"
-    },
-    {
-      "type": "java.lang.WeakPairMap$Pair$Weak"
     },
     {
       "type": "java.lang.WrongThreadException"
@@ -3562,22 +1587,6 @@
       "type": "java.lang.constant.MethodTypeDesc"
     },
     {
-      "type": "java.lang.instrument.Instrumentation",
-      "methods": [
-        {
-          "name": "redefineModule",
-          "parameterTypes": [
-            "java.lang.Module",
-            "java.util.Set",
-            "java.util.Map",
-            "java.util.Map",
-            "java.util.Set",
-            "java.util.Map"
-          ]
-        }
-      ]
-    },
-    {
       "type": "java.lang.invoke.MethodHandle",
       "methods": [
         {
@@ -3600,13 +1609,6 @@
         {
           "name": "lookup",
           "parameterTypes": []
-        },
-        {
-          "name": "privateLookupIn",
-          "parameterTypes": [
-            "java.lang.Class",
-            "java.lang.invoke.MethodHandles$Lookup"
-          ]
         }
       ]
     },
@@ -3651,15 +1653,6 @@
       "type": "java.lang.management.LockInfo"
     },
     {
-      "type": "java.lang.management.ManagementFactory",
-      "methods": [
-        {
-          "name": "getRuntimeMXBean",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
       "type": "java.lang.management.MemoryMXBean"
     },
     {
@@ -3686,19 +1679,10 @@
       "type": "java.lang.management.PlatformLoggingMXBean"
     },
     {
-      "type": "java.lang.management.RuntimeMXBean",
-      "methods": [
-        {
-          "name": "getInputArguments",
-          "parameterTypes": []
-        }
-      ]
+      "type": "java.lang.management.RuntimeMXBean"
     },
     {
       "type": "java.lang.management.ThreadInfo"
-    },
-    {
-      "type": "java.lang.reflect.AccessibleObject"
     },
     {
       "type": "java.lang.reflect.AnnotatedArrayType"
@@ -3777,36 +1761,10 @@
       "type": "java.math.BigInteger"
     },
     {
-      "type": "java.net.ServerSocket"
-    },
-    {
-      "type": "java.net.Socket"
-    },
-    {
-      "type": "java.net.URI"
-    },
-    {
-      "type": "java.net.URL"
-    },
-    {
-      "type": "java.net.UnixDomainSocketAddress",
-      "methods": [
-        {
-          "name": "of",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        }
-      ]
-    },
-    {
       "type": "java.net.http.HttpClient"
     },
     {
       "type": "java.nio.charset.Charset"
-    },
-    {
-      "type": "java.nio.file.Path"
     },
     {
       "type": "java.security.AccessController",
@@ -3847,9 +1805,6 @@
       "type": "java.util.AbstractCollection"
     },
     {
-      "type": "java.util.AbstractList"
-    },
-    {
       "type": "java.util.AbstractMap"
     },
     {
@@ -3868,22 +1823,10 @@
       ]
     },
     {
-      "type": "java.util.Arrays$ArrayList"
-    },
-    {
-      "type": "java.util.BitSet"
-    },
-    {
       "type": "java.util.Collection"
     },
     {
-      "type": "java.util.Comparator"
-    },
-    {
       "type": "java.util.Date"
-    },
-    {
-      "type": "java.util.Deque"
     },
     {
       "type": "java.util.Enumeration"
@@ -3901,52 +1844,22 @@
       "type": "java.util.ImmutableCollections$AbstractImmutableList"
     },
     {
+      "type": "java.util.ImmutableCollections$AbstractImmutableMap"
+    },
+    {
       "type": "java.util.ImmutableCollections$List12"
     },
     {
-      "type": "java.util.Iterator"
+      "type": "java.util.ImmutableCollections$Map1"
     },
     {
       "type": "java.util.List"
     },
     {
-      "type": "java.util.Locale"
-    },
-    {
       "type": "java.util.Map"
     },
     {
-      "type": "java.util.Map$Entry"
-    },
-    {
-      "type": "java.util.NavigableMap"
-    },
-    {
-      "type": "java.util.NavigableSet"
-    },
-    {
-      "type": "java.util.Optional"
-    },
-    {
-      "type": "java.util.OptionalDouble"
-    },
-    {
-      "type": "java.util.OptionalInt"
-    },
-    {
-      "type": "java.util.OptionalLong"
-    },
-    {
-      "type": "java.util.Queue"
-    },
-    {
-      "type": "java.util.Random"
-    },
-    {
       "type": "java.util.RandomAccess"
-    },
-    {
-      "type": "java.util.ResourceBundle"
     },
     {
       "type": "java.util.SequencedCollection"
@@ -3955,100 +1868,25 @@
       "type": "java.util.Set"
     },
     {
-      "type": "java.util.SortedMap"
-    },
-    {
-      "type": "java.util.SortedSet"
-    },
-    {
-      "type": "java.util.Spliterator"
-    },
-    {
-      "type": "java.util.Timer"
-    },
-    {
-      "type": "java.util.TimerTask"
-    },
-    {
-      "type": "java.util.concurrent.BlockingQueue"
-    },
-    {
       "type": "java.util.concurrent.Callable"
     },
     {
       "type": "java.util.concurrent.Executor"
     },
     {
-      "type": "java.util.concurrent.ExecutorService"
-    },
-    {
-      "type": "java.util.concurrent.Future"
+      "type": "java.util.concurrent.ForkJoinPool",
+      "methods": [
+        {
+          "name": "getDelayedTaskCount",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.util.concurrent.ThreadFactory"
     },
     {
       "type": "java.util.concurrent.ThreadPerTaskExecutor"
-    },
-    {
-      "type": "java.util.concurrent.atomic.AtomicBoolean"
-    },
-    {
-      "type": "java.util.function.Consumer"
-    },
-    {
-      "type": "java.util.function.DoubleConsumer"
-    },
-    {
-      "type": "java.util.function.DoubleFunction"
-    },
-    {
-      "type": "java.util.function.DoublePredicate"
-    },
-    {
-      "type": "java.util.function.DoubleUnaryOperator"
-    },
-    {
-      "type": "java.util.function.Function"
-    },
-    {
-      "type": "java.util.function.IntConsumer"
-    },
-    {
-      "type": "java.util.function.IntFunction"
-    },
-    {
-      "type": "java.util.function.IntPredicate"
-    },
-    {
-      "type": "java.util.function.IntUnaryOperator"
-    },
-    {
-      "type": "java.util.function.LongConsumer"
-    },
-    {
-      "type": "java.util.function.LongFunction"
-    },
-    {
-      "type": "java.util.function.LongPredicate"
-    },
-    {
-      "type": "java.util.function.LongUnaryOperator"
-    },
-    {
-      "type": "java.util.function.Predicate"
-    },
-    {
-      "type": "java.util.function.Supplier"
-    },
-    {
-      "type": "java.util.function.ToDoubleFunction"
-    },
-    {
-      "type": "java.util.function.ToIntFunction"
-    },
-    {
-      "type": "java.util.function.ToLongFunction"
     },
     {
       "type": "java.util.logging.LogManager"
@@ -4061,27 +1899,6 @@
           "parameterTypes": []
         }
       ]
-    },
-    {
-      "type": "java.util.regex.Matcher"
-    },
-    {
-      "type": "java.util.regex.Pattern"
-    },
-    {
-      "type": "java.util.stream.BaseStream"
-    },
-    {
-      "type": "java.util.stream.DoubleStream"
-    },
-    {
-      "type": "java.util.stream.IntStream"
-    },
-    {
-      "type": "java.util.stream.LongStream"
-    },
-    {
-      "type": "java.util.stream.Stream"
     },
     {
       "type": "javafx.beans.value.ObservableValue"
@@ -4139,9 +1956,6 @@
     },
     {
       "type": "jdk.internal.misc.Unsafe"
-    },
-    {
-      "type": "jdk.jfr.FlightRecorder"
     },
     {
       "type": "jdk.management.VirtualThreadSchedulerMXBean"
@@ -4621,16 +2435,7 @@
       ]
     },
     {
-      "type": "org.apache.groovy.nio.extensions.NioExtensions"
-    },
-    {
-      "type": "org.apache.groovy.xml.extensions.XmlExtensions"
-    },
-    {
       "type": "org.apache.hc.client5.http.classic.HttpClient"
-    },
-    {
-      "type": "org.apache.hc.client5.http.impl.classic.HttpClients"
     },
     {
       "type": "org.apache.jasper.compiler.JspConfig"
@@ -4695,249 +2500,6 @@
     },
     {
       "type": "org.aspectj.weaver.Advice"
-    },
-    {
-      "type": "org.assertj.core.api.Assert"
-    },
-    {
-      "type": "org.brotli.dec.BrotliInputStream"
-    },
-    {
-      "type": "org.codehaus.groovy.reflection.ParameterTypes"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.DefaultGroovyMethodsSupport"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.DefaultGroovyStaticMethods"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.GStringImpl"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.MethodClosure"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.NullObject"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.callsite.CallSite"
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.NumberNumberDiv",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.NumberNumberMinus",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.NumberNumberMultiply",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.NumberNumberPlus",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.BooleanArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.BooleanArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.ByteArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.ByteArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.CharacterArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.CharacterArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.DoubleArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.DoubleArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.FloatArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.FloatArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.IntegerArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.IntegerArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.LongArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.LongArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.ObjectArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.ObjectArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.ShortArrayGetAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.runtime.dgmimpl.arrays.ShortArrayPutAtMetaMethod",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.vmplugin.v10.PluginDefaultGroovyMethods"
-    },
-    {
-      "type": "org.codehaus.groovy.vmplugin.v16.Java16",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.codehaus.groovy.vmplugin.v8.PluginDefaultGroovyMethods"
-    },
-    {
-      "type": "org.codehaus.groovy.vmplugin.v9.PluginDefaultGroovyMethods"
     },
     {
       "type": "org.crac.Core"
@@ -5112,248 +2674,6 @@
     },
     {
       "type": "org.joda.time.ReadableInstant"
-    },
-    {
-      "type": "org.junit.AssumptionViolatedException"
-    },
-    {
-      "type": "org.junit.internal.AssumptionViolatedException"
-    },
-    {
-      "type": "org.junit.jupiter.api.BeforeEach"
-    },
-    {
-      "type": "org.junit.jupiter.api.DisplayName"
-    },
-    {
-      "type": "org.junit.jupiter.api.Test"
-    },
-    {
-      "type": "org.junit.jupiter.api.extension.ExtendWith"
-    },
-    {
-      "type": "org.junit.jupiter.engine.JupiterTestEngine"
-    },
-    {
-      "type": "org.junit.platform.commons.annotation.Testable"
-    },
-    {
-      "type": "org.junit.platform.engine.CancellationToken",
-      "methods": [
-        {
-          "name": "create",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.junit.platform.launcher.Launcher",
-      "methods": [
-        {
-          "name": "execute",
-          "parameterTypes": [
-            "org.junit.platform.launcher.LauncherExecutionRequest"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.junit.platform.launcher.LauncherExecutionRequest"
-    },
-    {
-      "type": "org.junit.platform.launcher.LauncherSession",
-      "methods": [
-        {
-          "name": "getLauncher",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.junit.platform.launcher.TestIdentifier",
-      "methods": [
-        {
-          "name": "getParentIdObject",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.junit.platform.launcher.core.LauncherExecutionRequestBuilder",
-      "methods": [
-        {
-          "name": "build",
-          "parameterTypes": []
-        },
-        {
-          "name": "cancellationToken",
-          "parameterTypes": [
-            "org.junit.platform.engine.CancellationToken"
-          ]
-        },
-        {
-          "name": "listeners",
-          "parameterTypes": [
-            "org.junit.platform.launcher.TestExecutionListener[]"
-          ]
-        },
-        {
-          "name": "request",
-          "parameterTypes": [
-            "org.junit.platform.launcher.LauncherDiscoveryRequest"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.junit.platform.launcher.core.LauncherFactory",
-      "methods": [
-        {
-          "name": "openSession",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.junit.platform.launcher.listeners.UniqueIdTrackingListener"
-    },
-    {
-      "type": "org.mockito.Mockito"
-    },
-    {
-      "type": "org.mockito.configuration.MockitoConfiguration"
-    },
-    {
-      "type": "org.mockito.internal.PremainAttach",
-      "methods": [
-        {
-          "name": "getInstrumentation",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.configuration.DefaultDoNotMockEnforcer",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.configuration.InjectingAnnotationEngine",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.configuration.plugins.DefaultPluginSwitch",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.InlineByteBuddyMockMaker",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.MockMethodAdvice"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.MockMethodAdvice$ForEquals"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.MockMethodAdvice$ForHashCode"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.MockMethodAdvice$ForReadObject"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.MockMethodAdvice$ForStatic"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.access.MockMethodInterceptor$DispatcherDefaultingToRealMethod"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.access.MockMethodInterceptor$ForEquals"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.access.MockMethodInterceptor$ForHashCode"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.access.MockMethodInterceptor$ForWriteReplace"
-    },
-    {
-      "type": "org.mockito.internal.creation.bytebuddy.inject.MockMethodDispatcher"
-    },
-    {
-      "type": "org.mockito.internal.creation.instance.DefaultInstantiatorProvider",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.exceptions.stacktrace.DefaultStackTraceCleanerProvider",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.util.ConsoleMockitoLogger",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher"
-    },
-    {
-      "type": "org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$R8uK1dy5",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.mockito.internal.util.reflection.ModuleMemberAccessor",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.openqa.selenium.WebDriver"
-    },
-    {
-      "type": "org.openqa.selenium.htmlunit.HtmlUnitDriver"
-    },
-    {
-      "type": "org.opentest4j.TestAbortedException"
     },
     {
       "type": "org.osgi.framework.FrameworkUtil"
@@ -5599,25 +2919,6 @@
       ]
     },
     {
-      "type": "org.springdoc.core.configuration.SpringDocGroovyConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "ignoreGroovyMetaClass",
-          "parameterTypes": []
-        },
-        {
-          "name": "requestTypeToIgnoreConverter",
-          "parameterTypes": [
-            "org.springdoc.core.providers.ObjectMapperProvider"
-          ]
-        }
-      ]
-    },
-    {
       "type": "org.springdoc.core.configuration.SpringDocWebServerConfiguration$EmbeddedWebServerConfiguration",
       "methods": [
         {
@@ -5643,9 +2944,6 @@
     },
     {
       "type": "org.springdoc.core.converters.FileSupportConverter"
-    },
-    {
-      "type": "org.springdoc.core.converters.JavaTypeToIgnoreConverter"
     },
     {
       "type": "org.springdoc.core.converters.ModelConverterRegistrar"
@@ -6092,31 +3390,7 @@
       "type": "org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor"
     },
     {
-      "type": "org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader"
-    },
-    {
-      "type": "org.springframework.beans.factory.groovy.GroovyBeanDefinitionReaderBeanInfo"
-    },
-    {
-      "type": "org.springframework.beans.factory.groovy.GroovyBeanDefinitionReaderCustomizer"
-    },
-    {
-      "type": "org.springframework.beans.factory.support.AbstractBeanDefinitionReader"
-    },
-    {
-      "type": "org.springframework.beans.factory.support.AbstractBeanDefinitionReaderBeanInfo"
-    },
-    {
-      "type": "org.springframework.beans.factory.support.AbstractBeanDefinitionReaderCustomizer"
-    },
-    {
-      "type": "org.springframework.beans.factory.support.BeanDefinitionReader"
-    },
-    {
       "type": "org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor"
-    },
-    {
-      "type": "org.springframework.beans.factory.support.BeanNameGenerator"
     },
     {
       "type": "org.springframework.beans.factory.support.NullBean"
@@ -7096,6 +4370,15 @@
       ]
     },
     {
+      "type": "org.springframework.boot.autoconfigure.task.TaskExecutorConfigurations$TaskExecutorContextPropagationConfiguration",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.autoconfigure.task.TaskExecutorConfigurations$ThreadPoolTaskExecutorBuilderConfiguration",
       "methods": [
         {
@@ -7587,9 +4870,6 @@
       ]
     },
     {
-      "type": "org.springframework.boot.health.autoconfigure.actuate.endpoint.HealthEndpointConfiguration$HealthEndpointGroupMembershipValidator"
-    },
-    {
       "type": "org.springframework.boot.health.autoconfigure.actuate.endpoint.HealthEndpointConfiguration$HealthEndpointGroupsBeanPostProcessor"
     },
     {
@@ -7712,6 +4992,9 @@
       ]
     },
     {
+      "type": "org.springframework.boot.health.autoconfigure.contributor.HealthContributorMembershipValidator"
+    },
+    {
       "type": "org.springframework.boot.health.autoconfigure.contributor.OnEnabledHealthIndicatorCondition",
       "methods": [
         {
@@ -7760,117 +5043,6 @@
     },
     {
       "type": "org.springframework.boot.health.registry.HealthContributorRegistry"
-    },
-    {
-      "type": "org.springframework.boot.http.client.AbstractClientHttpRequestFactoryBuilder"
-    },
-    {
-      "type": "org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder"
-    },
-    {
-      "type": "org.springframework.boot.http.client.HttpClientSettings"
-    },
-    {
-      "type": "org.springframework.boot.http.client.JdkClientHttpRequestFactoryBuilder"
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.HttpClientAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "httpClientSettings",
-          "parameterTypes": [
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.boot.http.client.autoconfigure.HttpClientsProperties"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.HttpClientSettingsProperties"
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.HttpClientsProperties",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.imperative.ImperativeHttpClientAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "org.springframework.core.env.Environment"
-          ]
-        },
-        {
-          "name": "clientHttpRequestFactoryBuilder",
-          "parameterTypes": [
-            "org.springframework.core.io.ResourceLoader",
-            "org.springframework.boot.http.client.autoconfigure.imperative.ImperativeHttpClientsProperties",
-            "org.springframework.beans.factory.ObjectProvider"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.imperative.ImperativeHttpClientsProperties",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.imperative.NotReactiveWebApplicationCondition",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.metrics.HttpClientMetricsAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "metricsHttpClientUriTagFilter",
-          "parameterTypes": [
-            "org.springframework.boot.micrometer.observation.autoconfigure.ObservationProperties",
-            "org.springframework.boot.micrometer.metrics.autoconfigure.MetricsProperties"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.service.HttpServiceClientProperties"
-    },
-    {
-      "type": "org.springframework.boot.http.client.autoconfigure.service.HttpServiceClientPropertiesAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "httpServiceClientProperties",
-          "parameterTypes": [
-            "org.springframework.core.env.Environment"
-          ]
-        }
-      ]
     },
     {
       "type": "org.springframework.boot.http.converter.autoconfigure.ClientHttpMessageConvertersCustomizer"
@@ -8069,34 +5241,53 @@
           "parameterTypes": []
         },
         {
-          "name": "jsonMapperBuilder",
+          "name": "jsonFactory",
           "parameterTypes": [
             "java.util.List"
           ]
+        },
+        {
+          "name": "jsonMapperBuilder",
+          "parameterTypes": [
+            "java.util.List",
+            "tools.jackson.core.json.JsonFactory"
+          ]
         }
       ]
+    },
+    {
+      "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$AbstractFactoryBuilderCustomizer"
     },
     {
       "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$AbstractMapperBuilderCustomizer"
     },
     {
-      "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JacksonJsonMapperBuilderCustomizerConfiguration",
+      "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JacksonJsonCustomizerConfiguration",
       "methods": [
         {
           "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.boot.jackson.autoconfigure.JacksonProperties"
+          ]
+        },
+        {
+          "name": "standardJsonFactoryBuilderCustomizer",
           "parameterTypes": []
         },
         {
           "name": "standardJsonMapperBuilderCustomizer",
           "parameterTypes": [
-            "org.springframework.boot.jackson.autoconfigure.JacksonProperties",
-            "org.springframework.beans.factory.ObjectProvider"
+            "org.springframework.beans.factory.ObjectProvider",
+            "org.springframework.beans.factory.config.AutowireCapableBeanFactory"
           ]
         }
       ]
     },
     {
-      "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JacksonJsonMapperBuilderCustomizerConfiguration$StandardJsonMapperBuilderCustomizer"
+      "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JacksonJsonCustomizerConfiguration$StandardJsonFactoryBuilderCustomizer"
+    },
+    {
+      "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JacksonJsonCustomizerConfiguration$StandardJsonMapperBuilderCustomizer"
     },
     {
       "type": "org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration$JacksonMixinConfiguration",
@@ -8153,6 +5344,9 @@
           "parameterTypes": []
         }
       ]
+    },
+    {
+      "type": "org.springframework.boot.jackson.autoconfigure.JsonFactoryBuilderCustomizer"
     },
     {
       "type": "org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer"
@@ -8365,7 +5559,8 @@
         {
           "name": "meterRegistryCloser",
           "parameterTypes": [
-            "org.springframework.context.ApplicationContext"
+            "org.springframework.context.ApplicationContext",
+            "org.springframework.boot.micrometer.metrics.autoconfigure.MetricsProperties"
           ]
         },
         {
@@ -8470,7 +5665,9 @@
         },
         {
           "name": "classLoaderMetrics",
-          "parameterTypes": []
+          "parameterTypes": [
+            "org.springframework.beans.factory.ObjectProvider"
+          ]
         },
         {
           "name": "jvmCompilationMetrics",
@@ -8490,11 +5687,15 @@
         },
         {
           "name": "jvmMemoryMetrics",
-          "parameterTypes": []
+          "parameterTypes": [
+            "org.springframework.beans.factory.ObjectProvider"
+          ]
         },
         {
           "name": "jvmThreadMetrics",
-          "parameterTypes": []
+          "parameterTypes": [
+            "org.springframework.beans.factory.ObjectProvider"
+          ]
         }
       ]
     },
@@ -8573,7 +5774,9 @@
         },
         {
           "name": "processorMetrics",
-          "parameterTypes": []
+          "parameterTypes": [
+            "org.springframework.beans.factory.ObjectProvider"
+          ]
         },
         {
           "name": "uptimeMetrics",
@@ -8915,127 +6118,6 @@
       ]
     },
     {
-      "type": "org.springframework.boot.restclient.RestClientCustomizer"
-    },
-    {
-      "type": "org.springframework.boot.restclient.RestTemplateBuilder"
-    },
-    {
-      "type": "org.springframework.boot.restclient.RestTemplateCustomizer"
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.AutoConfiguredRestClientSsl"
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.HttpMessageConvertersRestClientCustomizer"
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.NotReactiveWebApplicationCondition",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestClientAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "restClientBuilderConfigurer",
-          "parameterTypes": [
-            "org.springframework.core.io.ResourceLoader",
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.beans.factory.ObjectProvider"
-          ]
-        },
-        {
-          "name": "restClientSsl",
-          "parameterTypes": [
-            "org.springframework.core.io.ResourceLoader",
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.boot.ssl.SslBundles"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestClientAutoConfiguration$HttpMessageConvertersConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "httpMessageConvertersRestClientCustomizer",
-          "parameterTypes": [
-            "org.springframework.beans.factory.ObjectProvider"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestClientBuilderConfigurer"
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestClientObservationAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "observationRestClientCustomizer",
-          "parameterTypes": [
-            "io.micrometer.observation.ObservationRegistry",
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.boot.micrometer.observation.autoconfigure.ObservationProperties"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestClientSsl"
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestTemplateAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.restclient.autoconfigure.RestTemplateObservationAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "observationRestTemplateCustomizer",
-          "parameterTypes": [
-            "io.micrometer.observation.ObservationRegistry",
-            "org.springframework.beans.factory.ObjectProvider",
-            "org.springframework.boot.micrometer.observation.autoconfigure.ObservationProperties"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.restclient.observation.ObservationRestClientCustomizer"
-    },
-    {
-      "type": "org.springframework.boot.restclient.observation.ObservationRestTemplateCustomizer"
-    },
-    {
       "type": "org.springframework.boot.servlet.autoconfigure.HttpEncodingAutoConfiguration",
       "methods": [
         {
@@ -9199,149 +6281,6 @@
     },
     {
       "type": "org.springframework.boot.task.ThreadPoolTaskSchedulerBuilder"
-    },
-    {
-      "type": "org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.ImportsContextCustomizer$ImportsCleanupPostProcessor",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "java.lang.String[]"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.ImportsContextCustomizer$ImportsConfiguration"
-    },
-    {
-      "type": "org.springframework.boot.test.context.ImportsContextCustomizer$ImportsSelector",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.ImportsContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.PropertyMapping"
-    },
-    {
-      "type": "org.springframework.boot.test.context.PropertyMapping$Skip"
-    },
-    {
-      "type": "org.springframework.boot.test.context.PropertyMappingContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.SpringBootContextLoader",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.SpringBootTest"
-    },
-    {
-      "type": "org.springframework.boot.test.context.SpringBootTest$WebEnvironment"
-    },
-    {
-      "type": "org.springframework.boot.test.context.SpringBootTestContextBootstrapper",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.TestComponent"
-    },
-    {
-      "type": "org.springframework.boot.test.context.TestConfiguration"
-    },
-    {
-      "type": "org.springframework.boot.test.context.filter.ExcludeFilterApplicationContextInitializer",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.context.filter.annotation.TypeExcludeFiltersContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.http.client.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.boot.test.web.server.LocalServerPort"
     },
     {
       "type": "org.springframework.boot.thread.Threading"
@@ -10461,16 +7400,7 @@
       "type": "org.springframework.core.convert.support.GenericConversionService"
     },
     {
-      "type": "org.springframework.core.env.Environment"
-    },
-    {
       "type": "org.springframework.core.env.EnvironmentCapable"
-    },
-    {
-      "type": "org.springframework.core.io.Resource"
-    },
-    {
-      "type": "org.springframework.core.io.ResourceLoader"
     },
     {
       "type": "org.springframework.core.task.AsyncTaskExecutor"
@@ -10524,16 +7454,10 @@
       "type": "org.springframework.http.ReactiveHttpInputMessage"
     },
     {
-      "type": "org.springframework.http.client.ClientHttpRequestFactory"
-    },
-    {
       "type": "org.springframework.http.client.ReactorResourceFactory"
     },
     {
       "type": "org.springframework.http.converter.HttpMessageConverter"
-    },
-    {
-      "type": "org.springframework.http.converter.HttpMessageConverters"
     },
     {
       "type": "org.springframework.http.converter.StringHttpMessageConverter"
@@ -10594,221 +7518,6 @@
     },
     {
       "type": "org.springframework.stereotype.Service"
-    },
-    {
-      "type": "org.springframework.test.annotation.DirtiesContext"
-    },
-    {
-      "type": "org.springframework.test.context.BootstrapWith"
-    },
-    {
-      "type": "org.springframework.test.context.DynamicPropertySource"
-    },
-    {
-      "type": "org.springframework.test.context.bean.override.BeanOverrideContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.bean.override.BeanOverrideTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.bean.override.mockito.MockitoResetTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.bean.override.mockito.SpringMockResolver",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.event.ApplicationEventsTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.event.EventPublishingTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener"
-    },
-    {
-      "type": "org.springframework.test.context.junit.jupiter.SpringExtension",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.observation.MicrometerObservationRegistryTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.CommonCachesTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DefaultBootstrapContext",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "java.lang.Class",
-            "org.springframework.test.context.CacheAwareContextLoaderDelegate"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DefaultTestContext",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "org.springframework.test.context.support.DefaultTestContext"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DependencyInjectionTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DirtiesContextTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DynamicPropertiesContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.support.DynamicPropertyRegistrarBeanInitializer",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.transaction.TransactionalTestExecutionListener"
-    },
-    {
-      "type": "org.springframework.test.context.web.ServletTestExecutionListener",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.context.web.WebAppConfiguration"
-    },
-    {
-      "type": "org.springframework.test.context.web.socket.MockServerContainerContextCustomizerFactory",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.springframework.test.web.servlet.MockMvc"
-    },
-    {
-      "type": "org.springframework.test.web.servlet.MockMvcBuilder"
-    },
-    {
-      "type": "org.springframework.test.web.servlet.MockMvcBuilderSupport"
-    },
-    {
-      "type": "org.springframework.test.web.servlet.assertj.MockMvcTester"
-    },
-    {
-      "type": "org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder"
-    },
-    {
-      "type": "org.springframework.test.web.servlet.setup.ConfigurableMockMvcBuilder"
-    },
-    {
-      "type": "org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder"
     },
     {
       "type": "org.springframework.util.AntPathMatcher"
@@ -10886,19 +7595,7 @@
       "type": "org.springframework.web.bind.annotation.RestControllerAdvice"
     },
     {
-      "type": "org.springframework.web.client.RestClient"
-    },
-    {
-      "type": "org.springframework.web.client.RestClient$Builder"
-    },
-    {
       "type": "org.springframework.web.client.RestClientException"
-    },
-    {
-      "type": "org.springframework.web.client.RestTemplate"
-    },
-    {
-      "type": "org.springframework.web.client.support.RestClientAdapter"
     },
     {
       "type": "org.springframework.web.context.ConfigurableWebApplicationContext"
@@ -10959,9 +7656,6 @@
     },
     {
       "type": "org.springframework.web.reactive.function.client.WebClientException"
-    },
-    {
-      "type": "org.springframework.web.service.registry.HttpServiceProxyRegistry"
     },
     {
       "type": "org.springframework.web.servlet.DispatcherServlet"
@@ -11238,203 +7932,7 @@
       "type": "org.springframework.web.util.pattern.PathPatternParser"
     },
     {
-      "type": "org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy"
-    },
-    {
-      "type": "org.testcontainers.dockerclient.DockerMachineClientProviderStrategy"
-    },
-    {
-      "type": "org.testcontainers.dockerclient.EnvironmentAndSystemPropertyClientProviderStrategy"
-    },
-    {
-      "type": "org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy"
-    },
-    {
-      "type": "org.testcontainers.dockerclient.RootlessDockerClientProviderStrategy"
-    },
-    {
-      "type": "org.testcontainers.dockerclient.TestcontainersHostPropertyClientProviderStrategy"
-    },
-    {
-      "type": "org.testcontainers.dockerclient.UnixSocketClientProviderStrategy",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.testcontainers.shaded.com.fasterxml.jackson.databind.deser.BeanDeserializerModifier[]"
-    },
-    {
-      "type": "org.testcontainers.shaded.com.fasterxml.jackson.databind.ext.Java7SupportImpl",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.testcontainers.shaded.com.github.dockerjava.core.command.AbstrAsyncDockerCmd"
-    },
-    {
-      "type": "org.testcontainers.shaded.com.github.dockerjava.core.command.AbstrDockerCmd"
-    },
-    {
-      "type": "org.testcontainers.shaded.com.github.dockerjava.core.command.CreateContainerCmdImpl",
-      "fields": [
-        {
-          "name": "argsEscaped"
-        },
-        {
-          "name": "attachStderr"
-        },
-        {
-          "name": "attachStdin"
-        },
-        {
-          "name": "attachStdout"
-        },
-        {
-          "name": "cmd"
-        },
-        {
-          "name": "domainName"
-        },
-        {
-          "name": "entrypoint"
-        },
-        {
-          "name": "env"
-        },
-        {
-          "name": "exposedPorts"
-        },
-        {
-          "name": "healthcheck"
-        },
-        {
-          "name": "hostConfig"
-        },
-        {
-          "name": "hostName"
-        },
-        {
-          "name": "image"
-        },
-        {
-          "name": "labels"
-        },
-        {
-          "name": "macAddress"
-        },
-        {
-          "name": "networkDisabled"
-        },
-        {
-          "name": "networkingConfig"
-        },
-        {
-          "name": "onBuild"
-        },
-        {
-          "name": "portSpecs"
-        },
-        {
-          "name": "shell"
-        },
-        {
-          "name": "stdInOnce"
-        },
-        {
-          "name": "stdinOpen"
-        },
-        {
-          "name": "stopSignal"
-        },
-        {
-          "name": "stopTimeout"
-        },
-        {
-          "name": "tty"
-        },
-        {
-          "name": "user"
-        },
-        {
-          "name": "volumes"
-        },
-        {
-          "name": "workingDir"
-        }
-      ]
-    },
-    {
-      "type": "org.testcontainers.shaded.com.github.dockerjava.core.command.ExecCreateCmdImpl",
-      "fields": [
-        {
-          "name": "attachStderr"
-        },
-        {
-          "name": "attachStdin"
-        },
-        {
-          "name": "attachStdout"
-        },
-        {
-          "name": "cmd"
-        },
-        {
-          "name": "tty"
-        }
-      ],
-      "methods": [
-        {
-          "name": "getContainerId",
-          "parameterTypes": []
-        },
-        {
-          "name": "getEnv",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPrivileged",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUser",
-          "parameterTypes": []
-        },
-        {
-          "name": "getWorkingDir",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "org.testcontainers.shaded.com.github.dockerjava.core.command.ExecStartCmdImpl",
-      "fields": [
-        {
-          "name": "detach"
-        },
-        {
-          "name": "tty"
-        }
-      ]
-    },
-    {
-      "type": "org.testcontainers.shaded.org.awaitility.core.ConditionFactory$1"
-    },
-    {
       "type": "org.testng.SkipException"
-    },
-    {
-      "type": "org.w3c.dom.Element"
-    },
-    {
-      "type": "org.w3c.dom.NodeList"
     },
     {
       "type": "org.webjars.WebJarVersionLocator"
@@ -11869,10 +8367,25 @@
       "type": "sun.util.resources.cldr.TimeZoneNames_en_US"
     },
     {
+      "type": "tools.jackson.core.TokenStreamFactory"
+    },
+    {
       "type": "tools.jackson.core.TreeCodec"
     },
     {
       "type": "tools.jackson.core.Versioned"
+    },
+    {
+      "type": "tools.jackson.core.base.DecorableTSFactory"
+    },
+    {
+      "type": "tools.jackson.core.base.TextualTSFactory"
+    },
+    {
+      "type": "tools.jackson.core.json.JsonFactory"
+    },
+    {
+      "type": "tools.jackson.core.util.Snapshottable"
     },
     {
       "type": "tools.jackson.databind.JacksonModule"
@@ -12127,13 +8640,6 @@
     {
       "type": {
         "proxy": [
-          "org.springframework.boot.test.context.SpringBootTest"
-        ]
-      }
-    },
-    {
-      "type": {
-        "proxy": [
           "org.springframework.context.annotation.Import"
         ]
       }
@@ -12142,13 +8648,6 @@
       "type": {
         "proxy": [
           "org.springframework.context.event.EventListener"
-        ]
-      }
-    },
-    {
-      "type": {
-        "proxy": [
-          "org.springframework.test.context.BootstrapWith"
         ]
       }
     },
@@ -12292,37 +8791,11 @@
           ]
         }
       }
-    },
-    {
-      "type": {
-        "lambda": {
-          "declaringClass": "org.testcontainers.containers.GenericContainer",
-          "interfaces": [
-            "java.util.concurrent.Callable"
-          ]
-        }
-      }
-    },
-    {
-      "type": {
-        "lambda": {
-          "declaringClass": "org.testcontainers.dockerclient.DockerClientProviderStrategy",
-          "interfaces": [
-            "org.testcontainers.shaded.org.awaitility.core.ThrowingRunnable"
-          ]
-        }
-      }
     }
   ],
   "resources": [
     {
       "glob": "META-INF/build-info.properties"
-    },
-    {
-      "glob": "META-INF/dgminfo"
-    },
-    {
-      "glob": "META-INF/groovy/org.codehaus.groovy.runtime.ExtensionModule"
     },
     {
       "glob": "META-INF/jakarta.address.map"
@@ -12353,9 +8826,6 @@
     },
     {
       "glob": "META-INF/mime.types"
-    },
-    {
-      "glob": "META-INF/resources"
     },
     {
       "glob": "META-INF/resources/index.html"
@@ -12440,9 +8910,6 @@
     },
     {
       "glob": "META-INF/services/org.assertj.core.presentation.Representation"
-    },
-    {
-      "glob": "META-INF/services/org.codehaus.groovy.runtime.ExtensionModule"
     },
     {
       "glob": "META-INF/services/org.junit.platform.commons.support.scanning.ClasspathScanner"
@@ -13180,9 +9647,6 @@
       "glob": "org/springframework/boot/autoconfigure/condition/ConditionalOnClass.class"
     },
     {
-      "glob": "org/springframework/boot/autoconfigure/condition/ConditionalOnExpression.class"
-    },
-    {
       "glob": "org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.class"
     },
     {
@@ -13225,6 +9689,9 @@
       "glob": "org/springframework/boot/autoconfigure/ssl/SslAutoConfiguration.class"
     },
     {
+      "glob": "org/springframework/boot/autoconfigure/task/DefaultTaskSchedulerConfiguration.class"
+    },
+    {
       "glob": "org/springframework/boot/autoconfigure/task/TaskExecutionAutoConfiguration.class"
     },
     {
@@ -13250,6 +9717,9 @@
     },
     {
       "glob": "org/springframework/boot/autoconfigure/task/TaskExecutorConfigurations$TaskExecutorConfiguration.class"
+    },
+    {
+      "glob": "org/springframework/boot/autoconfigure/task/TaskExecutorConfigurations$TaskExecutorContextPropagationConfiguration.class"
     },
     {
       "glob": "org/springframework/boot/autoconfigure/task/TaskExecutorConfigurations$ThreadPoolTaskExecutorBuilderConfiguration.class"
@@ -13291,9 +9761,6 @@
       "glob": "org/springframework/boot/health/autoconfigure/actuate/endpoint/HealthEndpointAutoConfiguration.class"
     },
     {
-      "glob": "org/springframework/boot/health/autoconfigure/actuate/endpoint/HealthEndpointConfiguration$HealthEndpointGroupMembershipValidator.class"
-    },
-    {
       "glob": "org/springframework/boot/health/autoconfigure/actuate/endpoint/HealthEndpointConfiguration$HealthEndpointGroupsBeanPostProcessor.class"
     },
     {
@@ -13331,24 +9798,6 @@
     },
     {
       "glob": "org/springframework/boot/health/autoconfigure/registry/HealthContributorRegistryAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/http/client/autoconfigure/HttpClientAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/http/client/autoconfigure/imperative/ImperativeHttpClientAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/http/client/autoconfigure/imperative/NotReactiveWebApplicationCondition$ReactiveWebApplication.class"
-    },
-    {
-      "glob": "org/springframework/boot/http/client/autoconfigure/imperative/NotReactiveWebApplicationCondition.class"
-    },
-    {
-      "glob": "org/springframework/boot/http/client/autoconfigure/metrics/HttpClientMetricsAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/http/client/autoconfigure/service/HttpServiceClientPropertiesAutoConfiguration.class"
     },
     {
       "glob": "org/springframework/boot/http/converter/autoconfigure/GsonHttpMessageConvertersConfiguration.class"
@@ -13414,6 +9863,9 @@
       "glob": "org/springframework/boot/http/converter/autoconfigure/KotlinSerializationHttpMessageConvertersConfiguration.class"
     },
     {
+      "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$AbstractFactoryBuilderCustomizer.class"
+    },
+    {
       "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$AbstractMapperBuilderCustomizer.class"
     },
     {
@@ -13423,10 +9875,13 @@
       "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonAutoConfigurationRuntimeHints.class"
     },
     {
-      "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonJsonMapperBuilderCustomizerConfiguration$StandardJsonMapperBuilderCustomizer.class"
+      "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonJsonCustomizerConfiguration$StandardJsonFactoryBuilderCustomizer.class"
     },
     {
-      "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonJsonMapperBuilderCustomizerConfiguration.class"
+      "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonJsonCustomizerConfiguration$StandardJsonMapperBuilderCustomizer.class"
+    },
+    {
+      "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonJsonCustomizerConfiguration.class"
     },
     {
       "glob": "org/springframework/boot/jackson/autoconfigure/JacksonAutoConfiguration$JacksonMixinConfiguration.class"
@@ -13592,30 +10047,6 @@
     },
     {
       "glob": "org/springframework/boot/micrometer/tracing/brave/autoconfigure/zipkin/ZipkinWithBraveTracingAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/NotReactiveWebApplicationCondition$ReactiveWebApplication.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/NotReactiveWebApplicationCondition.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/RestClientAutoConfiguration$HttpMessageConvertersConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/RestClientAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/RestClientObservationAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/RestTemplateAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/RestTemplateObservationAutoConfiguration.class"
-    },
-    {
-      "glob": "org/springframework/boot/restclient/autoconfigure/service/HttpServiceClientAutoConfiguration.class"
     },
     {
       "glob": "org/springframework/boot/servlet/autoconfigure/HttpEncodingAutoConfiguration.class"
@@ -13805,6 +10236,9 @@
     },
     {
       "glob": "org/springframework/context/ApplicationContextAware.class"
+    },
+    {
+      "glob": "org/springframework/context/EmbeddedValueResolverAware.class"
     },
     {
       "glob": "org/springframework/context/ResourceLoaderAware.class"

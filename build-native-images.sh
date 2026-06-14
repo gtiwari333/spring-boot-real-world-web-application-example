@@ -41,10 +41,10 @@ esac
 # Modules
 # ---------------------------------------------------------------------------
 ALL_MODULES=(
-#    content-checker/content-checker-service
-#    email/email-service
-#    trend/trend-service
-#    main-app/report-service
+    content-checker/content-checker-service
+    email/email-service
+    trend/trend-service
+    main-app/report-service
     main-app/main-webapp
 )
 

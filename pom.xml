@@ -345,16 +345,7 @@
                                 </execution>
                             </executions>
                             <configuration>
-                                <agent>
-                                    <metadataCopy>
-                                        <merge>true</merge>
-                                        <outputDirectory>${project.build.outputDirectory}/META-INF/native-image
-                                        </outputDirectory>
-                                        <disabledStages>
-                                            <stage>main</stage>
-                                        </disabledStages>
-                                    </metadataCopy>
-                                </agent>
+                                <!-- Removed the <agent> block entirely -->
                                 <metadataRepository>
                                     <enabled>true</enabled>
                                 </metadataRepository>
@@ -363,9 +354,7 @@
                                     <buildArg>-H:+AddAllCharsets</buildArg>
                                     <buildArg>-Ob</buildArg>
                                     <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
-                                    <buildArg>
-                                        -H:ConfigurationFileDirectories=${project.build.directory}/native/agent-output/test
-                                    </buildArg>
+                                    <!-- Removed the test ConfigurationFileDirectories buildArg -->
                                 </buildArgs>
                             </configuration>
                         </plugin>

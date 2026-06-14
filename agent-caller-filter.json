@@ -3,12 +3,10 @@
     {"excludeClasses": "org.testcontainers.**"},
     {"excludeClasses": "com.github.dockerjava.**"},
     {"excludeClasses": "org.junit.**"},
-    {"excludeClasses": "org.junit.jupiter.**"},
-    {"excludeClasses": "org.junit.platform.**"},
     {"excludeClasses": "org.opentest4j.**"},
     {"excludeClasses": "org.mockito.**"},
-    {"excludeClasses": "net.bytebuddy.**"},
     {"excludeClasses": "org.assertj.**"},
+    {"excludeClasses": "org.hamcrest.**"},
     {"excludeClasses": "org.spockframework.**"},
     {"excludeClasses": "spock.**"},
     {"excludeClasses": "gt.app.frwk.**"},
@@ -18,7 +16,6 @@
     {"excludeClasses": "org.seleniumhq.**"},
     {"excludeClasses": "org.springframework.test.**"},
     {"excludeClasses": "org.springframework.boot.test.**"},
-    {"excludeClasses": "org.springframework.boot.testcontainers.**"},
-    {"includeClasses": "**"}
+    {"excludeClasses": "org.springframework.boot.testcontainers.**"}
   ]
 }

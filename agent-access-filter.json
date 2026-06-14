@@ -1,10 +1,21 @@
 {
   "rules": [
+    {"excludeClasses": "org.testcontainers.**"},
+    {"excludeClasses": "com.github.dockerjava.**"},
+    {"excludeClasses": "org.junit.**"},
+    {"excludeClasses": "org.opentest4j.**"},
+    {"excludeClasses": "org.mockito.**"},
+    {"excludeClasses": "org.assertj.**"},
+    {"excludeClasses": "org.hamcrest.**"},
+    {"excludeClasses": "org.spockframework.**"},
+    {"excludeClasses": "spock.**"},
+    {"excludeClasses": "dasniko.testcontainers.**"},
+    {"excludeClasses": "com.codeborne.selenide.**"},
+    {"excludeClasses": "org.openqa.selenium.**"},
+    {"excludeClasses": "org.seleniumhq.**"},
+    {"excludeClasses": "gt.app.frwk.**"},
     {"excludeClasses": "org.springframework.test.**"},
-    {"excludeClasses": "org.springframework.boot.testcontainers.**"},
-    {"excludeClasses": "org.springframework.boot.artemis.testcontainers.**"},
-    {"excludeClasses": "org.springframework.boot.micrometer.metrics.testcontainers.**"},
-    {"excludeClasses": "org.springframework.boot.zipkin.testcontainers.**"},
-    {"includeClasses": "**"}
+    {"excludeClasses": "org.springframework.boot.test.**"},
+    {"excludeClasses": "org.springframework.boot.testcontainers.**"}
   ]
 }
