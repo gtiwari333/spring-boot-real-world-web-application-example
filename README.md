@@ -42,7 +42,6 @@ MicroService:
 
 [//]: # (- Spring micrometer based tracing with zipkin)
 - Exposing and implementing Open Feign clients
-- Spring Cloud Contract (WIP)
 
 Spring MVC:
 - MVC with thymeleaf templating
@@ -97,7 +96,6 @@ Misc:
 
 Future: do more stuff
 - CQRS with event store/streaming  
-- Spring Cloud Contract integration (WIP)
 - Visitors log - IP, browser, etc
 - Centralized error reporting
 - Geo-Spatial query for visitors
@@ -189,6 +187,23 @@ The default username/passwords are listed on : gt.app.Application.initData, whic
 
 ### Run Tests Faster by using parallel maven build
 `mvn -T 5 clean package`
+
+
+# Generate GraalVM native image
+
+
+### generate reachability metadata 
+
+it copies to src/main/resources/META-INF/native-image/{module-name}. its one time step
+
+
+`mvn clean verify -Pnative-metadata`
+
+### generate native image using existing reachability metadata
+
+`mvn clean package -Pnative -DskipTests`
+
+Use `build-native-images.sh` or do the following steps manually
 
 
 # Code Quality

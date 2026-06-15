@@ -9,6 +9,7 @@ import org.testcontainers.containers.GenericContainer;
 public class TestContainerConfig {
 
     public static final GenericContainer<?> mailhog = new GenericContainer<>("richarvey/mailhog")
+        .withReuse(true)
         .withExposedPorts(1025);
 
     static {

@@ -11,6 +11,7 @@ import org.springframework.context.MessageSource;
 import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$$;
 
 class WebAppIT extends BaseSeleniumTest {
 
@@ -55,13 +56,13 @@ class WebAppIT extends BaseSeleniumTest {
         testAccessDenied(new PublicPage().open());
     }
 
-    void testAccessDenied(PublicPage publicPage) {
+    void testAccessDenied(PublicPage curPage) {
 
-        publicPage.load("/article");
-        publicPage.body().shouldHave(text("Sign in"));
+        curPage.load("/article");
+        curPage.body().shouldHave(text("Sign in"));
 
-        publicPage.load("/admin");
-        publicPage.body().shouldHave(text("Sign in"));
+        curPage.load("/admin");
+        curPage.body().shouldHave(text("Sign in"));
     }
 
     @Test
@@ -101,7 +102,52 @@ class WebAppIT extends BaseSeleniumTest {
     }
 
     private void testAdminFunctions(AdminPage adminPage) {
-        //TODO: test review page
+        // admin sees articles to review
+        adminPage.body()
+            .shouldHave(text("Articles to review"))
+            .shouldHave(text("Flagged Article To Accept"))
+            .shouldHave(text("Flagged Article To Reject"));
+
+        // --- accept flow ---
+        ReviewArticlePage reviewPage = adminPage.clickReviewByTitle("Flagged Article To Accept");
+        reviewPage.body()
+            .shouldHave(text("Flagged Article To Accept"))
+            .shouldHave(text("Flagged Content To Accept"));
+
+        adminPage = reviewPage.accept();
+        adminPage.body()
+            .shouldHave(text("Article with id"))
+            .shouldHave(text("Approved"));
+
+        // the accepted article should now appear on the public page
+        new PublicPage().open()
+            .body()
+            .shouldHave(text("Flagged Article To Accept"))
+            .shouldHave(text("Flagged Content To Accept"));
+
+        // --- reject flow ---
+        // go back to admin area — the article to reject should still be in the list
+        adminPage = adminPage.open();
+        adminPage.body()
+            .shouldHave(text("Articles to review"))
+            .shouldHave(text("Flagged Article To Reject"))
+            .shouldNotHave(text("Flagged Article To Accept"));
+
+        reviewPage = adminPage.clickReviewByTitle("Flagged Article To Reject");
+        reviewPage.body()
+            .shouldHave(text("Flagged Article To Reject"))
+            .shouldHave(text("Flagged Content To Reject"));
+
+        adminPage = reviewPage.reject();
+        adminPage.body()
+            .shouldHave(text("Article with id"))
+            .shouldHave(text("Rejected"));
+
+        // the rejected article should NOT appear on the public page
+        new PublicPage().open()
+            .body()
+            .shouldNotHave(text("Flagged Article To Reject"))
+            .shouldNotHave(text("Flagged Content To Reject"));
     }
 
     private void testLoggedInHomePage(LoggedInHomePage page, String username) {
@@ -193,6 +239,62 @@ class WebAppIT extends BaseSeleniumTest {
             .shouldHave(text("is deleted"))
             .shouldNotHave(text("Updated Title"))
             .shouldNotHave(text("Updated Content"));
+    }
+
+    @Test
+    void testAddCommentAndReply() {
+        var loginPage = new LoginPage().open();
+        var homePage = loginPage.login("user1", "pass");
+
+        // Navigate to "User1 Article" read page by clicking its title on the landing page
+        ArticleReadPage readPage = openArticleReadPage("User1 Article");
+
+        // Existing SHOWING comment from test data should be visible
+        readPage.body()
+            .shouldHave(text("Test comment for User1 Article"));
+        readPage.shouldShowAddCommentForm();
+
+        // --- level 1: post a top-level comment ---
+        readPage = readPage.addTopLevelComment("E2E top-level comment");
+        readPage.body()
+            .shouldHave(text("Comment saved. Its currently under review."));
+
+        // After redirect: inputs = [reply-form-existing, reply-form-top-level, main-form]
+        // --- level 2: reply to the first existing comment (index 0) ---
+        readPage.addReplyToComment(0, "E2E reply to existing comment");
+        readPage.body()
+            .shouldHave(text("Comment saved. Its currently under review."));
+
+        // After redirect, the level-2 reply is visible (NoopContentCheckService sets SHOWING).
+        // Inputs: [reply-form-existing, reply-form-level-2, reply-form-top-level, main-form]
+        // --- level 3: reply to the newly visible level-2 reply (index 1) ---
+        readPage.addReplyToComment(1, "E2E nested reply to reply");
+        readPage.body()
+            .shouldHave(text("Comment saved. Its currently under review."));
+    }
+
+    @Test
+    void testAnonymousUserArticleReadPage() {
+        // Navigate to "User1 Article" from the public landing page as anonymous user
+        new PublicPage().open();
+        ArticleReadPage readPage = openArticleReadPage("User1 Article");
+
+        // Existing SHOWING comments should be visible for reading
+        readPage.body()
+            .shouldHave(text("Test comment for User1 Article"));
+
+        // The main "Add a comment" form is always rendered (no sec:authorize guard),
+        // but reply forms under existing comments are guarded — they should be absent.
+        readPage.shouldNotHaveReplyForms();
+    }
+
+    /**
+     * Clicks the article title link on the current landing page to navigate
+     * to {@code /article/read/{id}}.
+     */
+    private ArticleReadPage openArticleReadPage(String articleTitle) {
+        $$(".card-title span").findBy(text(articleTitle)).click();
+        return new ArticleReadPage();
     }
 
 }

@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @Import(TestContainerConfig.class)
-class ReportControllerIT {
+class ReportControllerTest {
 
     @MockitoBean
     StatReport statReport;

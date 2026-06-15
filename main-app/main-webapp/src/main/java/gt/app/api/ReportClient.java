@@ -1,25 +1,41 @@
 package gt.app.api;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.stereotype.Component;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.web.client.RestClient;
 
-@FeignClient(name = "report-service", url = "${feign-clients.report-service.url}", fallback = ReportClient.ReportClientFallback.class, configuration = InternalKeycloakAuthConfig.class)
-public interface ReportClient {
-    @PostMapping(value = "/to-review", produces = MediaType.APPLICATION_JSON_VALUE)
-    FlagCount getFlaggedForReviewCount();
+@Component
+@Slf4j
+public class ReportClient {
 
-    @Slf4j
-    class ReportClientFallback implements ReportClient {
+    private final RestClient restClient;
 
+    public ReportClient(@Value("${feign-clients.report-service.url}") String baseUrl,
+                        RestClient.Builder restClientBuilder,
+                        ClientHttpRequestInterceptor bearerAuthInterceptor) {
+        this.restClient = restClientBuilder
+            .baseUrl(baseUrl)
+            .requestInterceptor(bearerAuthInterceptor)
+            .build();
+    }
 
-        @Override
-        public FlagCount getFlaggedForReviewCount() {
+    public FlagCount getFlaggedForReviewCount() {
+        try {
+            return restClient.post()
+                .uri("/to-review")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(FlagCount.class);
+        } catch (Exception e) {
+            log.debug("Failed to get flagged review count via RestClient, using fallback", e);
             return new FlagCount(-100);
         }
     }
-    record FlagCount(int value) {
+
+    public record FlagCount(int value) {
     }
 }
 

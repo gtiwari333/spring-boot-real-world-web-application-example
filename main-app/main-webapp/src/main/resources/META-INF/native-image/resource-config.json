@@ -1,0 +1,60 @@
+{
+    "resources": {
+        "includes": [
+            {
+                "pattern": "\\Qapplication.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-k8s.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-prod.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-loadtest.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-default.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-tls.yml\\E"
+            },
+            {
+                "pattern": "\\Qmessages.properties\\E"
+            },
+            {
+                "pattern": "\\Qmessages_np.properties\\E"
+            },
+            {
+                "pattern": "\\Qwro.properties\\E"
+            },
+            {
+                "pattern": "\\Qwro.xml\\E"
+            },
+            {
+                "pattern": "\\Qkeycloak/realm-export.json\\E"
+            },
+            {
+                "pattern": "\\Qkeys/seedapp.p12\\E"
+            },
+            {
+                "pattern": "\\Qstatic/.*\\E"
+            },
+            {
+                "pattern": "\\Qtemplates/.*\\E"
+            },
+            {
+                "pattern": ".*liquibase/.*"
+            },
+            {
+                "pattern": ".*master\\.xml"
+            },
+            {
+                "pattern": ".*changelog.*\\.xml"
+            },
+            {
+                "pattern": "www.liquibase.org/.*"
+            }
+        ]
+    }
+}

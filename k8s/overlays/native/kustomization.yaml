@@ -1,0 +1,165 @@
+# k8s/overlays/native/kustomization.yaml
+# Native image overlay — switches from JVM images to GraalVM native images
+# with reduced memory limits.
+#
+# Apply: kubectl apply -k k8s/overlays/native
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+    - ../../base
+
+images:
+    - name: gtapp-content-checker-service
+      newName: gtapp-content-checker-service-native
+    - name: gtapp-email-service
+      newName: gtapp-email-service-native
+    - name: gtapp-trend-service
+      newName: gtapp-trend-service-native
+    - name: gtapp-report-service
+      newName: gtapp-report-service-native
+    - name: gtapp-main-webapp
+      newName: gtapp-main-webapp-native
+
+patches:
+    # Replace JVM memory limits with native (much lower) limits
+    - target:
+          kind: Deployment
+          name: content-checker-service
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: content-checker-service
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: content-checker
+                            resources:
+                                requests:
+                                    memory: "64Mi"
+                                    cpu: "50m"
+                                limits:
+                                    memory: "128Mi"
+                                    cpu: "500m"
+
+    - target:
+          kind: Deployment
+          name: email-service
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: email-service
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: email-service
+                            resources:
+                                requests:
+                                    memory: "64Mi"
+                                    cpu: "50m"
+                                limits:
+                                    memory: "128Mi"
+                                    cpu: "500m"
+
+    - target:
+          kind: Deployment
+          name: trend-service
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: trend-service
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: trend-service
+                            resources:
+                                requests:
+                                    memory: "64Mi"
+                                    cpu: "50m"
+                                limits:
+                                    memory: "128Mi"
+                                    cpu: "500m"
+
+    - target:
+          kind: Deployment
+          name: report-service
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: report-service
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: report-service
+                            resources:
+                                requests:
+                                    memory: "64Mi"
+                                    cpu: "50m"
+                                limits:
+                                    memory: "128Mi"
+                                    cpu: "500m"
+
+    - target:
+          kind: Deployment
+          name: main-webapp
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: main-webapp
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: main-webapp
+                            resources:
+                                requests:
+                                    memory: "128Mi"
+                                    cpu: "100m"
+                                limits:
+                                    memory: "256Mi"
+                                    cpu: "1000m"
+
+    # Remove JVM-specific env vars (not applicable to native images)
+    - target:
+          kind: Deployment
+          name: content-checker-service
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: content-checker-service
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: content-checker
+                            env:
+                                - name: BPL_JVM_THREAD_COUNT
+                                  $patch: delete
+
+    - target:
+          kind: Deployment
+          name: main-webapp
+      patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+              name: main-webapp
+          spec:
+              template:
+                  spec:
+                      containers:
+                          - name: main-webapp
+                            env:
+                                - name: SPRING_ARTEMIS_MODE
+                                  $patch: delete

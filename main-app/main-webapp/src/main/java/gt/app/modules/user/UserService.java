@@ -26,8 +26,4 @@ public class UserService {
         return userRepository.existsByUsername(username);
     }
 
-    public AppUser getReference(UUID id) {
-        return userRepository.getReferenceById(id);
-    }
-
 }

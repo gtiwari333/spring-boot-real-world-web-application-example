@@ -1,0 +1,24 @@
+spring:
+    thymeleaf:
+        cache: true # set to false, this if you are working on UI
+        prefix: file:main-app/main-webapp/src/main/resources/templates/  #directly serve from src folder instead of target
+    web:
+        resources:
+            static-locations:
+                - file:src/main/resources/static/ #directly serve from src folder instead of target
+                - classpath:/META-INF/resources/
+                - classpath:/resources/
+                - classpath:/static/
+                - classpath:/public/
+            cache:
+                period: 500000
+            chain:
+                cache: true
+
+logging.level:
+    org.springframework.security: INFO
+    org.springframework.security.web: INFO
+    org.springframework.cloud: INFO
+#    org.hibernate.SQL: debug
+#    org.hibernate.type: TRACE
+    'org.hibernate.engine.internal.StatisticalLoggingSessionEventListener': info

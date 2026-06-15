@@ -38,6 +38,7 @@ public class ArticleService {
     private final WebsocketHandler websocketHandler;
     private final TransactionTemplate transactionTemplate;
 
+    @Transactional
     public Article createArticle(ArticleCreateDto dto) {
 
         List<ReceivedFile> files = new ArrayList<>();
@@ -64,6 +65,7 @@ public class ArticleService {
     }
 
     //single update statement - no transaction required
+    @Transactional
     public Article update(ArticleEditDto dto) {
         Optional<Article> articleOpt = articleRepository.findWithFilesAndUserById(dto.getId());
         return articleOpt.map(article -> {
@@ -74,8 +76,8 @@ public class ArticleService {
     }
 
     @Cacheable(cacheNames = "articleRead", key = "#id")
+    @Transactional(readOnly = true)
     public ArticleReadDto read(Long id) {
-        //TODO: filter out unpublished comments - write a jooq
         ArticleReadDto dto = articleRepository.findOneWithAllByIdAndStatus(id, ArticleStatus.PUBLISHED, Sort.by(Sort.Direction.DESC, "id"))
             .map(ArticleMapper.INSTANCE::mapForRead)
             .map(this::mapNested)
@@ -103,6 +105,7 @@ public class ArticleService {
         return d;
     }
 
+    @Transactional(readOnly = true)
     private ArticleReadDto.CommentDto findParentWithId(ArticleReadDto d, Long parentCommentId) {
         return d.getComments().stream()
             .filter(c -> c.id.equals(parentCommentId))
@@ -110,24 +113,28 @@ public class ArticleService {
     }
 
     @Cacheable(cacheNames = "previewForPublicHomePage")
+    @Transactional(readOnly = true)
     public Page<ArticlePreviewDto> previewForPublicHomePage(Pageable pageable) {
         return articleRepository.findWithUserAndAttachedFilesByStatus(ArticleStatus.PUBLISHED, pageable)
             .map(ArticleMapper.INSTANCE::mapForPreviewListing);
     }
 
     @Cacheable(cacheNames = "previewAllWithFilesByUser")
+    @Transactional(readOnly = true)
     public Page<ArticlePreviewDto> previewAllWithFilesByUser(Pageable pageable, UUID userId) {
         return articleRepository.findWithFilesAndUserByCreatedByUser_IdAndStatusOrderByCreatedDateDesc(userId, ArticleStatus.PUBLISHED, pageable)
             .map(ArticleMapper.INSTANCE::mapForPreviewListing);
     }
 
     @Cacheable(cacheNames = "articleForReview", key = "#id")
+    @Transactional(readOnly = true)
     public ArticlePreviewDto readForReview(Long id) {
         return articleRepository.findOneWithUserAndAttachedFilesByIdAndStatus(id, ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW)
             .map(ArticleMapper.INSTANCE::mapForReview)
             .orElseThrow();
     }
 
+    @Transactional(readOnly = true)
     public Page<ArticlePreviewDto> getAllToReview(Pageable pageable) {
         return articleRepository.findWithUserAndAttachedFilesByStatus(ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW, pageable)
             .map(ArticleMapper.INSTANCE::mapForPreviewListing);
@@ -147,12 +154,15 @@ public class ArticleService {
     public Optional<Article> handleReview(ArticleReviewResultDto dto) {
         return articleRepository.findWithModifiedUserByIdAndStatus(dto.getId(), ArticleStatus.FLAGGED_FOR_MANUAL_REVIEW)
             .map(n -> {
-                transactionTemplate.executeWithoutResult(txSt -> {
+                // Use execute() (not executeWithoutResult) to capture the managed entity
+                // returned by save() — the merged copy has auditing fields (@LastModifiedBy)
+                // populated by the AuditingEntityListener during flush/commit.
+                Article managed = transactionTemplate.execute(txSt -> {
                     n.setStatus(dto.getVerdict());
-                    articleRepository.save(n);
+                    return articleRepository.save(n);
                 });
-                websocketHandler.sendToUser(n.getLastModifiedByUser().getUsername(), "Your article with title " + n.getTitle() + " has been " + (dto.getVerdict() == ArticleStatus.PUBLISHED ? "approved from manual review." : "rejected from manual review."));
-                return n;
+                websocketHandler.sendToUser(managed.getLastModifiedByUser().getUsername(), "Your article with title " + managed.getTitle() + " has been " + (dto.getVerdict() == ArticleStatus.PUBLISHED ? "approved from manual review." : "rejected from manual review."));
+                return managed;
             });
     }
 

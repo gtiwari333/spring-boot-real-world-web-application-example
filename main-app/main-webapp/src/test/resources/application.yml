@@ -1,11 +1,12 @@
 spring:
     application:
-        name: Integration Test
+        name: Main-APP
     profiles:
         active: test
     liquibase:
         enabled: true
         change-log: classpath:/liquibase/master.xml
+        clear-checksums: true
     jpa:
         show-sql: false
         open-in-view: false
@@ -16,8 +17,6 @@ spring:
                 implicit-strategy: org.springframework.boot.hibernate.SpringImplicitNamingStrategy
     mvc:
         static-path-pattern: /static/**
-    jooq:
-        sql-dialect: MYSQL
     main:
         banner-mode: off
     security:

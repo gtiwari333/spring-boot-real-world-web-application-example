@@ -1,13 +1,11 @@
 package gt.app;
 
-import brave.sampler.Sampler;
 import gt.app.config.AppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -39,10 +37,5 @@ public class MainApplication {
             env.getProperty("server.port"),
             Arrays.toString(env.getActiveProfiles())
         );
-    }
-    //Force sample
-    @Bean
-    public Sampler defaultSampler() {
-        return Sampler.ALWAYS_SAMPLE;
     }
 }

@@ -3,11 +3,11 @@ spring:
         name: Main-APP
     mvc:
         static-path-pattern: /static/**
-    jooq:
-        sql-dialect: MySQL
     liquibase:
         enabled: true
         change-log: classpath:/liquibase/master.xml
+        # fix for graalvm native image
+        parameters.secureParsing: false
     jpa:
         open-in-view: false
         hibernate:
@@ -27,10 +27,6 @@ spring:
         user: ${SPRING_ARTEMIS_USER:admin}
         password: ${SPRING_ARTEMIS_PASSWORD:admin}
         broker-url: tcp://${SPRING_ARTEMIS_HOST:localhost:61616}
-    cloud:
-        openfeign:
-            micrometer:
-                enabled: true
     security:
         oauth2:
             client:

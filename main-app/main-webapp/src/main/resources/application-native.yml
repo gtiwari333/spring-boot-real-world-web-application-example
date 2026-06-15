@@ -1,0 +1,2 @@
+spring.jpa.properties.hibernate.bytecode.provider=none
+spring.jpa.properties.hibernate.bytecode.use_reflection_optimizer=false

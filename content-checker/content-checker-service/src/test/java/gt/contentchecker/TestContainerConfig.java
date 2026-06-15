@@ -8,7 +8,8 @@ import org.testcontainers.activemq.ArtemisContainer;
 @TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfig {
 
-    static final ArtemisContainer artemis = new ArtemisContainer("apache/activemq-artemis:2.44.0");
+    static final ArtemisContainer artemis = new ArtemisContainer("apache/activemq-artemis:2.44.0")
+        .withReuse(true);
 
     static {
         artemis.start();

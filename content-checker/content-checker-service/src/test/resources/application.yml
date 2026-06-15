@@ -1,2 +1,5 @@
+spring:
+    application:
+        name: Content-Checker-Service
 jms:
     content-checker-request-queue: jms-content-checker-request-queue

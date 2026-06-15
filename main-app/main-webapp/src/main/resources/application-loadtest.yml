@@ -19,7 +19,6 @@ spring:
             ddl-auto: none  # we use liquibase
 
 logging.level:
-    org.jooq.tools.LoggerListener: DEBUG
     org.springframework.security: WARN
     org.springframework.security.web: WARN
     ROOT: INFO

@@ -1,6 +1,6 @@
 spring:
     application:
-        name: Integration Test
+        name: Email-Service
     profiles:
         active: test
     jpa:

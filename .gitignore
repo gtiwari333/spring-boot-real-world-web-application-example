@@ -1,6 +1,5 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
-application-default.yml
 
 ### STS ###
 .apt_generated

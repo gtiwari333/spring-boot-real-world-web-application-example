@@ -30,7 +30,7 @@ spec:
         spec:
             containers:
                 -   name: mysql
-                    image: mysql:latest
+                    image: mysql:9.7
                     args:
                         - "--lower_case_table_names=1"
                         - "--character_set_server=utf8mb4"

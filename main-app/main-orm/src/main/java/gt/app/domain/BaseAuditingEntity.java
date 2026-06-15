@@ -13,16 +13,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.Instant;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-abstract class BaseAuditingEntity extends BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseAuditingEntity extends BaseEntity {
 
     private static final long serialVersionUID = 4681401402666658611L;
 
     @CreatedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by_user_id", updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "created_by_user_id")
     @JsonIgnore//ignore completely to avoid StackOverflow exception by User.createdByUser logic, use DTO
     private AppUser createdByUser;
 
@@ -31,7 +31,7 @@ abstract class BaseAuditingEntity extends BaseEntity {
     private Instant createdDate;
 
     @LastModifiedBy
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "last_modified_by_user_id")
     @JsonIgnore//ignore completely to avoid StackOverflow exception by User.lastModifiedByUser logic, use DTO
     private AppUser lastModifiedByUser;

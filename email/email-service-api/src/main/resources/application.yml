@@ -1,7 +1,6 @@
 spring:
     application:
-        name: Report Service
-
+        name: Report-Service
 server:
     port: 8086
 

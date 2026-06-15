@@ -16,30 +16,56 @@ services:
             - "8084:8084"
             - "8085:8085"
             - "8086:8086"
-            - "8161:8161"
             - "61616:61616"
+
     activemq:
-        # its not supported in M1 Mac, workaround is to enable Rosetta in Docker
-        # Docker settings → Features in development → check ☑ Use Rosetta for x86/amd64 emulation on Apple Silicon, and then restart Docker.
         image: 'apache/activemq-artemis:2.44.0'
         environment:
             - "ARTEMIS_USER=admin"
             - "ARTEMIS_PASSWORD=admin"
         network_mode: "service:localhost"
+        healthcheck:
+            test: [ "CMD-SHELL", "curl -sf http://localhost:8161 || exit 1" ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+            start_period: 30s
+
     mysql:
-        image: 'mysql'
+        image: 'mysql:9.7'
         environment:
             - "MYSQL_USER=seedappuser"
             - "MYSQL_ROOT_PASSWORD=password"
             - "MYSQL_DATABASE=seedapp"
         command: mysqld --lower_case_table_names=1 --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
         network_mode: "service:localhost"
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword" ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+            start_period: 30s
+
     emailhog:
         image: 'richarvey/mailhog'
         network_mode: "service:localhost"
+        healthcheck:
+            test: [ "CMD-SHELL", "curl -sf http://localhost:8025 || exit 1" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+
     zipkin:
         image: 'openzipkin/zipkin'
         network_mode: "service:localhost"
+        healthcheck:
+            test: [ "CMD-SHELL", "curl -sf http://localhost:9411/health || exit 1" ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+            start_period: 20s
+
     keycloak:
         image: 'quay.io/keycloak/keycloak:26.6.1'
         command: start-dev --import-realm
@@ -53,46 +79,72 @@ services:
         volumes:
             - ../main-app/main-webapp/src/main/resources/keycloak/:/opt/keycloak/data/import
         network_mode: "service:localhost"
+        healthcheck:
+            test: [ "CMD-SHELL", "curl -sf http://localhost:8080/health/ready || exit 1" ]
+            interval: 15s
+            timeout: 5s
+            retries: 15
+            start_period: 60s
+
     content-checker-service:
         image: gtapp-content-checker-service:latest
+        environment:
+            - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
-            - zipkin
-            - activemq
+            zipkin:
+                condition: service_healthy
+            activemq:
+                condition: service_healthy
+
     email-service:
         image: gtapp-email-service:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
-            - emailhog
-            - zipkin
+            emailhog:
+                condition: service_healthy
+            zipkin:
+                condition: service_healthy
+
     trend-service:
         image: gtapp-trend-service:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
-            - zipkin
+            zipkin:
+                condition: service_healthy
+
     report-service:
         image: gtapp-report-service:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
-            - zipkin
-            - mysql
-            - keycloak
+            zipkin:
+                condition: service_healthy
+            mysql:
+                condition: service_healthy
+            keycloak:
+                condition: service_healthy
+
     main-webapp:
         image: gtapp-main-webapp:latest
         environment:
             - "SPRING_PROFILES_ACTIVE=prod"
         network_mode: "service:localhost"
         depends_on:
-            - zipkin
-            - email-service
-            - mysql
-            - activemq
-            - keycloak
+            zipkin:
+                condition: service_healthy
+            email-service:
+                condition: service_started
+            mysql:
+                condition: service_healthy
+            activemq:
+                condition: service_healthy
+            keycloak:
+                condition: service_healthy
         volumes:
-            -   /var/tmp/:/tmp/uploads/attachments/
+            - /var/tmp/:/tmp/uploads/attachments/

@@ -3,12 +3,16 @@ package gt.report.frwk;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.mysql.MySQLContainer;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfig {
 
     static final MySQLContainer mysql = new MySQLContainer("mysql:9.7")
+        .withReuse(true)
+        .withDatabaseName("test_reportservice")
         .withCommand(
             "mysqld",
             "--lower_case_table_names=1",
@@ -26,4 +30,10 @@ public class TestContainerConfig {
         return mysql;
     }
 
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", mysql::getJdbcUrl);
+        registry.add("spring.datasource.username", mysql::getUsername);
+        registry.add("spring.datasource.password", mysql::getPassword);
+    }
 }

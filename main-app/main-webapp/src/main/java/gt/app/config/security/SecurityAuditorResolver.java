@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-class SecurityAuditorResolver implements AuditorAware<AppUser> {
+public class SecurityAuditorResolver implements AuditorAware<AppUser> {
 
     private final EntityManager entityManager;
 
@@ -23,6 +23,8 @@ class SecurityAuditorResolver implements AuditorAware<AppUser> {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(entityManager.getReference(AppUser.class, userId));
+        // find() instead of getReference() — getReference() creates a Hibernate proxy
+        // which fails in native image with bytecode.provider=none
+        return Optional.ofNullable(entityManager.find(AppUser.class, userId));
     }
 }

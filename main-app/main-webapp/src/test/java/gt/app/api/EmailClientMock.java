@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailClientMock implements EmailClient {
+public class EmailClientMock extends EmailClient {
 
     @Override
     public ResponseEntity<Void> sendEmailWithAttachments(@Valid @NotNull EmailDto email) {

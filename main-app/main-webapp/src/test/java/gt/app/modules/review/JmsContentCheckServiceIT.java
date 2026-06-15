@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 @SpringBootTest
 @Slf4j
-class JmsContentCheckServiceTest extends AbstractIntegrationTest {
+class JmsContentCheckServiceIT extends AbstractIntegrationTest {
 
     @Autowired
     JmsContentCheckService jmsContentCheckService;

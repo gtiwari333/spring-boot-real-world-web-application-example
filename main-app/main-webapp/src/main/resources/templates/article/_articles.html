@@ -52,7 +52,7 @@
                  th:with="article=${article},parentComment=${comment}">
             </div>
             <div class="row">
-                <div th:if="${comment.childComments.size()>0}">
+                <div th:if="${not #lists.isEmpty(comment.childComments)}">
                     <div class="col-12">
                         <section th:insert="~{article/_articles :: view-article-comments}"
                                  th:with="comments=${comment.childComments}">
@@ -102,7 +102,7 @@
 
         <div class="card-body">
             <p class="card-text"><span th:text="${article.content}"></span></p>
-            <div th:if="${article.files.size()>0}">
+            <div th:if="${not #lists.isEmpty(article.files)}">
                 <hr/>
                 Attachments:
                 <span th:each="file : ${article.files}">
@@ -135,7 +135,7 @@
 
         <div class="card-body">
             <p class="card-text"><span th:text="${article.content}"></span></p>
-            <div th:if="${article.files.size()>0}">
+            <div th:if="${not #lists.isEmpty(article.files)}">
                 <hr/>
                 Attachments:
                 <span th:each="file : ${article.files}">
@@ -154,7 +154,7 @@
                   th:text="${article.username}"></span>
         </div>
 
-        <div th:if="${article.comments.size()>0}">
+        <div th:if="${not #lists.isEmpty(article.comments)}">
             <div class="card-body">
                 <strong>Comments:</strong>
                 <hr/>

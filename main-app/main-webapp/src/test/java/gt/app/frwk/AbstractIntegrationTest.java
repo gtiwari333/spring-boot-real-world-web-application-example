@@ -17,6 +17,7 @@ public abstract class AbstractIntegrationTest {
     // use the same pattern for other test containers if they do not have @ServiceConnection support
     static final KeycloakContainer keycloak =
         new KeycloakContainer("quay.io/keycloak/keycloak:26.6.1")
+            .withReuse(true)
             .withRealmImportFile("keycloak/realm-export.json");
 
     static {
