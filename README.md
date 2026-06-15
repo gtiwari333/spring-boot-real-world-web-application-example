@@ -206,6 +206,24 @@ it copies to src/main/resources/META-INF/native-image/{module-name}. its one tim
 Use `build-native-images.sh` or do the following steps manually
 
 
+Look specifically for these patterns that require native image registration:
+
+       1. SpEL T() type references in @PreAuthorize, @PostAuthorize, @AuthenticationPrincipal(expression=...), @Cacheable(condition=...), etc. — each class named in T(...) needs registerType.
+       2. SpEL property/method access on types NOT in the reflection registry — e.g. #authentication.someField where the authentication object's class isn't registered.
+       3. Class.forName() or ClassLoader.loadClass() calls in the project's own code.
+       4. MapStruct Mappers.getMapper() calls beyond ArticleMapper — each generates a *Impl class loaded via Class.forName.
+       5. Jackson polymorphism — @JsonTypeInfo, @JsonSubTypes, subtypes registered via ObjectMapper.registerSubtypes() or SimpleModule.
+       6. @ConfigurationProperties classes not yet in the registry.
+       7. Thymeleaf #utility object methods — check templates for any #strings, #bools, #arrays, #sets, #maps, #dates, #calendars, #ids, #messages, #uris usage not yet registered.
+       8. @EventListener / ApplicationEvent subtypes that might need reflection.
+       9. Any ServiceLoader.load() calls — services need META-INF/services entries bundled.
+       10. @ConditionalOnClass or runtime class checks that dynamically load optional types.
+       11. Enum types used in JPA (@Enumerated) or Jackson that might need registration.
+       12. Hibernate-specific — entity classes (usually handled by AOT but check for any dynamic proxies or custom types).
+       13. @Value("#{...}") SpEL injections that reference type names.
+
+
+
 # Code Quality
 
 ##### The `error-prone` runs at compile time.

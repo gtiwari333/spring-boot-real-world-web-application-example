@@ -71,6 +71,7 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
     public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
         hints.reflection()
             .registerType(TrendDto.class, MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "trend.TrendDto$Trend", MemberCategory.values())
             .registerType(ArticleSummaryDto.class, MemberCategory.values())
             // Artemis JBoss Logging generated _impl classes loaded via Class.forName at runtime
             .registerTypeIfPresent(classLoader, "org.apache.activemq.artemis.core.client.ActiveMQClientMessageBundle_impl", MemberCategory.values())
@@ -111,6 +112,16 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             .registerType(java.sql.Time[].class)
             .registerType(java.sql.Timestamp[].class)
             .registerType(java.net.URL[].class);
+
+        hints.proxies()
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.QueueConnection.class, jakarta.jms.TopicConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.QueueConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.TopicConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class, jakarta.jms.TopicSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.TopicSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class);
 
         hints.resources()
             .registerPattern("activemq-version.properties");

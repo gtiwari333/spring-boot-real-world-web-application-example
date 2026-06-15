@@ -87,14 +87,18 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             .registerType(ArticleReadDto.FileInfo.class, MemberCategory.values())
             .registerType(ArticleReadDto.CommentDto.class, MemberCategory.values())
             .registerType(ArticlePreviewDto.class, MemberCategory.values())
+            .registerType(ArticlePreviewDto.FileInfo.class, MemberCategory.values())
             .registerType(ArticleReviewResultDto.class, MemberCategory.values())
             .registerType(NewCommentDto.class, MemberCategory.values())
             // client-side API records
             .registerType(ReportClient.FlagCount.class, MemberCategory.values())
+            // security types — CurrentUserToken itself needed for SpEL property access, not just the inner UserToken
+            .registerType(CurrentUserToken.class, MemberCategory.values())
             .registerType(CurrentUserToken.UserToken.class, MemberCategory.values())
-            // security types
             .registerType(AppPermissionEvaluatorService.class, MemberCategory.values())
             .registerType(UsernamePasswordAuthenticationToken.class, MemberCategory.values())
+            // user stats accessed by Thymeleaf on account page
+            .registerType(gt.app.modules.user.UserStat.class, MemberCategory.values())
             // Spring Data — needed for getTotalElements() etc. in native image
             .registerType(PageImpl.class, MemberCategory.values())
             // MapStruct: Mappers.getMapper() falls back to Class.forName("<Interface>Impl") when no ServiceLoader entry exists
@@ -102,7 +106,20 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             // Thymeleaf expression utility objects (#lists, #numbers, #temporals) — SpEL resolves their methods via reflection
             .registerTypeIfPresent(classLoader, "org.thymeleaf.expression.Lists", MemberCategory.values())
             .registerTypeIfPresent(classLoader, "org.thymeleaf.expression.Numbers", MemberCategory.values())
-            .registerTypeIfPresent(classLoader, "org.thymeleaf.extras.java8time.expression.Temporals", MemberCategory.values());
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.extras.java8time.expression.Temporals", MemberCategory.values())
+            // content-checker JMS model — main-webapp sends Request and receives Response via Jackson JMS converter
+            .registerTypeIfPresent(classLoader, "gt.contentchecker.Request", MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "gt.contentchecker.Request$RequestType", MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "gt.contentchecker.Response", MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "gt.contentchecker.ContentCheckOutcome", MemberCategory.values())
+            // OAuth2 authentication — SpEL accesses .principal.attributes via reflection in Thymeleaf templates
+            .registerTypeIfPresent(classLoader, "org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken", MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "org.springframework.security.oauth2.core.user.DefaultOAuth2User", MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser", MemberCategory.values())
+            // @AuthenticationPrincipal(expression = "idToken") in AuthController accesses OidcIdToken via SpEL
+            .registerTypeIfPresent(classLoader, "org.springframework.security.oauth2.core.oidc.OidcIdToken", MemberCategory.values())
+            // @CurrentUser uses T(SecurityUtils) in a SpEL expression — type lookup via StandardTypeLocator requires reflection
+            .registerType(gt.app.config.security.SecurityUtils.class, MemberCategory.values());
 
         // Artemis generated _impl classes loaded via Class.forName at runtime
         hints.reflection()
@@ -144,6 +161,18 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             .registerType(Time[].class)
             .registerType(java.sql.Timestamp[].class)
             .registerType(java.net.URL[].class);
+
+        // Spring SingleConnectionFactory wraps the JMS connection in a JDK proxy; interfaces added conditionally
+        hints.proxies()
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.QueueConnection.class, jakarta.jms.TopicConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.QueueConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.TopicConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class)
+            // Spring CachingConnectionFactory wraps JMS sessions in a JDK proxy; interfaces added conditionally
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class, jakarta.jms.TopicSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.TopicSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class);
 
         hints.resources()
             .registerPattern("liquibase/master.xml")

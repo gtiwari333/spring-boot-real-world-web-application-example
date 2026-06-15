@@ -146,6 +146,16 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             .registerType(java.sql.Timestamp[].class)
             .registerType(java.net.URL[].class);
 
+        hints.proxies()
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.QueueConnection.class, jakarta.jms.TopicConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.QueueConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class, jakarta.jms.TopicConnection.class)
+            .registerJdkProxy(jakarta.jms.Connection.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class, jakarta.jms.TopicSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.TopicSession.class)
+            .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class);
+
         hints.resources()
             .registerPattern("activemq-version.properties");
     }

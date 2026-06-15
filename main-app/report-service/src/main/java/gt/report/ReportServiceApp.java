@@ -1,6 +1,5 @@
 package gt.report;
 
-import gt.app.hibernate.PrefixedNamingStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
@@ -47,6 +46,7 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
     public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
         hints.reflection()
             .registerType(StatReport.FlagCount.class, MemberCategory.values())
-            .registerType(PrefixedNamingStrategy.class, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+            // jOOQ maps result rows to generated record classes reflectively when the scheduled report job runs
+            .registerTypeIfPresent(classLoader, "gtapp.jooq.tables.records.GArticleRecord", MemberCategory.values());
     }
 }
