@@ -12,6 +12,7 @@ import gt.contentchecker.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ class ArticleReviewResponseService {
     private final AppProperties appProperties;
     private final WebsocketHandler websocketHandler;
 
-    //no transaction required here - single operation
+    @Transactional
     void handle(Response resp) {
         Article a = articleRepository.findOneWithUserById(Long.valueOf(resp.getEntityId())).orElseThrow();
         switch (resp.getContentCheckOutcome()) {

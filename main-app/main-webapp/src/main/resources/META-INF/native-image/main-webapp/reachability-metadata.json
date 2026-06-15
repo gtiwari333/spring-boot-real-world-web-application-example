@@ -1230,6 +1230,17 @@
       "type": "gt.app.api.ReportClient"
     },
     {
+      "type": "gt.app.api.ReportClient$FlagCount",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "int"
+          ]
+        }
+      ]
+    },
+    {
       "type": "gt.app.api.TrendServiceMock",
       "methods": [
         {
@@ -1983,7 +1994,15 @@
       "type": "gt.app.domain.Comment_"
     },
     {
-      "type": "gt.app.domain.Comment__Accessor_7gy4v7"
+      "type": "gt.app.domain.Comment__Accessor_7gy4v7",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "gt.app.domain.Comment"
+          ]
+        }
+      ]
     },
     {
       "type": "gt.app.domain.ReceivedFile",
@@ -2200,6 +2219,10 @@
       "type": "gt.app.modules.article.ArticleReadDto",
       "methods": [
         {
+          "name": "getComments",
+          "parameterTypes": []
+        },
+        {
           "name": "getContent",
           "parameterTypes": []
         },
@@ -2278,6 +2301,31 @@
           "parameterTypes": [
             "java.lang.String"
           ]
+        }
+      ]
+    },
+    {
+      "type": "gt.app.modules.article.ArticleReadDto$CommentDto",
+      "methods": [
+        {
+          "name": "getChildComments",
+          "parameterTypes": []
+        },
+        {
+          "name": "getContent",
+          "parameterTypes": []
+        },
+        {
+          "name": "getCreatedDate",
+          "parameterTypes": []
+        },
+        {
+          "name": "getId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUsername",
+          "parameterTypes": []
         }
       ]
     },
@@ -2493,6 +2541,13 @@
           ]
         },
         {
+          "name": "existsByIdAndArticleId",
+          "parameterTypes": [
+            "java.lang.Long",
+            "java.lang.Long"
+          ]
+        },
+        {
           "name": "save",
           "parameterTypes": [
             "gt.app.domain.Comment"
@@ -2528,6 +2583,12 @@
             "gt.app.modules.article.CommentRepository",
             "gt.app.modules.review.ContentCheckService"
           ]
+        },
+        {
+          "name": "save",
+          "parameterTypes": [
+            "gt.app.modules.article.NewCommentDto"
+          ]
         }
       ]
     },
@@ -2539,6 +2600,45 @@
         },
         {
           "name": "CGLIB$FACTORY_DATA"
+        }
+      ]
+    },
+    {
+      "type": "gt.app.modules.article.NewCommentDto",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getArticleId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getContent",
+          "parameterTypes": []
+        },
+        {
+          "name": "getParentCommentId",
+          "parameterTypes": []
+        },
+        {
+          "name": "setArticleId",
+          "parameterTypes": [
+            "java.lang.Long"
+          ]
+        },
+        {
+          "name": "setContent",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setParentCommentId",
+          "parameterTypes": [
+            "java.lang.Long"
+          ]
         }
       ]
     },
@@ -2610,6 +2710,17 @@
             "gt.app.config.AppProperties",
             "gt.app.modules.common.WebsocketHandler"
           ]
+        }
+      ]
+    },
+    {
+      "type": "gt.app.modules.review.ArticleReviewResponseService$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
         }
       ]
     },
@@ -2818,6 +2929,13 @@
           ]
         },
         {
+          "name": "addComment",
+          "parameterTypes": [
+            "gt.app.modules.article.NewCommentDto",
+            "org.springframework.web.servlet.mvc.support.RedirectAttributes"
+          ]
+        },
+        {
           "name": "deleteArticle",
           "parameterTypes": [
             "java.lang.Long",
@@ -2837,6 +2955,13 @@
             "org.springframework.ui.Model",
             "gt.app.modules.article.ArticleEditDto",
             "org.springframework.web.servlet.mvc.support.RedirectAttributes"
+          ]
+        },
+        {
+          "name": "read",
+          "parameterTypes": [
+            "java.lang.Long",
+            "org.springframework.ui.Model"
           ]
         },
         {
@@ -24429,6 +24554,9 @@
       "glob": "META-INF/defaultservices/com.codeborne.selenide.impl.DownloadFileWithCdp"
     },
     {
+      "glob": "META-INF/defaultservices/com.codeborne.selenide.impl.ElementCommunicator"
+    },
+    {
       "glob": "META-INF/defaultservices/com.codeborne.selenide.impl.ElementDescriber"
     },
     {
@@ -24538,6 +24666,9 @@
     },
     {
       "glob": "META-INF/services/com.codeborne.selenide.impl.DownloadFileWithCdp"
+    },
+    {
+      "glob": "META-INF/services/com.codeborne.selenide.impl.ElementCommunicator"
     },
     {
       "glob": "META-INF/services/com.codeborne.selenide.impl.ElementDescriber"
@@ -27718,6 +27849,9 @@
     },
     {
       "glob": "templates/article/new-article.html"
+    },
+    {
+      "glob": "templates/article/read-article.html"
     },
     {
       "glob": "templates/error.html"

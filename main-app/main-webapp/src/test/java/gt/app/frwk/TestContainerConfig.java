@@ -6,10 +6,17 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestClient;
 import org.testcontainers.activemq.ArtemisContainer;
 import org.testcontainers.mysql.MySQLContainer;
+
+import static org.springframework.test.web.client.ExpectedCount.manyTimes;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfig {
@@ -57,21 +64,23 @@ public class TestContainerConfig {
     }
 
     /**
-     * Replace the RestClient-based ReportClient with a stub so tests don't
-     * need the report-service to be running.
+     * Replace the RestClient-based ReportClient so tests don't need the
+     * report-service to be running. Uses MockRestServiceServer to return
+     * real JSON that Jackson deserializes into FlagCount — this exercises
+     * the full record-deserialization path, critical for GraalVM
+     * native-image reachability metadata generation.
      */
     @Bean
     @Primary
     ReportClient reportClient(ClientHttpRequestInterceptor interceptor) {
-
         RestClient.Builder builder = RestClient.builder();
 
-        return new ReportClient("http://localhost:0", builder, interceptor) {
-            @Override
-            public FlagCount getFlaggedForReviewCount() {
-                return new FlagCount(2);
-            }
-        };
+        MockRestServiceServer mockServer = MockRestServiceServer.bindTo(builder).build();
+        mockServer.expect(manyTimes(), requestTo("http://localhost:0/to-review"))
+            .andExpect(method(HttpMethod.POST))
+            .andRespond(withSuccess("{\"value\": 2}", MediaType.APPLICATION_JSON));
+
+        return new ReportClient("http://localhost:0", builder, interceptor);
     }
 
 }

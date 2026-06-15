@@ -26,7 +26,7 @@ public class NoopContentCheckService implements ContentCheckService {
 
     @Override
     public void sendForAutoContentReview(Comment c) {
-        c.setStatus(CommentStatus.HIDDEN);
+        c.setStatus(CommentStatus.SHOWING);
         commentRepository.save(c);
     }
 }
