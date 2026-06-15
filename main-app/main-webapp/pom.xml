@@ -500,40 +500,26 @@
                 <artifactId>native-maven-plugin</artifactId>
                 <configuration>
                     <buildArgs combine.children="append">
-                        <buildArg>-H:ServiceLoaderFeatureExcludeServices=org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
-                        <buildArg>-H:ExcludeResources=META-INF/services/org.hibernate.bytecode.spi.BytecodeProvider</buildArg>
                     </buildArgs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-maven-plugin</artifactId>
+                <version>${hibernate.version}</version>
+                <executions>
+                    <execution>
+                        <id>enhance</id>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                        <configuration>
+                            <enableAssociationManagement>true</enableAssociationManagement>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>native</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-jpa</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-core</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate.orm</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-bytebuddy</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 
 </project>

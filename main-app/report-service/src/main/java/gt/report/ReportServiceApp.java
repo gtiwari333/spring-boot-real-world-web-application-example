@@ -1,8 +1,13 @@
 package gt.report;
 
+import gt.app.hibernate.PrefixedNamingStrategy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aot.hint.MemberCategory;
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -13,6 +18,7 @@ import java.util.Arrays;
 @SpringBootApplication
 @Slf4j
 @EnableScheduling
+@ImportRuntimeHints(NativeRuntimeHints.class)
 public class ReportServiceApp {
 
     public static void main(String[] args) throws UnknownHostException {
@@ -34,4 +40,13 @@ public class ReportServiceApp {
         );
     }
 
+}
+
+class NativeRuntimeHints implements RuntimeHintsRegistrar {
+    @Override
+    public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+        hints.reflection()
+            .registerType(StatReport.FlagCount.class, MemberCategory.values())
+            .registerType(PrefixedNamingStrategy.class, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+    }
 }

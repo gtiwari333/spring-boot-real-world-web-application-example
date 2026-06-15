@@ -2,8 +2,12 @@ package gt.contentchecker;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aot.hint.MemberCategory;
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.env.Environment;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 
 @SpringBootApplication
 @Slf4j
+@ImportRuntimeHints(NativeRuntimeHints.class)
 public class ContentCheckerService {
 
     public static void main(String[] args) throws UnknownHostException {
@@ -91,6 +96,17 @@ class ContentChecker {
         return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
 
+}
+
+class NativeRuntimeHints implements RuntimeHintsRegistrar {
+    @Override
+    public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+        hints.reflection()
+            .registerType(Request.class, MemberCategory.values())
+            .registerType(Request.RequestType.class, MemberCategory.values())
+            .registerType(Response.class, MemberCategory.values())
+            .registerType(ContentCheckOutcome.class, MemberCategory.values());
+    }
 }
 
 

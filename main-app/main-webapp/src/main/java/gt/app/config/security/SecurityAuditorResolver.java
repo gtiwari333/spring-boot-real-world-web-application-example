@@ -23,8 +23,7 @@ public class SecurityAuditorResolver implements AuditorAware<AppUser> {
             return Optional.empty();
         }
 
-        // find() instead of getReference() — getReference() creates a Hibernate proxy
-        // which fails in native image with bytecode.provider=none
         return Optional.ofNullable(entityManager.find(AppUser.class, userId));
+
     }
 }

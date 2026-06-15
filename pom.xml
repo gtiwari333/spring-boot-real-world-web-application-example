@@ -277,32 +277,7 @@
                         <targetTests>gt.app.modules.file.*</targetTests>
                     </configuration>
                 </plugin>
-                <!-- Spring Boot Maven Plugin for AOT processing and repackaging -->
 
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>process-aot</id>
-                            <goals>
-                                <goal>process-aot</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>process-test-aot</id>
-                            <goals>
-                                <goal>process-test-aot</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>repackage</id>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
                 <!-- GraalVM Native Build Tools Plugin -->
                 <plugin>
                     <groupId>org.graalvm.buildtools</groupId>
@@ -322,11 +297,7 @@
     </build>
 
     <profiles>
-        <!--
-          PROFILE 1: Fast Native Build (Daily Use / CI)
-          Skips tests entirely and builds the native image using
-          the pre-existing metadata in src/main/resources/META-INF/native-image/
-        -->
+
         <profile>
             <id>native</id>
             <build>
@@ -335,17 +306,7 @@
                         <plugin>
                             <groupId>org.graalvm.buildtools</groupId>
                             <artifactId>native-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>build-native</id>
-                                    <goals>
-                                        <goal>build</goal>
-                                    </goals>
-                                    <phase>package</phase>
-                                </execution>
-                            </executions>
                             <configuration>
-                                <!-- Removed the <agent> block entirely -->
                                 <metadataRepository>
                                     <enabled>true</enabled>
                                 </metadataRepository>
@@ -360,78 +321,26 @@
                         </plugin>
                     </plugins>
                 </pluginManagement>
-            </build>
-        </profile>
-
-        <!--
-          PROFILE 2: Metadata Generation + Auto-Copy (Run ONLY when dependencies upgrade)
-          1. Runs tests with the GraalVM tracing agent.
-          2. Automatically copies the merged metadata to src/main/resources for committing.
-        -->
-        <profile>
-            <id>native-metadata</id>
-            <build>
                 <plugins>
-                    <!-- 1. Unit Tests with Agent -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <argLine>
-                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata,caller-filter-file=${root.dir}/agent-caller-filter.json,access-filter-file=${root.dir}/agent-access-filter.json
-                            </argLine>
-                        </configuration>
-                    </plugin>
-
-                    <!-- 2. Integration Tests with Agent -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <configuration>
-                            <argLine>
-                                -agentlib:native-image-agent=config-output-dir=${project.build.directory}/native-reachability-metadata,caller-filter-file=${root.dir}/agent-caller-filter.json,access-filter-file=${root.dir}/agent-access-filter.json
-                            </argLine>
-                        </configuration>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
                         <executions>
                             <execution>
+                                <id>build-native</id>
                                 <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
+                                    <goal>compile</goal>
                                 </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- 3. AUTO-COPY: Move generated metadata to source tree -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-native-metadata</id>
-                                <phase>verify</phase> <!-- Runs after failsafe completes -->
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- Evaluates per-module, e.g., email-service/src/main/... -->
-                                    <outputDirectory>
-                                        ${project.basedir}/src/main/resources/META-INF/native-image/${project.artifactId}
-                                    </outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${project.build.directory}/native-reachability-metadata
-                                            </directory>
-                                            <filtering>false</filtering>
-                                        </resource>
-                                    </resources>
-                                </configuration>
+                                <!-- Run in verify phase so both unit tests (surefire)
+                                     and integration tests (failsafe) execute first. -->
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
 
         <profile>
             <id>code-quality</id>

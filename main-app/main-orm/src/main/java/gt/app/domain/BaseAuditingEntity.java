@@ -16,12 +16,12 @@ import java.time.Instant;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseAuditingEntity extends BaseEntity {
+abstract class BaseAuditingEntity extends BaseEntity {
 
     private static final long serialVersionUID = 4681401402666658611L;
 
     @CreatedBy
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_user_id")
     @JsonIgnore//ignore completely to avoid StackOverflow exception by User.createdByUser logic, use DTO
     private AppUser createdByUser;
@@ -31,7 +31,7 @@ public abstract class BaseAuditingEntity extends BaseEntity {
     private Instant createdDate;
 
     @LastModifiedBy
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "last_modified_by_user_id")
     @JsonIgnore//ignore completely to avoid StackOverflow exception by User.lastModifiedByUser logic, use DTO
     private AppUser lastModifiedByUser;
