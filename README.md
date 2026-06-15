@@ -194,11 +194,12 @@ The default username/passwords are listed on : gt.app.Application.initData, whic
 
 ### generate reachability metadata 
 
-it alos copies to src/main/resources/META-INF/native-image/{module-name}
+it copies to src/main/resources/META-INF/native-image/{module-name}. its one time step
+
 
 `mvn clean verify -Pnative-metadata`
 
-### using existing reachability metadata
+### generate native image using existing reachability metadata
 
 `mvn clean package -Pnative -DskipTests`
 

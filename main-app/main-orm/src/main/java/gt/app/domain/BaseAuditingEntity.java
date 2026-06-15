@@ -22,7 +22,7 @@ public abstract class BaseAuditingEntity extends BaseEntity {
 
     @CreatedBy
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "created_by_user_id", updatable = false)
+    @JoinColumn(name = "created_by_user_id")
     @JsonIgnore//ignore completely to avoid StackOverflow exception by User.createdByUser logic, use DTO
     private AppUser createdByUser;
 

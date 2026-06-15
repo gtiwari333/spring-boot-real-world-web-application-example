@@ -1314,7 +1314,9 @@
       "methods": [
         {
           "name": "<init>",
-          "parameterTypes": []
+          "parameterTypes": [
+            "jakarta.persistence.EntityManager"
+          ]
         }
       ]
     },
