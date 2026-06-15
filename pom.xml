@@ -162,6 +162,12 @@
                 <groupId>com.github.dasniko</groupId>
                 <artifactId>testcontainers-keycloak</artifactId>
                 <version>${testcontainers-keycloak.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.keycloak</groupId>
+                        <artifactId>keycloak-admin-client</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
