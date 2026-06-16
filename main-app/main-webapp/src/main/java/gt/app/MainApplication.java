@@ -107,6 +107,22 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             .registerTypeIfPresent(classLoader, "org.thymeleaf.expression.Lists", MemberCategory.values())
             .registerTypeIfPresent(classLoader, "org.thymeleaf.expression.Numbers", MemberCategory.values())
             .registerTypeIfPresent(classLoader, "org.thymeleaf.extras.java8time.expression.Temporals", MemberCategory.values())
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.expression.Temporals", MemberCategory.values())
+            // Thymeleaf binary/unary expression nodes — BinaryOperationExpression.doComposeBinaryOperationExpression()
+            // calls getDeclaredConstructor(IStandardExpression, IStandardExpression).newInstance() at runtime
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.EqualsExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.NotEqualsExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.GreaterThanExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.LessThanExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.GreaterOrEqualToExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.LessOrEqualToExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.AndExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.OrExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.AdditionExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.SubtractionExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.MultiplicationExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.DivisionExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
+            .registerTypeIfPresent(classLoader, "org.thymeleaf.standard.expression.RemainderExpression", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS)
             // content-checker JMS model — main-webapp sends Request and receives Response via Jackson JMS converter
             .registerTypeIfPresent(classLoader, "gt.contentchecker.Request", MemberCategory.values())
             .registerTypeIfPresent(classLoader, "gt.contentchecker.Request$RequestType", MemberCategory.values())
@@ -173,6 +189,19 @@ class NativeRuntimeHints implements RuntimeHintsRegistrar {
             .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.QueueSession.class)
             .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class, jakarta.jms.TopicSession.class)
             .registerJdkProxy(org.springframework.jms.connection.SessionProxy.class);
+
+        // Hibernate resolves PhysicalNamingStrategy by class name via Class.forName()
+        hints.reflection()
+            .registerTypeIfPresent(classLoader, "gt.app.hibernate.PrefixedNamingStrategy", MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS, MemberCategory.INVOKE_PUBLIC_METHODS);
+
+        // Liquibase calls getter methods via reflection in ChangeParameterMetaData.getCurrentValue()
+        // during checksum generation — register all change types used in the changelog
+        hints.reflection()
+            .registerTypeIfPresent(classLoader, "liquibase.change.core.AddForeignKeyConstraintChange", MemberCategory.INVOKE_PUBLIC_METHODS)
+            .registerTypeIfPresent(classLoader, "liquibase.change.core.CreateTableChange", MemberCategory.INVOKE_PUBLIC_METHODS)
+            .registerTypeIfPresent(classLoader, "liquibase.change.core.CreateIndexChange", MemberCategory.INVOKE_PUBLIC_METHODS)
+            .registerTypeIfPresent(classLoader, "liquibase.change.ColumnConfig", MemberCategory.INVOKE_PUBLIC_METHODS)
+            .registerTypeIfPresent(classLoader, "liquibase.change.ConstraintsConfig", MemberCategory.INVOKE_PUBLIC_METHODS);
 
         hints.resources()
             .registerPattern("liquibase/master.xml")
